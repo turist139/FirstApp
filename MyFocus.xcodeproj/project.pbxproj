@@ -6,14 +6,78 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		C603F3A12FE3E47300A87840 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C603F3A02FE3E47300A87840 /* WidgetKit.framework */; };
+		C603F3A32FE3E47300A87840 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C603F3A22FE3E47300A87840 /* SwiftUI.framework */; };
+		C603F3B22FE3E47500A87840 /* MyFocusWidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C603F39E2FE3E47300A87840 /* MyFocusWidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C603F3B02FE3E47500A87840 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C603F2592FE3E02800A87840 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C603F39D2FE3E47300A87840;
+			remoteInfo = MyFocusWidgetsExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C603F3B32FE3E47500A87840 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				C603F3B22FE3E47500A87840 /* MyFocusWidgetsExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		C603F2612FE3E02800A87840 /* MyFocus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyFocus.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C603F39E2FE3E47300A87840 /* MyFocusWidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MyFocusWidgetsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		C603F3A02FE3E47300A87840 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		C603F3A22FE3E47300A87840 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		C603F3C32FE4022900A87840 /* MyFocusWidgetsExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MyFocusWidgetsExtension.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		C603F3B62FE3E47500A87840 /* Exceptions for "MyFocusWidgets" folder in "MyFocusWidgetsExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = C603F39D2FE3E47300A87840 /* MyFocusWidgetsExtension */;
+		};
+		C603F3BE2FE3FDE100A87840 /* Exceptions for "MyFocus" folder in "MyFocusWidgetsExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Models/DetoxLog.swift,
+				Models/UserProgress.swift,
+				Utilities/DetoxDateHelper.swift,
+			);
+			target = C603F39D2FE3E47300A87840 /* MyFocusWidgetsExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		C603F2632FE3E02800A87840 /* MyFocus */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				C603F3BE2FE3FDE100A87840 /* Exceptions for "MyFocus" folder in "MyFocusWidgetsExtension" target */,
+			);
 			path = MyFocus;
+			sourceTree = "<group>";
+		};
+		C603F3A42FE3E47300A87840 /* MyFocusWidgets */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				C603F3B62FE3E47500A87840 /* Exceptions for "MyFocusWidgets" folder in "MyFocusWidgetsExtension" target */,
+			);
+			path = MyFocusWidgets;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -26,13 +90,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C603F39B2FE3E47300A87840 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C603F3A32FE3E47300A87840 /* SwiftUI.framework in Frameworks */,
+				C603F3A12FE3E47300A87840 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		C603F2582FE3E02800A87840 = {
 			isa = PBXGroup;
 			children = (
+				C603F3C32FE4022900A87840 /* MyFocusWidgetsExtension.entitlements */,
 				C603F2632FE3E02800A87840 /* MyFocus */,
+				C603F3A42FE3E47300A87840 /* MyFocusWidgets */,
+				C603F39F2FE3E47300A87840 /* Frameworks */,
 				C603F2622FE3E02800A87840 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,8 +117,18 @@
 			isa = PBXGroup;
 			children = (
 				C603F2612FE3E02800A87840 /* MyFocus.app */,
+				C603F39E2FE3E47300A87840 /* MyFocusWidgetsExtension.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		C603F39F2FE3E47300A87840 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C603F3A02FE3E47300A87840 /* WidgetKit.framework */,
+				C603F3A22FE3E47300A87840 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -55,10 +141,12 @@
 				C603F25D2FE3E02800A87840 /* Sources */,
 				C603F25E2FE3E02800A87840 /* Frameworks */,
 				C603F25F2FE3E02800A87840 /* Resources */,
+				C603F3B32FE3E47500A87840 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				C603F3B12FE3E47500A87840 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				C603F2632FE3E02800A87840 /* MyFocus */,
@@ -69,6 +157,28 @@
 			productName = MyFocus;
 			productReference = C603F2612FE3E02800A87840 /* MyFocus.app */;
 			productType = "com.apple.product-type.application";
+		};
+		C603F39D2FE3E47300A87840 /* MyFocusWidgetsExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C603F3B72FE3E47500A87840 /* Build configuration list for PBXNativeTarget "MyFocusWidgetsExtension" */;
+			buildPhases = (
+				C603F39A2FE3E47300A87840 /* Sources */,
+				C603F39B2FE3E47300A87840 /* Frameworks */,
+				C603F39C2FE3E47300A87840 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				C603F3A42FE3E47300A87840 /* MyFocusWidgets */,
+			);
+			name = MyFocusWidgetsExtension;
+			packageProductDependencies = (
+			);
+			productName = MyFocusWidgetsExtension;
+			productReference = C603F39E2FE3E47300A87840 /* MyFocusWidgetsExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -81,6 +191,9 @@
 				LastUpgradeCheck = 2650;
 				TargetAttributes = {
 					C603F2602FE3E02800A87840 = {
+						CreatedOnToolsVersion = 26.5;
+					};
+					C603F39D2FE3E47300A87840 = {
 						CreatedOnToolsVersion = 26.5;
 					};
 				};
@@ -100,12 +213,20 @@
 			projectRoot = "";
 			targets = (
 				C603F2602FE3E02800A87840 /* MyFocus */,
+				C603F39D2FE3E47300A87840 /* MyFocusWidgetsExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		C603F25F2FE3E02800A87840 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C603F39C2FE3E47300A87840 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -122,7 +243,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C603F39A2FE3E47300A87840 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C603F3B12FE3E47500A87840 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C603F39D2FE3E47300A87840 /* MyFocusWidgetsExtension */;
+			targetProxy = C603F3B02FE3E47500A87840 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		C603F26C2FE3E02A00A87840 /* Debug */ = {
@@ -251,6 +387,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MyFocus/MyFocus.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = QRHQZGLBFB;
@@ -283,6 +420,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MyFocus/MyFocus.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = QRHQZGLBFB;
@@ -310,6 +448,68 @@
 			};
 			name = Release;
 		};
+		C603F3B42FE3E47500A87840 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = MyFocusWidgetsExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = QRHQZGLBFB;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MyFocusWidgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MyFocusWidgets;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gg.MyFocus.MyFocusWidgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C603F3B52FE3E47500A87840 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = MyFocusWidgetsExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = QRHQZGLBFB;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MyFocusWidgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MyFocusWidgets;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gg.MyFocus.MyFocusWidgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -327,6 +527,15 @@
 			buildConfigurations = (
 				C603F26F2FE3E02A00A87840 /* Debug */,
 				C603F2702FE3E02A00A87840 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C603F3B72FE3E47500A87840 /* Build configuration list for PBXNativeTarget "MyFocusWidgetsExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C603F3B42FE3E47500A87840 /* Debug */,
+				C603F3B52FE3E47500A87840 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
