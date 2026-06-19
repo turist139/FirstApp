@@ -86,8 +86,21 @@ struct DetoxDateHelper {
             }
         }
         
-        let start = profile.streakStartDate ?? profile.creationDate
-        let activeHours = max(0, Int(Date().timeIntervalSince(start) / 3600.0))
+        var start: Date
+        if let relapseDate = profile.streakStartDate {
+            start = endOfDetoxDay(for: relapseDate, boundaryHour: boundaryHour)
+        } else {
+            start = profile.creationDate
+        }
+        
+        let now = Date()
+        let activeHours: Int
+        if start > now {
+            activeHours = 0
+        } else {
+            activeHours = Int(now.timeIntervalSince(start) / 3600.0)
+        }
+        
         currentStreak = activeHours / 24
         
         profile.currentStreakDays = currentStreak
