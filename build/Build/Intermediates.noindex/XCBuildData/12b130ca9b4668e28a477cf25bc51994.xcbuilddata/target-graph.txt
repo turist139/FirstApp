@@ -1,0 +1,4 @@
+Target dependency graph (2 targets)
+Target 'MyFocus' in project 'MyFocus'
+➜ Explicit dependency on target 'MyFocusWidgetsExtension' in project 'MyFocus'
+Target 'MyFocusWidgetsExtension' in project 'MyFocus' (no dependencies)

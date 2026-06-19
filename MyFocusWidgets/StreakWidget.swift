@@ -55,7 +55,8 @@ struct StreakProvider: TimelineProvider {
         let profiles = (try? context.fetch(profilesFetch)) ?? []
         let activeProfile = profiles.first { $0.id == progress.activeProfileId } ?? profiles.first
         
-        let currentStreak = activeProfile?.currentStreakDays ?? progress.currentStreakDays
+        let streakStartDate = activeProfile?.streakStartDate ?? progress.streakStartDate
+        let creationDate = activeProfile?.creationDate ?? Date()
         let lastCheckIn = activeProfile?.lastCheckInDate ?? progress.lastCheckInDate
         
         var hasCheckedIn = false
@@ -74,7 +75,9 @@ struct StreakProvider: TimelineProvider {
             
             hasCheckedIn = DetoxDateHelper_Widget.isDateSameDetoxDay(lastCheck, Date(), boundaryHour: finalBoundary)
         }
-        let activeHours = DetoxDateHelper_Widget.calculateActiveHours(from: activeProfile?.streakStartDate, creationDate: activeProfile?.creationDate ?? Date())
+        
+        let activeHours = DetoxDateHelper_Widget.calculateActiveHours(from: streakStartDate, creationDate: creationDate)
+        let currentStreak = DetoxDateHelper_Widget.calculateStreakDays(from: streakStartDate, creationDate: creationDate, boundaryHour: boundaryHour)
         
         return StreakEntry(
             date: Date(),
@@ -323,6 +326,13 @@ struct DetoxDateHelper_Widget {
         return calendar.date(from: components) ?? date
     }
     
+    static func endOfDetoxDay(for date: Date, boundaryHour: Int) -> Date {
+        let dayStart = detoxDay(for: date, boundaryHour: boundaryHour)
+        let calendar = Calendar.current
+        guard let nextDay = calendar.date(byAdding: .day, value: 1, to: dayStart) else { return date }
+        return calendar.date(byAdding: .hour, value: boundaryHour, to: nextDay) ?? date
+    }
+    
     static func isDateSameDetoxDay(_ date1: Date, _ date2: Date, boundaryHour: Int) -> Bool {
         let day1 = detoxDay(for: date1, boundaryHour: boundaryHour)
         let day2 = detoxDay(for: date2, boundaryHour: boundaryHour)
@@ -334,6 +344,29 @@ struct DetoxDateHelper_Widget {
         let now = Date()
         if start > now { return 0 }
         return Int(now.timeIntervalSince(start) / 3600.0)
+    }
+    
+    static func calculateStreakDays(from relapseDate: Date?, creationDate: Date, boundaryHour: Int) -> Int {
+        var start: Date
+        if let relapseDate = relapseDate {
+            let endOfRelapseDay = endOfDetoxDay(for: relapseDate, boundaryHour: boundaryHour)
+            let remainingHours = endOfRelapseDay.timeIntervalSince(relapseDate) / 3600.0
+            
+            if remainingHours < 6 {
+                start = endOfRelapseDay
+            } else {
+                start = relapseDate
+            }
+        } else {
+            start = creationDate
+        }
+        
+        let now = Date()
+        if start > now {
+            return 0
+        } else {
+            return Int(now.timeIntervalSince(start) / (3600.0 * 24.0))
+        }
     }
 }
 
