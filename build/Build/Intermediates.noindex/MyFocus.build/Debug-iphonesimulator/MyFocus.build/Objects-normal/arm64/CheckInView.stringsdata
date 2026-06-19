@@ -1,0 +1,192 @@
+{
+  "source": "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Views/CheckInView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Отчет за день",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 307
+        }
+      },
+      {
+        "comment": "",
+        "key": "Честный отчет о дне помогает поддерживать осознанность.",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 47
+        }
+      },
+      {
+        "comment": "",
+        "key": "ТОЛЕРАНТНОСТЬ К ТИШИНЕ",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 57
+        }
+      },
+      {
+        "comment": "",
+        "key": "Насколько комфортно вам было наедине со своими мыслями (1 - тяжело, 5 - отлично)?",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 62
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 74
+        }
+      },
+      {
+        "comment": "",
+        "key": "СТАТУС ДЕТОКСА",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 102
+        }
+      },
+      {
+        "comment": "",
+        "key": "Вы нарушили в этот день свои лимиты (сорвались)?",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 107
+        }
+      },
+      {
+        "comment": "",
+        "key": "Нет, я чист",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 119
+        }
+      },
+      {
+        "comment": "",
+        "key": "Да, я сорвался",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 137
+        }
+      },
+      {
+        "comment": "",
+        "key": "ДЕТАЛИ СРЫВА",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 160
+        }
+      },
+      {
+        "comment": "",
+        "key": "Насколько долго вы сорвались?",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 167
+        }
+      },
+      {
+        "comment": "",
+        "key": "Длительность",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 171
+        }
+      },
+      {
+        "comment": "",
+        "key": "Указать точное время срыва",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 185
+        }
+      },
+      {
+        "comment": "",
+        "key": "Время срыва",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 192
+        }
+      },
+      {
+        "comment": "",
+        "key": "Что послужило триггером?",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 208
+        }
+      },
+      {
+        "comment": "",
+        "key": "Свой триггер",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 236
+        }
+      },
+      {
+        "comment": "",
+        "key": "Укажите свою причину...",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 240
+        }
+      },
+      {
+        "comment": "",
+        "key": "РЕФЛЕКСИЯ / ЗАМЕТКИ",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 261
+        }
+      },
+      {
+        "comment": "",
+        "key": "Запишите ваши мысли, наблюдения или уроки за день.",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 266
+        }
+      },
+      {
+        "comment": "",
+        "key": "Напишите заметку...",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 270
+        }
+      },
+      {
+        "comment": "",
+        "key": "Обнулить сегодняшний день",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 290
+        }
+      },
+      {
+        "comment": "",
+        "key": "Отмена",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 311
+        }
+      },
+      {
+        "comment": "",
+        "key": "Готово",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 318
+        }
+      }
+    ]
+  },
+  "version": 1
+}

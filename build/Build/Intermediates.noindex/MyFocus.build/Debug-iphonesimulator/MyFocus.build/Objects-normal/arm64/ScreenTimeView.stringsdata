@@ -1,0 +1,376 @@
+{
+  "source": "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Views/ScreenTimeView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 138
+        }
+      },
+      {
+        "comment": "",
+        "key": "Я сорвался...",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 119
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 215
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 230
+        }
+      },
+      {
+        "comment": "",
+        "key": "Следующий день начнется в %@",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 252
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ (конец в %@)",
+        "location": {
+          "startingColumn": 174,
+          "startingLine": 252
+        }
+      },
+      {
+        "comment": "",
+        "key": "Осталось сегодня (конец в %@)",
+        "location": {
+          "startingColumn": 269,
+          "startingLine": 252
+        }
+      },
+      {
+        "comment": "",
+        "key": "Список пуст. Нажмите карандаш справа вверху, чтобы добавить цели.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 313
+        }
+      },
+      {
+        "comment": "",
+        "key": "ЧТО МЫ ИЗБЕГАЕМ:",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 292
+        }
+      },
+      {
+        "comment": "",
+        "key": "ПОСЛЕДНИЙ ДОСТИГНУТЫЙ ЖЕТОН",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 344
+        }
+      },
+      {
+        "comment": "",
+        "key": "Нет жетонов",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 368
+        }
+      },
+      {
+        "comment": "",
+        "key": "Начните детокс сегодня!",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 372
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld дн.",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 409
+        }
+      },
+      {
+        "comment": "",
+        "key": "Чек-ин выполнен!",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 444
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ваш стрик сохранен: %lld дн. Отличная работа!",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 448
+        }
+      },
+      {
+        "comment": "",
+        "key": "Пройти чек-ин за сегодня",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 478
+        }
+      },
+      {
+        "comment": "",
+        "key": "Удалить цель?",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 562
+        }
+      },
+      {
+        "comment": "",
+        "key": "Редактирование целей",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 496
+        }
+      },
+      {
+        "comment": "",
+        "key": "Новая вредная привычка...",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 502
+        }
+      },
+      {
+        "comment": "",
+        "key": "Готово",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 556
+        }
+      },
+      {
+        "comment": "",
+        "key": "Удалить",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 563
+        }
+      },
+      {
+        "comment": "",
+        "key": "Отмена",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 566
+        }
+      },
+      {
+        "comment": "",
+        "key": "Вы уверены, что хотите удалить цель «%@»?",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 568
+        }
+      },
+      {
+        "comment": "",
+        "key": "0 дн.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 629
+        }
+      },
+      {
+        "comment": "",
+        "key": "Максимальный milestone достигнут! 🎉",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 636
+        }
+      },
+      {
+        "comment": "",
+        "key": "До следующего жетона: %lld %@",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 641
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld дн.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 648
+        }
+      },
+      {
+        "comment": "",
+        "key": "Изменить конец сегодняшнего дня",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 771
+        }
+      },
+      {
+        "comment": "",
+        "key": "Выберите время, в которое для вас закончится текущий день детокса. Это изменение применится ТОЛЬКО на сегодня.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 777
+        }
+      },
+      {
+        "comment": "",
+        "key": "Время окончания",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 795
+        }
+      },
+      {
+        "comment": "",
+        "key": "18:00 (6:00 PM)",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 797
+        }
+      },
+      {
+        "comment": "",
+        "key": "19:00 (7:00 PM)",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 798
+        }
+      },
+      {
+        "comment": "",
+        "key": "20:00 (8:00 PM)",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 799
+        }
+      },
+      {
+        "comment": "",
+        "key": "21:00 (9:00 PM)",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 800
+        }
+      },
+      {
+        "comment": "",
+        "key": "22:00 (10:00 PM)",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 801
+        }
+      },
+      {
+        "comment": "",
+        "key": "23:00 (11:00 PM)",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 802
+        }
+      },
+      {
+        "comment": "",
+        "key": "00:00 (Полночь)",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 803
+        }
+      },
+      {
+        "comment": "",
+        "key": "01:00 AM",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 806
+        }
+      },
+      {
+        "comment": "",
+        "key": "02:00 AM",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 807
+        }
+      },
+      {
+        "comment": "",
+        "key": "03:00 AM",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 808
+        }
+      },
+      {
+        "comment": "",
+        "key": "04:00 AM",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 809
+        }
+      },
+      {
+        "comment": "",
+        "key": "05:00 AM",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 810
+        }
+      },
+      {
+        "comment": "",
+        "key": "06:00 AM",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 811
+        }
+      },
+      {
+        "comment": "",
+        "key": "Готово",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 823
+        }
+      },
+      {
+        "comment": "",
+        "key": "Сбросить",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 839
+        }
+      },
+      {
+        "comment": "",
+        "key": "Отмена",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 849
+        }
+      }
+    ]
+  },
+  "version": 1
+}

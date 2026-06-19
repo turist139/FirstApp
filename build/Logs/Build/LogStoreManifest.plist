@@ -90,7 +90,7 @@
 			<key>uniqueIdentifier</key>
 			<string>71336018-AC9D-457D-AB43-0F9AB27C3D55</string>
 		</dict>
-		<key>71542D92-6910-46B0-B8E8-0B3ADDE4E103</key>
+		<key>F03DCD54-2FDA-4D00-A926-00542E00981F</key>
 		<dict>
 			<key>className</key>
 			<string>IDECommandLineBuildLog</string>
@@ -99,7 +99,7 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
 			<key>fileName</key>
-			<string>71542D92-6910-46B0-B8E8-0B3ADDE4E103.xcactivitylog</string>
+			<string>F03DCD54-2FDA-4D00-A926-00542E00981F.xcactivitylog</string>
 			<key>hasPrimaryLog</key>
 			<true/>
 			<key>primaryObservable</key>
@@ -124,13 +124,13 @@
 			<key>signature</key>
 			<string>Cleaning project MyFocus with scheme MyFocus</string>
 			<key>timeStartedRecording</key>
-			<real>803601634.612149</real>
+			<real>803603300.42445397</real>
 			<key>timeStoppedRecording</key>
-			<real>803601634.99584198</real>
+			<real>803603300.81217003</real>
 			<key>title</key>
 			<string>Cleaning project MyFocus with scheme MyFocus</string>
 			<key>uniqueIdentifier</key>
-			<string>71542D92-6910-46B0-B8E8-0B3ADDE4E103</string>
+			<string>F03DCD54-2FDA-4D00-A926-00542E00981F</string>
 		</dict>
 	</dict>
 </dict>

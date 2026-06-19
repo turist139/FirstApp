@@ -1,0 +1,16 @@
+{
+  "source": "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Views/Onboarding/OnboardingBreathingView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Время для глубокого вдоха",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 15
+        }
+      }
+    ]
+  },
+  "version": 1
+}

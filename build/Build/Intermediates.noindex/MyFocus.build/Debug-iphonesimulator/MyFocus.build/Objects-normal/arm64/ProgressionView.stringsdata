@@ -1,0 +1,80 @@
+{
+  "source": "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Views/Progression/ProgressionView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Прогресс",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 186
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld дн.",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 23
+        }
+      },
+      {
+        "comment": "",
+        "key": "Текущий стрик детокса",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 27
+        }
+      },
+      {
+        "comment": "",
+        "key": "Рекорд: %lld дн.",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 33
+        }
+      },
+      {
+        "comment": "",
+        "key": "МЕДАЛИ ДЕТОКСА",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 52
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld дн.",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 102
+        }
+      },
+      {
+        "comment": "",
+        "key": "ВЫБОР ТЕМЫ",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 130
+        }
+      },
+      {
+        "comment": "",
+        "key": "🔥 %lld дн",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 158
+        }
+      },
+      {
+        "comment": "",
+        "key": "Базовая",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 166
+        }
+      }
+    ]
+  },
+  "version": 1
+}

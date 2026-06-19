@@ -1,0 +1,96 @@
+{
+  "source": "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Views/Breathing/SOSBreathingView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "SOS: Дыхание Спасения",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 63
+        }
+      },
+      {
+        "comment": "",
+        "key": "Сфокусируйтесь на физических ощущениях воздуха",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 110
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 97
+        }
+      },
+      {
+        "comment": "",
+        "key": "Вдох...",
+        "location": {
+          "startingColumn": 39,
+          "startingLine": 101
+        }
+      },
+      {
+        "comment": "",
+        "key": "Выдох...",
+        "location": {
+          "startingColumn": 55,
+          "startingLine": 101
+        }
+      },
+      {
+        "comment": "",
+        "key": "Отменить",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 119
+        }
+      },
+      {
+        "comment": "",
+        "key": "Отличная работа!",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 152
+        }
+      },
+      {
+        "comment": "",
+        "key": "Вы дышали в течение 90 секунд.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 156
+        }
+      },
+      {
+        "comment": "",
+        "key": "Помогло справиться с тягой?",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 168
+        }
+      },
+      {
+        "comment": "",
+        "key": "Нет",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 176
+        }
+      },
+      {
+        "comment": "",
+        "key": "Да",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 194
+        }
+      }
+    ]
+  },
+  "version": 1
+}
