@@ -33,6 +33,29 @@ struct DetoxDateHelper {
         }
     }
     
+    static func calculateActiveHours(from relapseDate: Date?, creationDate: Date, boundaryHour: Int) -> Int {
+        var start: Date
+        if let relapseDate = relapseDate {
+            let endOfRelapseDay = endOfDetoxDay(for: relapseDate, boundaryHour: boundaryHour)
+            let remainingHours = endOfRelapseDay.timeIntervalSince(relapseDate) / 3600.0
+            
+            if remainingHours < 6 {
+                start = endOfRelapseDay
+            } else {
+                start = relapseDate
+            }
+        } else {
+            start = creationDate
+        }
+        
+        let now = Date()
+        if start > now {
+            return 0
+        } else {
+            return Int(now.timeIntervalSince(start) / 3600.0)
+        }
+    }
+    
     static func recalculateStreak(logs: [DetoxLog], boundaryHour: Int, profile: DetoxProfile?) {
         guard let profile = profile else { return }
         let calendar = Calendar.current
@@ -86,21 +109,7 @@ struct DetoxDateHelper {
             }
         }
         
-        var start: Date
-        if let relapseDate = profile.streakStartDate {
-            start = endOfDetoxDay(for: relapseDate, boundaryHour: boundaryHour)
-        } else {
-            start = profile.creationDate
-        }
-        
-        let now = Date()
-        let activeHours: Int
-        if start > now {
-            activeHours = 0
-        } else {
-            activeHours = Int(now.timeIntervalSince(start) / 3600.0)
-        }
-        
+        let activeHours = calculateActiveHours(from: profile.streakStartDate, creationDate: profile.creationDate, boundaryHour: boundaryHour)
         currentStreak = activeHours / 24
         
         profile.currentStreakDays = currentStreak

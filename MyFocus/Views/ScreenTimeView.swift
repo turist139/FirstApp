@@ -198,8 +198,7 @@ struct ScreenTimeView: View {
     // MARK: - Subviews
     
     private var activeHours: Int {
-        let start = activeProfile?.streakStartDate ?? activeProfile?.creationDate ?? Date()
-        return max(0, Calendar.current.dateComponents([.hour], from: start, to: Date()).hour ?? 0)
+        return DetoxDateHelper.calculateActiveHours(from: activeProfile?.streakStartDate, creationDate: activeProfile?.creationDate ?? Date(), boundaryHour: currentBoundaryHour)
     }
     
     private var realStreakDays: Int {
