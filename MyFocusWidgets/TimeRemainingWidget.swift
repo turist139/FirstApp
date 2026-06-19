@@ -193,14 +193,7 @@ struct TimeRemainingWidgetEntryView : View {
                 Text("⏳ \(Text(entry.endDate, style: .relative))")
             }
         default:
-            ZStack {
-                LinearGradient(
-                    colors: [Color(white: 0.08), Color(white: 0.03)],
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
-                
-                VStack(spacing: 8) {
+            VStack(spacing: 8) {
                     HStack {
                         Text("MY FOCUS")
                             .font(.system(size: 10, weight: .black))
@@ -261,7 +254,6 @@ struct TimeRemainingWidgetEntryView : View {
                 }
                 .padding(.vertical, 12)
             }
-        }
     }
 }
 
@@ -272,11 +264,23 @@ struct TimeRemainingWidget: Widget {
         StaticConfiguration(kind: kind, provider: TimeRemainingProvider()) { entry in
             if #available(iOS 17.0, *) {
                 TimeRemainingWidgetEntryView(entry: entry)
-                    .containerBackground(.fill.tertiary, for: .widget)
+                    .containerBackground(for: .widget) {
+                        LinearGradient(
+                            colors: [Color(white: 0.08), Color(white: 0.03)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    }
             } else {
                 TimeRemainingWidgetEntryView(entry: entry)
                     .padding()
-                    .background()
+                    .background(
+                        LinearGradient(
+                            colors: [Color(white: 0.08), Color(white: 0.03)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
             }
         }
         .configurationDisplayName("Осталось Времени")

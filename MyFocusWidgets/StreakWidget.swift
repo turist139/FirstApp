@@ -114,14 +114,7 @@ struct StreakWidgetEntryView : View {
         case .accessoryInline:
             Text("\(Image(systemName: "flame.fill")) \(entry.streakDays) \(daysString(entry.streakDays))")
         default:
-            ZStack {
-                LinearGradient(
-                    colors: [Color(white: 0.08), Color(white: 0.03)],
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
-                
-                VStack(spacing: 8) {
+            VStack(spacing: 8) {
                     if family == .systemSmall {
                         ZStack {
                             Circle()
@@ -206,11 +199,11 @@ struct StreakWidgetEntryView : View {
                         }
                         .padding(.horizontal, 16)
                     }
-                }
             }
         }
     }
     
+
     private func daysString(_ count: Int) -> String {
         let mod10 = count % 10
         let mod100 = count % 100
@@ -236,11 +229,23 @@ struct StreakWidget: Widget {
         StaticConfiguration(kind: kind, provider: StreakProvider()) { entry in
             if #available(iOS 17.0, *) {
                 StreakWidgetEntryView(entry: entry)
-                    .containerBackground(.fill.tertiary, for: .widget)
+                    .containerBackground(for: .widget) {
+                        LinearGradient(
+                            colors: [Color(white: 0.08), Color(white: 0.03)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    }
             } else {
                 StreakWidgetEntryView(entry: entry)
                     .padding()
-                    .background()
+                    .background(
+                        LinearGradient(
+                            colors: [Color(white: 0.08), Color(white: 0.03)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
             }
         }
         .configurationDisplayName("Прогресс Детокса")
