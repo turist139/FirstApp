@@ -23,7 +23,7 @@
         "key": "%lld",
         "location": {
           "startingColumn": 26,
-          "startingLine": 215
+          "startingLine": 229
         }
       },
       {
@@ -31,7 +31,7 @@
         "key": "%lld",
         "location": {
           "startingColumn": 26,
-          "startingLine": 230
+          "startingLine": 244
         }
       },
       {
@@ -39,7 +39,7 @@
         "key": "Следующий день начнется в %@",
         "location": {
           "startingColumn": 42,
-          "startingLine": 252
+          "startingLine": 266
         }
       },
       {
@@ -47,7 +47,7 @@
         "key": "%@ (конец в %@)",
         "location": {
           "startingColumn": 174,
-          "startingLine": 252
+          "startingLine": 266
         }
       },
       {
@@ -55,7 +55,7 @@
         "key": "Осталось сегодня (конец в %@)",
         "location": {
           "startingColumn": 269,
-          "startingLine": 252
+          "startingLine": 266
         }
       },
       {
@@ -63,7 +63,7 @@
         "key": "Список пуст. Нажмите карандаш справа вверху, чтобы добавить цели.",
         "location": {
           "startingColumn": 22,
-          "startingLine": 313
+          "startingLine": 327
         }
       },
       {
@@ -71,7 +71,7 @@
         "key": "ЧТО МЫ ИЗБЕГАЕМ:",
         "location": {
           "startingColumn": 22,
-          "startingLine": 292
+          "startingLine": 306
         }
       },
       {
@@ -79,7 +79,7 @@
         "key": "ПОСЛЕДНИЙ ДОСТИГНУТЫЙ ЖЕТОН",
         "location": {
           "startingColumn": 18,
-          "startingLine": 344
+          "startingLine": 358
         }
       },
       {
@@ -87,7 +87,7 @@
         "key": "Нет жетонов",
         "location": {
           "startingColumn": 30,
-          "startingLine": 368
+          "startingLine": 382
         }
       },
       {
@@ -95,7 +95,7 @@
         "key": "Начните детокс сегодня!",
         "location": {
           "startingColumn": 30,
-          "startingLine": 372
+          "startingLine": 386
         }
       },
       {
@@ -103,7 +103,7 @@
         "key": "%lld дн.",
         "location": {
           "startingColumn": 34,
-          "startingLine": 409
+          "startingLine": 423
         }
       },
       {
@@ -111,7 +111,7 @@
         "key": "Чек-ин выполнен!",
         "location": {
           "startingColumn": 30,
-          "startingLine": 444
+          "startingLine": 458
         }
       },
       {
@@ -119,7 +119,7 @@
         "key": "Ваш стрик сохранен: %lld дн. Отличная работа!",
         "location": {
           "startingColumn": 30,
-          "startingLine": 448
+          "startingLine": 462
         }
       },
       {
@@ -127,7 +127,7 @@
         "key": "Пройти чек-ин за сегодня",
         "location": {
           "startingColumn": 30,
-          "startingLine": 478
+          "startingLine": 492
         }
       },
       {
@@ -135,7 +135,7 @@
         "key": "Удалить цель?",
         "location": {
           "startingColumn": 20,
-          "startingLine": 562
+          "startingLine": 576
         }
       },
       {
@@ -143,7 +143,7 @@
         "key": "Редактирование целей",
         "location": {
           "startingColumn": 22,
-          "startingLine": 496
+          "startingLine": 510
         }
       },
       {
@@ -151,7 +151,7 @@
         "key": "Новая вредная привычка...",
         "location": {
           "startingColumn": 31,
-          "startingLine": 502
+          "startingLine": 516
         }
       },
       {
@@ -159,7 +159,7 @@
         "key": "Готово",
         "location": {
           "startingColumn": 28,
-          "startingLine": 556
+          "startingLine": 570
         }
       },
       {
@@ -167,7 +167,7 @@
         "key": "Удалить",
         "location": {
           "startingColumn": 24,
-          "startingLine": 563
+          "startingLine": 577
         }
       },
       {
@@ -175,7 +175,7 @@
         "key": "Отмена",
         "location": {
           "startingColumn": 24,
-          "startingLine": 566
+          "startingLine": 580
         }
       },
       {
@@ -183,7 +183,7 @@
         "key": "Вы уверены, что хотите удалить цель «%@»?",
         "location": {
           "startingColumn": 22,
-          "startingLine": 568
+          "startingLine": 582
         }
       },
       {
@@ -191,7 +191,7 @@
         "key": "0 дн.",
         "location": {
           "startingColumn": 22,
-          "startingLine": 629
+          "startingLine": 643
         }
       },
       {
@@ -199,7 +199,7 @@
         "key": "Максимальный milestone достигнут! 🎉",
         "location": {
           "startingColumn": 26,
-          "startingLine": 636
+          "startingLine": 650
         }
       },
       {
@@ -207,7 +207,7 @@
         "key": "До следующего жетона: %lld %@",
         "location": {
           "startingColumn": 26,
-          "startingLine": 641
+          "startingLine": 655
         }
       },
       {
@@ -215,7 +215,7 @@
         "key": "%lld дн.",
         "location": {
           "startingColumn": 22,
-          "startingLine": 648
+          "startingLine": 662
         }
       },
       {
@@ -223,7 +223,7 @@
         "key": "Изменить конец сегодняшнего дня",
         "location": {
           "startingColumn": 22,
-          "startingLine": 771
+          "startingLine": 785
         }
       },
       {
@@ -231,7 +231,7 @@
         "key": "Выберите время, в которое для вас закончится текущий день детокса. Это изменение применится ТОЛЬКО на сегодня.",
         "location": {
           "startingColumn": 22,
-          "startingLine": 777
+          "startingLine": 791
         }
       },
       {
@@ -239,7 +239,7 @@
         "key": "Время окончания",
         "location": {
           "startingColumn": 24,
-          "startingLine": 795
+          "startingLine": 809
         }
       },
       {
@@ -247,7 +247,7 @@
         "key": "18:00 (6:00 PM)",
         "location": {
           "startingColumn": 30,
-          "startingLine": 797
+          "startingLine": 811
         }
       },
       {
@@ -255,7 +255,7 @@
         "key": "19:00 (7:00 PM)",
         "location": {
           "startingColumn": 30,
-          "startingLine": 798
+          "startingLine": 812
         }
       },
       {
@@ -263,7 +263,7 @@
         "key": "20:00 (8:00 PM)",
         "location": {
           "startingColumn": 30,
-          "startingLine": 799
+          "startingLine": 813
         }
       },
       {
@@ -271,7 +271,7 @@
         "key": "21:00 (9:00 PM)",
         "location": {
           "startingColumn": 30,
-          "startingLine": 800
+          "startingLine": 814
         }
       },
       {
@@ -279,7 +279,7 @@
         "key": "22:00 (10:00 PM)",
         "location": {
           "startingColumn": 30,
-          "startingLine": 801
+          "startingLine": 815
         }
       },
       {
@@ -287,7 +287,7 @@
         "key": "23:00 (11:00 PM)",
         "location": {
           "startingColumn": 30,
-          "startingLine": 802
+          "startingLine": 816
         }
       },
       {
@@ -295,7 +295,7 @@
         "key": "00:00 (Полночь)",
         "location": {
           "startingColumn": 30,
-          "startingLine": 803
+          "startingLine": 817
         }
       },
       {
@@ -303,7 +303,7 @@
         "key": "01:00 AM",
         "location": {
           "startingColumn": 30,
-          "startingLine": 806
+          "startingLine": 820
         }
       },
       {
@@ -311,7 +311,7 @@
         "key": "02:00 AM",
         "location": {
           "startingColumn": 30,
-          "startingLine": 807
+          "startingLine": 821
         }
       },
       {
@@ -319,7 +319,7 @@
         "key": "03:00 AM",
         "location": {
           "startingColumn": 30,
-          "startingLine": 808
+          "startingLine": 822
         }
       },
       {
@@ -327,7 +327,7 @@
         "key": "04:00 AM",
         "location": {
           "startingColumn": 30,
-          "startingLine": 809
+          "startingLine": 823
         }
       },
       {
@@ -335,7 +335,7 @@
         "key": "05:00 AM",
         "location": {
           "startingColumn": 30,
-          "startingLine": 810
+          "startingLine": 824
         }
       },
       {
@@ -343,7 +343,7 @@
         "key": "06:00 AM",
         "location": {
           "startingColumn": 30,
-          "startingLine": 811
+          "startingLine": 825
         }
       },
       {
@@ -351,7 +351,7 @@
         "key": "Готово",
         "location": {
           "startingColumn": 26,
-          "startingLine": 823
+          "startingLine": 837
         }
       },
       {
@@ -359,7 +359,7 @@
         "key": "Сбросить",
         "location": {
           "startingColumn": 32,
-          "startingLine": 839
+          "startingLine": 853
         }
       },
       {
@@ -367,7 +367,7 @@
         "key": "Отмена",
         "location": {
           "startingColumn": 28,
-          "startingLine": 849
+          "startingLine": 863
         }
       }
     ]

@@ -6,13 +6,14 @@ import SwiftData
 struct StreakEntry: TimelineEntry {
     let date: Date
     let streakDays: Int
+    let activeHours: Int
     let paletteName: String
     let hasCheckedInToday: Bool
 }
 
 struct StreakProvider: TimelineProvider {
     func placeholder(in context: Context) -> StreakEntry {
-        StreakEntry(date: Date(), streakDays: 7, paletteName: "default", hasCheckedInToday: true)
+        StreakEntry(date: Date(), streakDays: 7, activeHours: 168, paletteName: "default", hasCheckedInToday: true)
     }
 
     func getSnapshot(in context: Context, completion: @escaping (StreakEntry) -> ()) {
@@ -43,7 +44,7 @@ struct StreakProvider: TimelineProvider {
         
         let config = ModelConfiguration(url: storeURL)
         guard let container = try? ModelContainer(for: schema, configurations: [config]) else {
-            return StreakEntry(date: Date(), streakDays: 0, paletteName: paletteName, hasCheckedInToday: false)
+            return StreakEntry(date: Date(), streakDays: 0, activeHours: 0, paletteName: paletteName, hasCheckedInToday: false)
         }
         
         let context = ModelContext(container)
@@ -73,10 +74,12 @@ struct StreakProvider: TimelineProvider {
             
             hasCheckedIn = DetoxDateHelper_Widget.isDateSameDetoxDay(lastCheck, Date(), boundaryHour: finalBoundary)
         }
+        let activeHours = DetoxDateHelper_Widget.calculateActiveHours(from: activeProfile?.streakStartDate, creationDate: activeProfile?.creationDate ?? Date())
         
         return StreakEntry(
             date: Date(),
             streakDays: currentStreak,
+            activeHours: activeHours,
             paletteName: paletteName,
             hasCheckedInToday: hasCheckedIn
         )
@@ -97,8 +100,13 @@ struct StreakWidgetEntryView : View {
             VStack(spacing: 2) {
                 Image(systemName: "flame.fill")
                     .font(.system(size: 16))
-                Text("\(entry.streakDays)")
-                    .font(.system(size: 18, weight: .bold))
+                if entry.streakDays < 1 {
+                    Text("\(entry.activeHours)h")
+                        .font(.system(size: 18, weight: .bold))
+                } else {
+                    Text("\(entry.streakDays)")
+                        .font(.system(size: 18, weight: .bold))
+                }
             }
         case .accessoryRectangular:
             HStack(spacing: 8) {
@@ -107,12 +115,21 @@ struct StreakWidgetEntryView : View {
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Стрик детокса")
                         .font(.system(size: 10))
-                    Text("\(entry.streakDays) \(daysString(entry.streakDays))")
-                        .font(.system(size: 14, weight: .bold))
+                    if entry.streakDays < 1 {
+                        Text("\(entry.activeHours) \(hoursString(entry.activeHours))")
+                            .font(.system(size: 14, weight: .bold))
+                    } else {
+                        Text("\(entry.streakDays) \(daysString(entry.streakDays))")
+                            .font(.system(size: 14, weight: .bold))
+                    }
                 }
             }
         case .accessoryInline:
-            Text("\(Image(systemName: "flame.fill")) \(entry.streakDays) \(daysString(entry.streakDays))")
+            if entry.streakDays < 1 {
+                Text("\(Image(systemName: "flame.fill")) \(entry.activeHours) \(hoursString(entry.activeHours))")
+            } else {
+                Text("\(Image(systemName: "flame.fill")) \(entry.streakDays) \(daysString(entry.streakDays))")
+            }
         default:
             VStack(spacing: 8) {
                     if family == .systemSmall {
@@ -129,13 +146,23 @@ struct StreakWidgetEntryView : View {
                                 .shadow(color: themeColors.first?.opacity(0.4) ?? .green.opacity(0.4), radius: 8)
                         }
                         
-                        Text("\(entry.streakDays)")
-                            .font(.system(size: 28, weight: .bold, design: .rounded))
-                            .foregroundColor(.white)
-                        
-                        Text(daysString(entry.streakDays))
-                            .font(.system(size: 10, weight: .bold))
-                            .foregroundColor(.white.opacity(0.4))
+                        if entry.streakDays < 1 {
+                            Text("\(entry.activeHours)")
+                                .font(.system(size: 28, weight: .bold, design: .rounded))
+                                .foregroundColor(.white)
+                            
+                            Text(hoursString(entry.activeHours))
+                                .font(.system(size: 10, weight: .bold))
+                                .foregroundColor(.white.opacity(0.4))
+                        } else {
+                            Text("\(entry.streakDays)")
+                                .font(.system(size: 28, weight: .bold, design: .rounded))
+                                .foregroundColor(.white)
+                            
+                            Text(daysString(entry.streakDays))
+                                .font(.system(size: 10, weight: .bold))
+                                .foregroundColor(.white.opacity(0.4))
+                        }
                     } else {
                         HStack(spacing: 20) {
                             VStack(spacing: 6) {
@@ -152,9 +179,15 @@ struct StreakWidgetEntryView : View {
                                         .shadow(color: themeColors.first?.opacity(0.4) ?? .green.opacity(0.4), radius: 6)
                                 }
                                 
-                                Text("\(entry.streakDays) \(daysString(entry.streakDays))")
-                                    .font(.system(size: 14, weight: .bold, design: .rounded))
-                                    .foregroundColor(.white)
+                                if entry.streakDays < 1 {
+                                    Text("\(entry.activeHours) \(hoursString(entry.activeHours))")
+                                        .font(.system(size: 14, weight: .bold, design: .rounded))
+                                        .foregroundColor(.white)
+                                } else {
+                                    Text("\(entry.streakDays) \(daysString(entry.streakDays))")
+                                        .font(.system(size: 14, weight: .bold, design: .rounded))
+                                        .foregroundColor(.white)
+                                }
                             }
                             
                             Divider()
@@ -220,6 +253,20 @@ struct StreakWidgetEntryView : View {
             return "дней"
         }
     }
+    
+    private func hoursString(_ count: Int) -> String {
+        let mod10 = count % 10
+        let mod100 = count % 100
+        if mod100 >= 11 && mod100 <= 14 {
+            return "часов"
+        } else if mod10 == 1 {
+            return "час"
+        } else if mod10 >= 2 && mod10 <= 4 {
+            return "часа"
+        } else {
+            return "часов"
+        }
+    }
 }
 
 struct StreakWidget: Widget {
@@ -280,6 +327,13 @@ struct DetoxDateHelper_Widget {
         let day1 = detoxDay(for: date1, boundaryHour: boundaryHour)
         let day2 = detoxDay(for: date2, boundaryHour: boundaryHour)
         return Calendar.current.isDate(day1, inSameDayAs: day2)
+    }
+    
+    static func calculateActiveHours(from relapseDate: Date?, creationDate: Date) -> Int {
+        let start = relapseDate ?? creationDate
+        let now = Date()
+        if start > now { return 0 }
+        return Int(now.timeIntervalSince(start) / 3600.0)
     }
 }
 

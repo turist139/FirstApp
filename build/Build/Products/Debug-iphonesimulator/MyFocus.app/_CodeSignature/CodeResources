@@ -4,25 +4,25 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>AppIcon60x60@2x.png</key>
-		<data>
-		e3EahFDip1mTgW6ept8Q7mP6paY=
-		</data>
-		<key>AppIcon76x76@2x~ipad.png</key>
-		<data>
-		OxYQbXnNx6pEsvLo3Q7m06CLKNQ=
-		</data>
 		<key>Assets.car</key>
 		<data>
-		iq9pvYCI9xzMQx6u01mn66RMkpY=
+		cypAVzrnoqaOCTZ8cvpx0NNJP5c=
+		</data>
+		<key>Final60x60@2x.png</key>
+		<data>
+		TzZl2I+wOv4axHmwyHZZuR/RuqU=
+		</data>
+		<key>Final76x76@2x~ipad.png</key>
+		<data>
+		toXLPreI+vtGS4bNW0gQFSZdUmY=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		K9vOM+GO3wjk1W93cMW+O3zv5mU=
+		4js9WB0I3um0X+vUsraGiBZi2Zg=
 		</data>
 		<key>MyFocus.debug.dylib</key>
 		<data>
-		SW7pkWXu9fo0psJCRoHUaObpgQE=
+		ZDTIbxSxcOPNLP4yWovXA4i4GIs=
 		</data>
 		<key>PkgInfo</key>
 		<data>
@@ -34,15 +34,15 @@
 		</data>
 		<key>PlugIns/MyFocusWidgetsExtension.appex/MyFocusWidgetsExtension</key>
 		<data>
-		AHLPIlMP4AlAUkoaJ+L8B3ZD1Sk=
+		pirYLXwRYyWP0ElvI6jfpLJIXRs=
 		</data>
 		<key>PlugIns/MyFocusWidgetsExtension.appex/MyFocusWidgetsExtension.debug.dylib</key>
 		<data>
-		kUiVJiO+V3zki8MNvquYXUyH1zo=
+		ymZBqUDV6l02lhOX1NpkDInHNYA=
 		</data>
 		<key>PlugIns/MyFocusWidgetsExtension.appex/_CodeSignature/CodeResources</key>
 		<data>
-		b/2YM2VMIXjLMFIz66ihWtSQmxI=
+		U9IUmT/l7VfotJ4YcyAZ7keAdPo=
 		</data>
 		<key>PlugIns/MyFocusWidgetsExtension.appex/__preview.dylib</key>
 		<data>
@@ -55,32 +55,32 @@
 	</dict>
 	<key>files2</key>
 	<dict>
-		<key>AppIcon60x60@2x.png</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			9VY4K+qs7699QaLQwMQz+73vKUg6gFNJkGKLiw9plQc=
-			</data>
-		</dict>
-		<key>AppIcon76x76@2x~ipad.png</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			SfhSQiZ4HPmi8RZBrZxPtnL4PzJnKnnMcaK5SMNa2DM=
-			</data>
-		</dict>
 		<key>Assets.car</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			yu8YKNeoC6WH91wOXpHXCLag/WXUTtrU2xmrUPRmm+g=
+			zmI87uVLsEhGLcKekDjffe0AFmlK55A9xD4FU4z9Lis=
+			</data>
+		</dict>
+		<key>Final60x60@2x.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			kEQYkeU7zIm4tEmlrxHF3d53bQZEr4SLQi0DD+KcNJ4=
+			</data>
+		</dict>
+		<key>Final76x76@2x~ipad.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			Hhjqpbdzb3eZiOxboum9/eA16ukxoDYFyEO1Wd7lXRI=
 			</data>
 		</dict>
 		<key>MyFocus.debug.dylib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Y9TZwZCY/R13rRpGIIrIYiVKa2hTBomRu50eHXsmf54=
+			s+OIs2EsyvvGCFDld7+/lFR1XdZCwH+BeLPPRDxZATk=
 			</data>
 		</dict>
 		<key>PlugIns/MyFocusWidgetsExtension.appex/Info.plist</key>
@@ -94,21 +94,21 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			44PWvcCVnQCAXMZgt0KiV8gPgzeD3QFhzZfldL5bDs4=
+			9njF20kmaHNb9jkUH66212Ld53d7jmhKi4huP/FE7/8=
 			</data>
 		</dict>
 		<key>PlugIns/MyFocusWidgetsExtension.appex/MyFocusWidgetsExtension.debug.dylib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			cS7j1cKBIvspNEJ2Zc4iNft0J4d4ANR0hTDsl8wr7hs=
+			9YJS9BXtL57CMO4mtN+W50jeWgUpCmEnW6eT5kt530E=
 			</data>
 		</dict>
 		<key>PlugIns/MyFocusWidgetsExtension.appex/_CodeSignature/CodeResources</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			DZlNcL9FMWAsT9JeQHsS1kIB7Gbyd54klOrE9alAoHk=
+			7FRmV5sV0/OfVOlMVayXxsm8XsKvlhgx9UKkiLlIUb0=
 			</data>
 		</dict>
 		<key>PlugIns/MyFocusWidgetsExtension.appex/__preview.dylib</key>

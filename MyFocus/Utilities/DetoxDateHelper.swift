@@ -116,7 +116,7 @@ struct DetoxDateHelper {
             }
         }
         
-        let currentStreak = calculateStreakDays(from: profile.streakStartDate, creationDate: profile.creationDate, boundaryHour: boundaryHour)
+        currentStreak = calculateStreakDays(from: profile.streakStartDate, creationDate: profile.creationDate, boundaryHour: boundaryHour)
         
         profile.currentStreakDays = currentStreak
         profile.longestStreakDays = longestStreak
