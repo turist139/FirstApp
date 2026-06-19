@@ -31,6 +31,7 @@ struct TimeRemainingProvider: TimelineProvider {
         
         let now = Date()
         if entry.endDate > now && entry.endDate.timeIntervalSince(now) < 12 * 3600 {
+            // Add an entry right at the boundary so the UI updates to 'Time Up' state immediately if needed
             let endEntry = TimeEntry(
                 date: entry.endDate,
                 endDate: entry.endDate,
@@ -41,7 +42,9 @@ struct TimeRemainingProvider: TimelineProvider {
             entries.append(endEntry)
         }
         
-        let nextUpdate = Calendar.current.date(byAdding: .minute, value: 15, to: Date()) ?? Date()
+        let defaultNext = Calendar.current.date(byAdding: .minute, value: 15, to: now) ?? now
+        let nextUpdate = entry.endDate > now ? min(defaultNext, entry.endDate.addingTimeInterval(1)) : defaultNext
+        
         let timeline = Timeline(entries: entries, policy: .after(nextUpdate))
         completion(timeline)
     }
