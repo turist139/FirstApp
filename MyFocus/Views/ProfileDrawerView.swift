@@ -67,6 +67,7 @@ struct ProfileDrawerView: View {
                                     } label: {
                                         Label("Удалить", systemImage: "trash")
                                     }
+                                    .tint(.red)
                                 }
                         }
                     }
