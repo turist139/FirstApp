@@ -51,7 +51,7 @@ struct TimeRemainingProvider: TimelineProvider {
         let paletteName = sharedDefaults.string(forKey: "activePalette") ?? "default"
         let boundaryHour = sharedDefaults.integer(forKey: "detoxDayBoundaryHour")
         
-        let schema = Schema([UserProgress.self, DetoxLog.self])
+        let schema = Schema([UserProgress.self, DetoxLog.self, DetoxProfile.self])
         var storeURL: URL
         if let sharedURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.gg.MyFocus") {
             storeURL = sharedURL.appendingPathComponent("default.store")
@@ -71,6 +71,12 @@ struct TimeRemainingProvider: TimelineProvider {
         let progressFetch = FetchDescriptor<UserProgress>()
         let progress = (try? context.fetch(progressFetch))?.first ?? UserProgress()
         
+        let profilesFetch = FetchDescriptor<DetoxProfile>()
+        let profiles = (try? context.fetch(profilesFetch)) ?? []
+        let activeProfile = profiles.first { $0.id == progress.activeProfileId } ?? profiles.first
+        
+        let lastCheckIn = activeProfile?.lastCheckInDate ?? progress.lastCheckInDate
+        
         var finalBoundary = boundaryHour
         let overrideDate = sharedDefaults.string(forKey: "todayBoundaryOverrideDate") ?? ""
         let overrideHour = sharedDefaults.integer(forKey: "todayBoundaryHourOverride")
@@ -84,7 +90,7 @@ struct TimeRemainingProvider: TimelineProvider {
         }
         
         var hasCheckedIn = false
-        if let lastCheck = progress.lastCheckInDate {
+        if let lastCheck = lastCheckIn {
             hasCheckedIn = isDateSameDetoxDay(lastCheck, Date(), boundaryHour: finalBoundary)
         }
         

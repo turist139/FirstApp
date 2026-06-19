@@ -32,7 +32,7 @@ struct StreakProvider: TimelineProvider {
         let paletteName = sharedDefaults.string(forKey: "activePalette") ?? "default"
         let boundaryHour = sharedDefaults.integer(forKey: "detoxDayBoundaryHour")
         
-        let schema = Schema([UserProgress.self, DetoxLog.self])
+        let schema = Schema([UserProgress.self, DetoxLog.self, DetoxProfile.self])
         var storeURL: URL
         if let sharedURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.gg.MyFocus") {
             storeURL = sharedURL.appendingPathComponent("default.store")
@@ -50,8 +50,15 @@ struct StreakProvider: TimelineProvider {
         let progressFetch = FetchDescriptor<UserProgress>()
         let progress = (try? context.fetch(progressFetch))?.first ?? UserProgress()
         
+        let profilesFetch = FetchDescriptor<DetoxProfile>()
+        let profiles = (try? context.fetch(profilesFetch)) ?? []
+        let activeProfile = profiles.first { $0.id == progress.activeProfileId } ?? profiles.first
+        
+        let currentStreak = activeProfile?.currentStreakDays ?? progress.currentStreakDays
+        let lastCheckIn = activeProfile?.lastCheckInDate ?? progress.lastCheckInDate
+        
         var hasCheckedIn = false
-        if let lastCheck = progress.lastCheckInDate {
+        if let lastCheck = lastCheckIn {
             var finalBoundary = boundaryHour
             let overrideDate = sharedDefaults.string(forKey: "todayBoundaryOverrideDate") ?? ""
             let overrideHour = sharedDefaults.integer(forKey: "todayBoundaryHourOverride")
@@ -69,7 +76,7 @@ struct StreakProvider: TimelineProvider {
         
         return StreakEntry(
             date: Date(),
-            streakDays: progress.currentStreakDays,
+            streakDays: currentStreak,
             paletteName: paletteName,
             hasCheckedInToday: hasCheckedIn
         )
