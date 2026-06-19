@@ -77,7 +77,7 @@ struct StreakProvider: TimelineProvider {
         }
         
         let activeHours = DetoxDateHelper_Widget.calculateActiveHours(from: streakStartDate, creationDate: creationDate)
-        let currentStreak = DetoxDateHelper_Widget.calculateStreakDays(from: streakStartDate, creationDate: creationDate, boundaryHour: boundaryHour)
+        let currentStreak = activeHours / 24
         
         return StreakEntry(
             date: Date(),
