@@ -426,7 +426,9 @@ struct StatisticsView: View {
                         .foregroundColor(.yellow)
                         .shadow(color: .yellow.opacity(0.4), radius: 6)
                     
-                    Text("\(activeProfile?.longestStreakDays ?? 0) дн")
+                    let maxHistory = pastStreaks.map { $0.length }.max() ?? 0
+                    let actualLongest = max(activeProfile?.longestStreakDays ?? 0, max(maxHistory, activeProfile?.currentStreakDays ?? 0))
+                    Text("\(actualLongest) дн")
                         .font(.title.bold())
                         .foregroundColor(.white)
                     
@@ -646,10 +648,9 @@ struct StatisticsView: View {
         formatter.locale = Locale(identifier: "ru_RU")
         return formatter.string(from: date)
     }
-    
     private func formatShortDate(_ date: Date) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "d MMMM"
+        formatter.dateFormat = "d MMMM HH:mm"
         formatter.locale = Locale(identifier: "ru_RU")
         return formatter.string(from: date)
     }
