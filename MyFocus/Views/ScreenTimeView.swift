@@ -176,7 +176,7 @@ struct ScreenTimeView: View {
             .onAppear {
                 NotificationManager.shared.requestPermission()
                 updateCountdown()
-                checkRecoveryStatus()
+
                 burnPaletteIfExpired()
             }
             .onReceive(timer) { _ in
@@ -688,14 +688,7 @@ struct ScreenTimeView: View {
         .padding(.top, 4)
     }
     
-    private func checkRecoveryStatus() {
-        // Automatically check if yesterday check-in was missed (broken streak)
-        if isStreakBroken && (activeProfile?.currentStreakDays ?? 0) > 0 && !(activeProfile?.streakSavedToday ?? false) {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                showRecovery = true
-            }
-        }
-    }
+
     
     private func claimCleanDay() {
         withAnimation {

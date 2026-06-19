@@ -1,0 +1,419 @@
+{
+  "" : {
+    "diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MyFocus-primary.dia",
+    "emit-module-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MyFocus-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MyFocus-primary-emit-module.dia",
+    "pch" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MyFocus-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MyFocus-primary.swiftdeps"
+  },
+  "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/App/MyFocusApp.swift" : {
+    "const-values" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MyFocusApp.swiftconstvalues",
+    "dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MyFocusApp.d",
+    "diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MyFocusApp.dia",
+    "index-unit-output-path" : "/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MyFocusApp.o",
+    "llvm-bc" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MyFocusApp.bc",
+    "object" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MyFocusApp.o",
+    "swift-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MyFocusApp.swiftdeps",
+    "swiftmodule" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MyFocusApp~partial.swiftmodule"
+  },
+  "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Models/BreakActivity.swift" : {
+    "const-values" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/BreakActivity.swiftconstvalues",
+    "dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/BreakActivity.d",
+    "diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/BreakActivity.dia",
+    "index-unit-output-path" : "/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/BreakActivity.o",
+    "llvm-bc" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/BreakActivity.bc",
+    "object" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/BreakActivity.o",
+    "swift-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/BreakActivity.swiftdeps",
+    "swiftmodule" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/BreakActivity~partial.swiftmodule"
+  },
+  "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Models/DetoxLog.swift" : {
+    "const-values" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/DetoxLog.swiftconstvalues",
+    "dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/DetoxLog.d",
+    "diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/DetoxLog.dia",
+    "index-unit-output-path" : "/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/DetoxLog.o",
+    "llvm-bc" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/DetoxLog.bc",
+    "object" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/DetoxLog.o",
+    "swift-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/DetoxLog.swiftdeps",
+    "swiftmodule" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/DetoxLog~partial.swiftmodule"
+  },
+  "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Models/DetoxProfile.swift" : {
+    "const-values" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/DetoxProfile.swiftconstvalues",
+    "dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/DetoxProfile.d",
+    "diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/DetoxProfile.dia",
+    "index-unit-output-path" : "/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/DetoxProfile.o",
+    "llvm-bc" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/DetoxProfile.bc",
+    "object" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/DetoxProfile.o",
+    "swift-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/DetoxProfile.swiftdeps",
+    "swiftmodule" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/DetoxProfile~partial.swiftmodule"
+  },
+  "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Models/FocusSession.swift" : {
+    "const-values" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/FocusSession.swiftconstvalues",
+    "dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/FocusSession.d",
+    "diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/FocusSession.dia",
+    "index-unit-output-path" : "/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/FocusSession.o",
+    "llvm-bc" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/FocusSession.bc",
+    "object" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/FocusSession.o",
+    "swift-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/FocusSession.swiftdeps",
+    "swiftmodule" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/FocusSession~partial.swiftmodule"
+  },
+  "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Models/MindfulnessSession.swift" : {
+    "const-values" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MindfulnessSession.swiftconstvalues",
+    "dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MindfulnessSession.d",
+    "diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MindfulnessSession.dia",
+    "index-unit-output-path" : "/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MindfulnessSession.o",
+    "llvm-bc" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MindfulnessSession.bc",
+    "object" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MindfulnessSession.o",
+    "swift-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MindfulnessSession.swiftdeps",
+    "swiftmodule" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MindfulnessSession~partial.swiftmodule"
+  },
+  "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Models/MotivationSettings.swift" : {
+    "const-values" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MotivationSettings.swiftconstvalues",
+    "dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MotivationSettings.d",
+    "diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MotivationSettings.dia",
+    "index-unit-output-path" : "/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MotivationSettings.o",
+    "llvm-bc" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MotivationSettings.bc",
+    "object" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MotivationSettings.o",
+    "swift-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MotivationSettings.swiftdeps",
+    "swiftmodule" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MotivationSettings~partial.swiftmodule"
+  },
+  "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Models/PastStreak.swift" : {
+    "const-values" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/PastStreak.swiftconstvalues",
+    "dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/PastStreak.d",
+    "diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/PastStreak.dia",
+    "index-unit-output-path" : "/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/PastStreak.o",
+    "llvm-bc" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/PastStreak.bc",
+    "object" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/PastStreak.o",
+    "swift-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/PastStreak.swiftdeps",
+    "swiftmodule" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/PastStreak~partial.swiftmodule"
+  },
+  "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Models/UserProgress.swift" : {
+    "const-values" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/UserProgress.swiftconstvalues",
+    "dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/UserProgress.d",
+    "diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/UserProgress.dia",
+    "index-unit-output-path" : "/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/UserProgress.o",
+    "llvm-bc" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/UserProgress.bc",
+    "object" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/UserProgress.o",
+    "swift-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/UserProgress.swiftdeps",
+    "swiftmodule" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/UserProgress~partial.swiftmodule"
+  },
+  "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Utilities/DetoxDateHelper.swift" : {
+    "const-values" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/DetoxDateHelper.swiftconstvalues",
+    "dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/DetoxDateHelper.d",
+    "diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/DetoxDateHelper.dia",
+    "index-unit-output-path" : "/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/DetoxDateHelper.o",
+    "llvm-bc" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/DetoxDateHelper.bc",
+    "object" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/DetoxDateHelper.o",
+    "swift-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/DetoxDateHelper.swiftdeps",
+    "swiftmodule" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/DetoxDateHelper~partial.swiftmodule"
+  },
+  "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Utilities/DetoxMockDataHelper.swift" : {
+    "const-values" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/DetoxMockDataHelper.swiftconstvalues",
+    "dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/DetoxMockDataHelper.d",
+    "diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/DetoxMockDataHelper.dia",
+    "index-unit-output-path" : "/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/DetoxMockDataHelper.o",
+    "llvm-bc" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/DetoxMockDataHelper.bc",
+    "object" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/DetoxMockDataHelper.o",
+    "swift-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/DetoxMockDataHelper.swiftdeps",
+    "swiftmodule" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/DetoxMockDataHelper~partial.swiftmodule"
+  },
+  "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Utilities/NotificationManager.swift" : {
+    "const-values" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/NotificationManager.swiftconstvalues",
+    "dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/NotificationManager.d",
+    "diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/NotificationManager.dia",
+    "index-unit-output-path" : "/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/NotificationManager.o",
+    "llvm-bc" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/NotificationManager.bc",
+    "object" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/NotificationManager.o",
+    "swift-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/NotificationManager.swiftdeps",
+    "swiftmodule" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/NotificationManager~partial.swiftmodule"
+  },
+  "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Utilities/PaletteManager.swift" : {
+    "const-values" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/PaletteManager.swiftconstvalues",
+    "dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/PaletteManager.d",
+    "diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/PaletteManager.dia",
+    "index-unit-output-path" : "/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/PaletteManager.o",
+    "llvm-bc" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/PaletteManager.bc",
+    "object" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/PaletteManager.o",
+    "swift-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/PaletteManager.swiftdeps",
+    "swiftmodule" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/PaletteManager~partial.swiftmodule"
+  },
+  "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Utilities/SharedUserDefaults.swift" : {
+    "const-values" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/SharedUserDefaults.swiftconstvalues",
+    "dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/SharedUserDefaults.d",
+    "diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/SharedUserDefaults.dia",
+    "index-unit-output-path" : "/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/SharedUserDefaults.o",
+    "llvm-bc" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/SharedUserDefaults.bc",
+    "object" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/SharedUserDefaults.o",
+    "swift-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/SharedUserDefaults.swiftdeps",
+    "swiftmodule" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/SharedUserDefaults~partial.swiftmodule"
+  },
+  "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/ViewModels/TimerManager.swift" : {
+    "const-values" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/TimerManager.swiftconstvalues",
+    "dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/TimerManager.d",
+    "diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/TimerManager.dia",
+    "index-unit-output-path" : "/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/TimerManager.o",
+    "llvm-bc" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/TimerManager.bc",
+    "object" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/TimerManager.o",
+    "swift-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/TimerManager.swiftdeps",
+    "swiftmodule" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/TimerManager~partial.swiftmodule"
+  },
+  "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Views/BackgroundGlowView.swift" : {
+    "const-values" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/BackgroundGlowView.swiftconstvalues",
+    "dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/BackgroundGlowView.d",
+    "diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/BackgroundGlowView.dia",
+    "index-unit-output-path" : "/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/BackgroundGlowView.o",
+    "llvm-bc" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/BackgroundGlowView.bc",
+    "object" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/BackgroundGlowView.o",
+    "swift-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/BackgroundGlowView.swiftdeps",
+    "swiftmodule" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/BackgroundGlowView~partial.swiftmodule"
+  },
+  "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Views/Breathing/BreathingModuleView.swift" : {
+    "const-values" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/BreathingModuleView.swiftconstvalues",
+    "dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/BreathingModuleView.d",
+    "diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/BreathingModuleView.dia",
+    "index-unit-output-path" : "/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/BreathingModuleView.o",
+    "llvm-bc" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/BreathingModuleView.bc",
+    "object" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/BreathingModuleView.o",
+    "swift-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/BreathingModuleView.swiftdeps",
+    "swiftmodule" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/BreathingModuleView~partial.swiftmodule"
+  },
+  "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Views/Breathing/SOSBreathingView.swift" : {
+    "const-values" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/SOSBreathingView.swiftconstvalues",
+    "dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/SOSBreathingView.d",
+    "diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/SOSBreathingView.dia",
+    "index-unit-output-path" : "/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/SOSBreathingView.o",
+    "llvm-bc" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/SOSBreathingView.bc",
+    "object" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/SOSBreathingView.o",
+    "swift-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/SOSBreathingView.swiftdeps",
+    "swiftmodule" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/SOSBreathingView~partial.swiftmodule"
+  },
+  "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Views/CheckInView.swift" : {
+    "const-values" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/CheckInView.swiftconstvalues",
+    "dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/CheckInView.d",
+    "diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/CheckInView.dia",
+    "index-unit-output-path" : "/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/CheckInView.o",
+    "llvm-bc" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/CheckInView.bc",
+    "object" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/CheckInView.o",
+    "swift-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/CheckInView.swiftdeps",
+    "swiftmodule" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/CheckInView~partial.swiftmodule"
+  },
+  "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Views/CreateProfileView.swift" : {
+    "const-values" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/CreateProfileView.swiftconstvalues",
+    "dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/CreateProfileView.d",
+    "diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/CreateProfileView.dia",
+    "index-unit-output-path" : "/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/CreateProfileView.o",
+    "llvm-bc" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/CreateProfileView.bc",
+    "object" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/CreateProfileView.o",
+    "swift-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/CreateProfileView.swiftdeps",
+    "swiftmodule" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/CreateProfileView~partial.swiftmodule"
+  },
+  "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Views/Focus/ActiveBreakView.swift" : {
+    "const-values" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/ActiveBreakView.swiftconstvalues",
+    "dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/ActiveBreakView.d",
+    "diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/ActiveBreakView.dia",
+    "index-unit-output-path" : "/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/ActiveBreakView.o",
+    "llvm-bc" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/ActiveBreakView.bc",
+    "object" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/ActiveBreakView.o",
+    "swift-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/ActiveBreakView.swiftdeps",
+    "swiftmodule" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/ActiveBreakView~partial.swiftmodule"
+  },
+  "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Views/Focus/FocusTimerView.swift" : {
+    "const-values" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/FocusTimerView.swiftconstvalues",
+    "dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/FocusTimerView.d",
+    "diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/FocusTimerView.dia",
+    "index-unit-output-path" : "/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/FocusTimerView.o",
+    "llvm-bc" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/FocusTimerView.bc",
+    "object" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/FocusTimerView.o",
+    "swift-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/FocusTimerView.swiftdeps",
+    "swiftmodule" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/FocusTimerView~partial.swiftmodule"
+  },
+  "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Views/Focus/SessionEvaluationView.swift" : {
+    "const-values" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/SessionEvaluationView.swiftconstvalues",
+    "dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/SessionEvaluationView.d",
+    "diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/SessionEvaluationView.dia",
+    "index-unit-output-path" : "/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/SessionEvaluationView.o",
+    "llvm-bc" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/SessionEvaluationView.bc",
+    "object" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/SessionEvaluationView.o",
+    "swift-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/SessionEvaluationView.swiftdeps",
+    "swiftmodule" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/SessionEvaluationView~partial.swiftmodule"
+  },
+  "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Views/MainTabView.swift" : {
+    "const-values" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MainTabView.swiftconstvalues",
+    "dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MainTabView.d",
+    "diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MainTabView.dia",
+    "index-unit-output-path" : "/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MainTabView.o",
+    "llvm-bc" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MainTabView.bc",
+    "object" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MainTabView.o",
+    "swift-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MainTabView.swiftdeps",
+    "swiftmodule" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MainTabView~partial.swiftmodule"
+  },
+  "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Views/Mindfulness/MindfulnessHistoryView.swift" : {
+    "const-values" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MindfulnessHistoryView.swiftconstvalues",
+    "dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MindfulnessHistoryView.d",
+    "diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MindfulnessHistoryView.dia",
+    "index-unit-output-path" : "/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MindfulnessHistoryView.o",
+    "llvm-bc" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MindfulnessHistoryView.bc",
+    "object" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MindfulnessHistoryView.o",
+    "swift-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MindfulnessHistoryView.swiftdeps",
+    "swiftmodule" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MindfulnessHistoryView~partial.swiftmodule"
+  },
+  "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Views/Mindfulness/MindfulnessView.swift" : {
+    "const-values" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MindfulnessView.swiftconstvalues",
+    "dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MindfulnessView.d",
+    "diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MindfulnessView.dia",
+    "index-unit-output-path" : "/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MindfulnessView.o",
+    "llvm-bc" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MindfulnessView.bc",
+    "object" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MindfulnessView.o",
+    "swift-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MindfulnessView.swiftdeps",
+    "swiftmodule" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MindfulnessView~partial.swiftmodule"
+  },
+  "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Views/Motivation/MotivationContainerView.swift" : {
+    "const-values" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MotivationContainerView.swiftconstvalues",
+    "dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MotivationContainerView.d",
+    "diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MotivationContainerView.dia",
+    "index-unit-output-path" : "/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MotivationContainerView.o",
+    "llvm-bc" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MotivationContainerView.bc",
+    "object" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MotivationContainerView.o",
+    "swift-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MotivationContainerView.swiftdeps",
+    "swiftmodule" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MotivationContainerView~partial.swiftmodule"
+  },
+  "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Views/Motivation/MotivationDashboardView.swift" : {
+    "const-values" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MotivationDashboardView.swiftconstvalues",
+    "dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MotivationDashboardView.d",
+    "diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MotivationDashboardView.dia",
+    "index-unit-output-path" : "/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MotivationDashboardView.o",
+    "llvm-bc" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MotivationDashboardView.bc",
+    "object" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MotivationDashboardView.o",
+    "swift-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MotivationDashboardView.swiftdeps",
+    "swiftmodule" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MotivationDashboardView~partial.swiftmodule"
+  },
+  "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Views/Motivation/MotivationEditView.swift" : {
+    "const-values" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MotivationEditView.swiftconstvalues",
+    "dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MotivationEditView.d",
+    "diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MotivationEditView.dia",
+    "index-unit-output-path" : "/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MotivationEditView.o",
+    "llvm-bc" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MotivationEditView.bc",
+    "object" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MotivationEditView.o",
+    "swift-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MotivationEditView.swiftdeps",
+    "swiftmodule" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MotivationEditView~partial.swiftmodule"
+  },
+  "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Views/Motivation/MotivationOnboardingView.swift" : {
+    "const-values" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MotivationOnboardingView.swiftconstvalues",
+    "dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MotivationOnboardingView.d",
+    "diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MotivationOnboardingView.dia",
+    "index-unit-output-path" : "/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MotivationOnboardingView.o",
+    "llvm-bc" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MotivationOnboardingView.bc",
+    "object" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MotivationOnboardingView.o",
+    "swift-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MotivationOnboardingView.swiftdeps",
+    "swiftmodule" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/MotivationOnboardingView~partial.swiftmodule"
+  },
+  "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Views/Onboarding/OnboardingBreathingView.swift" : {
+    "const-values" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/OnboardingBreathingView.swiftconstvalues",
+    "dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/OnboardingBreathingView.d",
+    "diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/OnboardingBreathingView.dia",
+    "index-unit-output-path" : "/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/OnboardingBreathingView.o",
+    "llvm-bc" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/OnboardingBreathingView.bc",
+    "object" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/OnboardingBreathingView.o",
+    "swift-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/OnboardingBreathingView.swiftdeps",
+    "swiftmodule" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/OnboardingBreathingView~partial.swiftmodule"
+  },
+  "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Views/PracticesView.swift" : {
+    "const-values" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/PracticesView.swiftconstvalues",
+    "dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/PracticesView.d",
+    "diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/PracticesView.dia",
+    "index-unit-output-path" : "/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/PracticesView.o",
+    "llvm-bc" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/PracticesView.bc",
+    "object" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/PracticesView.o",
+    "swift-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/PracticesView.swiftdeps",
+    "swiftmodule" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/PracticesView~partial.swiftmodule"
+  },
+  "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Views/ProfileDrawerView.swift" : {
+    "const-values" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/ProfileDrawerView.swiftconstvalues",
+    "dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/ProfileDrawerView.d",
+    "diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/ProfileDrawerView.dia",
+    "index-unit-output-path" : "/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/ProfileDrawerView.o",
+    "llvm-bc" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/ProfileDrawerView.bc",
+    "object" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/ProfileDrawerView.o",
+    "swift-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/ProfileDrawerView.swiftdeps",
+    "swiftmodule" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/ProfileDrawerView~partial.swiftmodule"
+  },
+  "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Views/ProfileSelectionMenu.swift" : {
+    "const-values" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/ProfileSelectionMenu.swiftconstvalues",
+    "dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/ProfileSelectionMenu.d",
+    "diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/ProfileSelectionMenu.dia",
+    "index-unit-output-path" : "/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/ProfileSelectionMenu.o",
+    "llvm-bc" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/ProfileSelectionMenu.bc",
+    "object" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/ProfileSelectionMenu.o",
+    "swift-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/ProfileSelectionMenu.swiftdeps",
+    "swiftmodule" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/ProfileSelectionMenu~partial.swiftmodule"
+  },
+  "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Views/Progression/ProgressionView.swift" : {
+    "const-values" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/ProgressionView.swiftconstvalues",
+    "dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/ProgressionView.d",
+    "diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/ProgressionView.dia",
+    "index-unit-output-path" : "/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/ProgressionView.o",
+    "llvm-bc" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/ProgressionView.bc",
+    "object" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/ProgressionView.o",
+    "swift-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/ProgressionView.swiftdeps",
+    "swiftmodule" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/ProgressionView~partial.swiftmodule"
+  },
+  "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Views/Progression/StreakRecoveryView.swift" : {
+    "const-values" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/StreakRecoveryView.swiftconstvalues",
+    "dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/StreakRecoveryView.d",
+    "diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/StreakRecoveryView.dia",
+    "index-unit-output-path" : "/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/StreakRecoveryView.o",
+    "llvm-bc" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/StreakRecoveryView.bc",
+    "object" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/StreakRecoveryView.o",
+    "swift-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/StreakRecoveryView.swiftdeps",
+    "swiftmodule" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/StreakRecoveryView~partial.swiftmodule"
+  },
+  "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Views/SOSToolbarModifier.swift" : {
+    "const-values" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/SOSToolbarModifier.swiftconstvalues",
+    "dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/SOSToolbarModifier.d",
+    "diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/SOSToolbarModifier.dia",
+    "index-unit-output-path" : "/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/SOSToolbarModifier.o",
+    "llvm-bc" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/SOSToolbarModifier.bc",
+    "object" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/SOSToolbarModifier.o",
+    "swift-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/SOSToolbarModifier.swiftdeps",
+    "swiftmodule" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/SOSToolbarModifier~partial.swiftmodule"
+  },
+  "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Views/ScreenTimeView.swift" : {
+    "const-values" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/ScreenTimeView.swiftconstvalues",
+    "dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/ScreenTimeView.d",
+    "diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/ScreenTimeView.dia",
+    "index-unit-output-path" : "/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/ScreenTimeView.o",
+    "llvm-bc" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/ScreenTimeView.bc",
+    "object" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/ScreenTimeView.o",
+    "swift-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/ScreenTimeView.swiftdeps",
+    "swiftmodule" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/ScreenTimeView~partial.swiftmodule"
+  },
+  "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Views/SettingsView.swift" : {
+    "const-values" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/SettingsView.swiftconstvalues",
+    "dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/SettingsView.d",
+    "diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/SettingsView.dia",
+    "index-unit-output-path" : "/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/SettingsView.o",
+    "llvm-bc" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/SettingsView.bc",
+    "object" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/SettingsView.o",
+    "swift-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/SettingsView.swiftdeps",
+    "swiftmodule" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/SettingsView~partial.swiftmodule"
+  },
+  "/Users/gg/Desktop/own/xcode version/MyFocus/MyFocus/Views/Statistics/StatisticsView.swift" : {
+    "const-values" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/StatisticsView.swiftconstvalues",
+    "dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/StatisticsView.d",
+    "diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/StatisticsView.dia",
+    "index-unit-output-path" : "/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/StatisticsView.o",
+    "llvm-bc" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/StatisticsView.bc",
+    "object" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/StatisticsView.o",
+    "swift-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/StatisticsView.swiftdeps",
+    "swiftmodule" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/StatisticsView~partial.swiftmodule"
+  },
+  "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/DerivedSources/GeneratedAssetSymbols.swift" : {
+    "const-values" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftconstvalues",
+    "dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/GeneratedAssetSymbols.d",
+    "diagnostics" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/GeneratedAssetSymbols.dia",
+    "index-unit-output-path" : "/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "llvm-bc" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/GeneratedAssetSymbols.bc",
+    "object" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "swift-dependencies" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftdeps",
+    "swiftmodule" : "/Users/gg/Desktop/own/xcode version/MyFocus/build/Build/Intermediates.noindex/MyFocus.build/Debug-iphonesimulator/MyFocus.build/Objects-normal/arm64/GeneratedAssetSymbols~partial.swiftmodule"
+  }
+}
