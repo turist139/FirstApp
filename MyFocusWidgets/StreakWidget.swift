@@ -32,7 +32,7 @@ struct StreakProvider: TimelineProvider {
         let paletteName = sharedDefaults.string(forKey: "activePalette") ?? "default"
         let boundaryHour = sharedDefaults.integer(forKey: "detoxDayBoundaryHour")
         
-        let schema = Schema([UserProgress.self, DetoxLog.self, DetoxProfile.self])
+        let schema = Schema([FocusSession.self, UserProgress.self, BreakActivity.self, MindfulnessSession.self, DetoxLog.self, PastStreak.self, DetoxProfile.self])
         var storeURL: URL
         if let sharedURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.gg.MyFocus") {
             storeURL = sharedURL.appendingPathComponent("default.store")

@@ -59,6 +59,10 @@
 				Models/DetoxProfile.swift,
 				Models/UserProgress.swift,
 				Utilities/DetoxDateHelper.swift,
+				Models/PastStreak.swift,
+				Models/FocusSession.swift,
+				Models/MindfulnessSession.swift,
+				Models/BreakActivity.swift,
 			);
 			target = C603F39D2FE3E47300A87840 /* MyFocusWidgetsExtension */;
 		};
