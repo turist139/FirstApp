@@ -43,9 +43,11 @@ struct DetoxDateHelper {
         for log in logs {
             let day = detoxDay(for: log.date, boundaryHour: boundaryHour)
             if let existing = logsByDay[day] {
-                // Priority: Full relapse (2) > Rescued relapse (1) > Clean day (0)
-                let existingSeverity = !existing.isClean ? (existing.isRescued ? 1 : 2) : 0
-                let currentSeverity = !log.isClean ? (log.isRescued ? 1 : 2) : 0
+                let existingIsMinor = !existing.isClean && existing.relapseDuration == "пару минут"
+                let existingSeverity = !existing.isClean ? (existing.isRescued || existingIsMinor ? 1 : 2) : 0
+                
+                let currentIsMinor = !log.isClean && log.relapseDuration == "пару минут"
+                let currentSeverity = !log.isClean ? (log.isRescued || currentIsMinor ? 1 : 2) : 0
                 
                 if currentSeverity > existingSeverity {
                     logsByDay[day] = log
@@ -72,7 +74,9 @@ struct DetoxDateHelper {
         for day in sortedDays {
             guard let log = logsByDay[day] else { continue }
             
-            if log.isClean || log.isRescued || log.isMinorRelapse {
+            let isMinor = !log.isClean && log.relapseDuration == "пару минут"
+            
+            if log.isClean || log.isRescued || isMinor {
                 // Streak continues
                 prevDay = day
             } else {

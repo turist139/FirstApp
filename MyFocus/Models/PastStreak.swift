@@ -49,9 +49,13 @@ extension PastStreak {
         var logsByDay: [Date: DetoxLog] = [:]
         for log in logs {
             let day = DetoxDateHelper.detoxDay(for: log.date, boundaryHour: boundaryHour)
+            
+            let isMinor = !log.isClean && log.relapseDuration == "пару минут"
+            let currentSeverity = !log.isClean ? (log.isRescued || isMinor ? 1 : 2) : 0
+            
             if let existing = logsByDay[day] {
-                let existingSeverity = !existing.isClean ? (existing.isRescued || existing.isMinorRelapse ? 1 : 2) : 0
-                let currentSeverity = !log.isClean ? (log.isRescued || log.isMinorRelapse ? 1 : 2) : 0
+                let existingIsMinor = !existing.isClean && existing.relapseDuration == "пару минут"
+                let existingSeverity = !existing.isClean ? (existing.isRescued || existingIsMinor ? 1 : 2) : 0
                 
                 if currentSeverity > existingSeverity {
                     logsByDay[day] = log
@@ -74,6 +78,7 @@ extension PastStreak {
         
         for log in sortedLogs {
             let day = DetoxDateHelper.detoxDay(for: log.date, boundaryHour: boundaryHour)
+            let isMinor = !log.isClean && log.relapseDuration == "пару минут"
             
             if let prev = prevDay {
                 let diff = calendar.dateComponents([.day], from: prev, to: day).day ?? 0
@@ -97,7 +102,10 @@ extension PastStreak {
                 }
                 prevDay = day
                 currentStreakEndDate = log.date
-            } else if log.isRescued || log.isMinorRelapse {
+            } else if log.isRescued || isMinor {
+                if currentStreakStartDate == nil {
+                    currentStreakStartDate = log.date
+                }
                 prevDay = day
                 currentStreakEndDate = log.date
             } else {
