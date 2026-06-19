@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>logFormatVersion</key>
+	<integer>12</integer>
+	<key>logs</key>
+	<dict>
+		<key>6A7E8499-7A16-4FEA-A8B9-A58A1DFFAEE6</key>
+		<dict>
+			<key>className</key>
+			<string>IDECommandLineBuildLog</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>6A7E8499-7A16-4FEA-A8B9-A58A1DFFAEE6.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+				<key>totalNumberOfAnalyzerIssues</key>
+				<integer>0</integer>
+				<key>totalNumberOfErrors</key>
+				<integer>0</integer>
+				<key>totalNumberOfTestFailures</key>
+				<integer>0</integer>
+				<key>totalNumberOfWarnings</key>
+				<integer>0</integer>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>MyFocus project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>MyFocus</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Cleaning project MyFocus with scheme MyFocus</string>
+			<key>timeStartedRecording</key>
+			<real>803603186.27184296</real>
+			<key>timeStoppedRecording</key>
+			<real>803603186.65825498</real>
+			<key>title</key>
+			<string>Cleaning project MyFocus with scheme MyFocus</string>
+			<key>uniqueIdentifier</key>
+			<string>6A7E8499-7A16-4FEA-A8B9-A58A1DFFAEE6</string>
+		</dict>
+		<key>71336018-AC9D-457D-AB43-0F9AB27C3D55</key>
+		<dict>
+			<key>className</key>
+			<string>IDECommandLineBuildLog</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>71336018-AC9D-457D-AB43-0F9AB27C3D55.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>E</string>
+				<key>totalNumberOfAnalyzerIssues</key>
+				<integer>0</integer>
+				<key>totalNumberOfErrors</key>
+				<integer>1</integer>
+				<key>totalNumberOfTestFailures</key>
+				<integer>0</integer>
+				<key>totalNumberOfWarnings</key>
+				<integer>6</integer>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>MyFocus project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>MyFocus</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Building project MyFocus with scheme MyFocus</string>
+			<key>timeStartedRecording</key>
+			<real>803603186.66423702</real>
+			<key>timeStoppedRecording</key>
+			<real>803603189.50542104</real>
+			<key>title</key>
+			<string>Building project MyFocus with scheme MyFocus</string>
+			<key>uniqueIdentifier</key>
+			<string>71336018-AC9D-457D-AB43-0F9AB27C3D55</string>
+		</dict>
+		<key>71542D92-6910-46B0-B8E8-0B3ADDE4E103</key>
+		<dict>
+			<key>className</key>
+			<string>IDECommandLineBuildLog</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>71542D92-6910-46B0-B8E8-0B3ADDE4E103.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+				<key>totalNumberOfAnalyzerIssues</key>
+				<integer>0</integer>
+				<key>totalNumberOfErrors</key>
+				<integer>0</integer>
+				<key>totalNumberOfTestFailures</key>
+				<integer>0</integer>
+				<key>totalNumberOfWarnings</key>
+				<integer>0</integer>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>MyFocus project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>MyFocus</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Cleaning project MyFocus with scheme MyFocus</string>
+			<key>timeStartedRecording</key>
+			<real>803601634.612149</real>
+			<key>timeStoppedRecording</key>
+			<real>803601634.99584198</real>
+			<key>title</key>
+			<string>Cleaning project MyFocus with scheme MyFocus</string>
+			<key>uniqueIdentifier</key>
+			<string>71542D92-6910-46B0-B8E8-0B3ADDE4E103</string>
+		</dict>
+	</dict>
+</dict>
+</plist>
