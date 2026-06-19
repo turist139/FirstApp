@@ -7,20 +7,34 @@ struct ScreenTimeView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var progressQuery: [UserProgress]
     @Query(sort: \DetoxLog.date, order: .forward) private var logs: [DetoxLog]
+    @Query private var profilesQuery: [DetoxProfile]
     
-    @AppStorage("customMantra") private var customMantra: String = "продержись всего сегодняшний день"
-    
-    var todayLog: DetoxLog? {
-        logs.first { DetoxDateHelper.isDateSameDetoxDay($0.date, Date(), boundaryHour: currentBoundaryHour) }
+    var activeProfile: DetoxProfile? {
+        let activeId = progress.activeProfileId
+        return profilesQuery.first(where: { $0.id == activeId }) ?? profilesQuery.first
     }
     
-    // UI state
+    var activeLogs: [DetoxLog] {
+        guard let profileId = activeProfile?.id else { return [] }
+        return logs.filter { $0.profileId == profileId }
+    }
+    
+    var todayLog: DetoxLog? {
+        activeLogs.first { DetoxDateHelper.isDateSameDetoxDay($0.date, Date(), boundaryHour: currentBoundaryHour) }
+    }
+    
+    @AppStorage("customMantra") private var customMantra: String = "продержись всего сегодняшний день"
     @State private var showSOS = false
     @State private var showRecovery = false
     @State private var showHabitSettings = false
     @State private var showCheckInSheet = false
+    @State private var showCreateProfile = false
+    @State private var showProfileDrawer = false
     @State private var newHabitName = ""
     @State private var countdownString = "00:00:00"
+    @State private var showDeleteConfirmation = false
+    @State private var habitToDelete: String? = nil
+
     
     @AppStorage("activePalette", store: .shared) private var activePalette: String = "default"
     @AppStorage("detoxDayBoundaryHour", store: .shared) private var detoxDayBoundaryHour: Int = 0
@@ -65,12 +79,12 @@ struct ScreenTimeView: View {
     }
     
     var hasCheckedInToday: Bool {
-        guard let lastCheck = progress.lastCheckInDate else { return false }
+        guard let lastCheck = activeProfile?.lastCheckInDate else { return false }
         return DetoxDateHelper.isDateSameDetoxDay(lastCheck, Date(), boundaryHour: currentBoundaryHour)
     }
     
     var isStreakBroken: Bool {
-        guard let lastCheck = progress.lastCheckInDate else { return false }
+        guard let lastCheck = activeProfile?.lastCheckInDate else { return false }
         let currentDetoxDay = DetoxDateHelper.detoxDay(for: Date(), boundaryHour: currentBoundaryHour)
         let lastCheckDetoxDay = DetoxDateHelper.detoxDay(for: lastCheck, boundaryHour: currentBoundaryHour)
         
@@ -121,16 +135,39 @@ struct ScreenTimeView: View {
                 .padding()
             }
             .withAmbientGlow()
-            .navigationTitle("Детокс")
+            .navigationTitle("")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        withAnimation(.easeInOut(duration: 0.25)) {
+                            showProfileDrawer = true
+                        }
+                    } label: {
+                        HStack(spacing: 6) {
+                            Image(systemName: activeProfile?.icon ?? "flame.fill")
+                            Text(activeProfile?.name ?? "Трекинг")
+                                .font(.title3.bold())
+                            Image(systemName: "chevron.down")
+                                .font(.caption.bold())
+                                .foregroundColor(.white.opacity(0.5))
+                        }
+                        .foregroundColor(.white)
+                    }
+                }
+            }
             .sheet(isPresented: $showRecovery) {
                 StreakRecoveryView()
             }
             .sheet(isPresented: $showHabitSettings) {
                 habitSettingsSheet
+                    .preferredColorScheme(.dark)
             }
             .sheet(isPresented: $showCheckInSheet) {
-                CheckInView()
+                CheckInView(profile: activeProfile, progress: progress)
+            }
+            .sheet(isPresented: $showCreateProfile) {
+                CreateProfileView(progress: progress)
             }
             .sheet(isPresented: $showTodayBoundaryPicker) {
                 todayBoundaryPickerSheet
@@ -145,18 +182,28 @@ struct ScreenTimeView: View {
                 updateCountdown()
             }
         }
+        .overlay {
+            ProfileDrawerView(
+                profiles: Array(profilesQuery),
+                activeProfile: activeProfile,
+                progress: progress,
+                isOpen: $showProfileDrawer,
+                showCreateProfile: $showCreateProfile
+            )
+            .animation(.easeInOut(duration: 0.25), value: showProfileDrawer)
+        }
         .withSOSToolbar()
     }
     // MARK: - Subviews
     
     private var activeHours: Int {
-        let start = progress.streakStartDate ?? progress.lastCheckInDate ?? Date()
+        let start = activeProfile?.streakStartDate ?? activeProfile?.lastCheckInDate ?? Date()
         return max(0, Calendar.current.dateComponents([.hour], from: start, to: Date()).hour ?? 0)
     }
     
     private var countdownCard: some View {
         VStack(spacing: 10) {
-            if progress.currentStreakDays == 0 {
+            if activeHours < 24 || activeProfile?.currentStreakDays ?? 0 == 0 {
                 HStack(spacing: 12) {
                     Image(systemName: "flame.fill")
                         .font(.system(size: 60, weight: .bold))
@@ -176,7 +223,7 @@ struct ScreenTimeView: View {
                     Image(systemName: "flame.fill")
                         .font(.system(size: 60, weight: .bold))
                         .foregroundColor(themeColor)
-                    Text("\(progress.currentStreakDays)")
+                    Text("\(activeProfile?.currentStreakDays ?? 0)")
                         .font(.system(size: 72, weight: .bold, design: .rounded))
                         .foregroundColor(themeColor)
                 }
@@ -258,14 +305,14 @@ struct ScreenTimeView: View {
                 .buttonStyle(.plain)
             }
             
-            if progress.detoxHabits.isEmpty {
+            if (activeProfile?.detoxHabits ?? []).isEmpty {
                 Text("Список пуст. Нажмите карандаш справа вверху, чтобы добавить цели.")
                     .font(.caption)
                     .foregroundColor(.white.opacity(0.4))
                     .padding(.vertical, 5)
             } else {
                 FlowLayout(spacing: 8) {
-                    ForEach(progress.detoxHabits, id: \.self) { habit in
+                    ForEach(activeProfile?.detoxHabits ?? [], id: \.self) { habit in
                         HStack(spacing: 6) {
                             Image(systemName: "nosign")
                                 .font(.caption2)
@@ -295,7 +342,7 @@ struct ScreenTimeView: View {
                 .foregroundColor(.white.opacity(0.5))
                 .tracking(1)
             
-            let streak = progress.currentStreakDays
+            let streak = activeProfile?.currentStreakDays ?? 0
             
             if streak == 0 {
                 HStack(spacing: 15) {
@@ -394,7 +441,7 @@ struct ScreenTimeView: View {
                             .font(.headline)
                             .foregroundColor(.white)
                         
-                        Text("Ваш стрик сохранен: \(progress.currentStreakDays) дн. Отличная работа!")
+                        Text("Ваш стрик сохранен: \(activeProfile?.currentStreakDays ?? 0) дн. Отличная работа!")
                             .font(.caption)
                             .foregroundColor(.white.opacity(0.6))
                     }
@@ -465,26 +512,39 @@ struct ScreenTimeView: View {
                 .padding(.horizontal)
                 
                 List {
-                    ForEach(progress.detoxHabits, id: \.self) { habit in
+                    ForEach(activeProfile?.detoxHabits ?? [], id: \.self) { habit in
                         HStack {
                             Text(habit)
                                 .foregroundColor(.white)
+                                .font(.body)
                             Spacer()
                             Button(action: {
-                                removeHabit(habit)
+                                habitToDelete = habit
+                                showDeleteConfirmation = true
                             }) {
                                 Image(systemName: "trash")
-                                    .foregroundColor(.red.opacity(0.8))
+                                    .font(.title3)
+                                    .foregroundColor(.red.opacity(0.9))
                             }
                             .buttonStyle(.plain)
                         }
-                        .listRowBackground(Color.white.opacity(0.05))
+                        .padding()
+                        .background(Color.white.opacity(0.06))
+                        .cornerRadius(12)
+                        .listRowBackground(Color.clear)
+                        .listRowSeparator(.hidden)
+                        .listRowInsets(EdgeInsets(top: 6, leading: 16, bottom: 6, trailing: 16))
+                    }
+                    .onDelete { indexSet in
+                        if let index = indexSet.first, let habits = activeProfile?.detoxHabits {
+                            habitToDelete = habits[index]
+                            showDeleteConfirmation = true
+                        }
                     }
                 }
                 .scrollContentBackground(.hidden)
                 .background(Color.clear)
-                
-                Spacer()
+                .listStyle(.plain)
             }
             .withAmbientGlow()
             .toolbar {
@@ -495,6 +555,15 @@ struct ScreenTimeView: View {
                     .foregroundColor(.white)
                 }
             }
+            .alert("Удалить цель?", isPresented: $showDeleteConfirmation, presenting: habitToDelete) { habit in
+                Button("Удалить", role: .destructive) {
+                    removeHabit(habit)
+                }
+                Button("Отмена", role: .cancel) {}
+            } message: { habit in
+                Text("Вы уверены, что хотите удалить цель «\(habit)»?")
+            }
+
         }
     }
     
@@ -508,7 +577,7 @@ struct ScreenTimeView: View {
         let now = Date()
         var targetEnd = DetoxDateHelper.endOfDetoxDay(for: now, boundaryHour: currentBoundaryHour)
         
-        if progress.currentStreakDays == 0, let start = progress.streakStartDate {
+        if activeProfile?.currentStreakDays ?? 0 == 0, let start = activeProfile?.streakStartDate {
             let firstEnd = DetoxDateHelper.endOfDetoxDay(for: start, boundaryHour: currentBoundaryHour)
             let hoursBetweenStartAndFirstEnd = firstEnd.timeIntervalSince(start) / 3600.0
             if hoursBetweenStartAndFirstEnd > 0 && hoursBetweenStartAndFirstEnd < 6.0 {
@@ -537,7 +606,7 @@ struct ScreenTimeView: View {
     }
     
     private var milestoneProgressBar: some View {
-        let streak = progress.currentStreakDays
+        let streak = activeProfile?.currentStreakDays ?? 0
         let milestones = [1, 3, 7, 15, 30]
         
         let next: Int
@@ -603,7 +672,7 @@ struct ScreenTimeView: View {
     
     private func checkRecoveryStatus() {
         // Automatically check if yesterday check-in was missed (broken streak)
-        if isStreakBroken && progress.currentStreakDays > 0 && !progress.streakSavedToday {
+        if isStreakBroken && (activeProfile?.currentStreakDays ?? 0) > 0 && !(activeProfile?.streakSavedToday ?? false) {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 showRecovery = true
             }
@@ -612,17 +681,17 @@ struct ScreenTimeView: View {
     
     private func claimCleanDay() {
         withAnimation {
-            progress.lastCheckInDate = Date()
+            activeProfile?.lastCheckInDate = Date()
             progress.lastActiveDate = Date()
-            progress.currentStreakDays += 1
-            progress.streakSavedToday = false // Reset saved today for next day
+            activeProfile?.currentStreakDays += 1
+            activeProfile?.streakSavedToday = false // Reset saved today for next day
             
-            if progress.currentStreakDays > progress.longestStreakDays {
-                progress.longestStreakDays = progress.currentStreakDays
+            if (activeProfile?.currentStreakDays ?? 0) > (activeProfile?.longestStreakDays ?? 0) {
+                activeProfile?.longestStreakDays = activeProfile?.currentStreakDays ?? 0
             }
             
             // Log clean day in SwiftData
-            let log = DetoxLog(date: Date(), isClean: true)
+            let log = DetoxLog(date: Date(), isClean: true, profileId: activeProfile?.id)
             modelContext.insert(log)
             
             // Check theme unlocking based on new requirements:
@@ -641,7 +710,7 @@ struct ScreenTimeView: View {
     }
     
     private func unlockThemesForCurrentStreak() {
-        let streak = progress.currentStreakDays
+        let streak = activeProfile?.currentStreakDays ?? 0
         
         func unlock(_ id: String) {
             if !progress.unlockedPaletteIDs.contains(id) {
@@ -661,14 +730,14 @@ struct ScreenTimeView: View {
     private func addHabit() {
         let name = newHabitName.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !name.isEmpty else { return }
-        if !progress.detoxHabits.contains(name) {
-            progress.detoxHabits.append(name)
+        if !(activeProfile?.detoxHabits.contains(name) ?? false) {
+            activeProfile?.detoxHabits.append(name)
         }
         newHabitName = ""
     }
     
     private func removeHabit(_ name: String) {
-        progress.detoxHabits.removeAll { $0 == name }
+        activeProfile?.detoxHabits.removeAll { $0 == name }
     }
     
     private func playCheckInSound() {
@@ -684,7 +753,7 @@ struct ScreenTimeView: View {
     }
     
     private func burnPaletteIfExpired() {
-        let streak = progress.currentStreakDays
+        let streak = activeProfile?.currentStreakDays ?? 0
         if !PaletteManager.shared.isPaletteUnlocked(id: activePalette, currentStreak: streak) {
             withAnimation {
                 activePalette = "default"
