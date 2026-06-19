@@ -22,6 +22,7 @@ struct StatisticsView: View {
     @State private var selectedDate: Date? = Date()
     @State private var showEditCheckIn: Bool = false
     @State private var editCheckInDate: Date = Date()
+    @State private var editCheckInLogId: UUID? = nil
     @State private var showImpulsesHistory: Bool = false
     @State private var showStreaksHistory: Bool = false
     @State private var showProfileDrawer: Bool = false
@@ -184,7 +185,7 @@ struct StatisticsView: View {
                 }
             }
             .sheet(isPresented: $showEditCheckIn) {
-                CheckInView(targetDate: editCheckInDate, profile: activeProfile, progress: progress)
+                CheckInView(targetDate: editCheckInDate, targetLogId: editCheckInLogId, profile: activeProfile, progress: progress)
             }
             .sheet(isPresented: $showImpulsesHistory) {
                 impulsesHistorySheet
@@ -703,9 +704,10 @@ struct StatisticsView: View {
                     if !isFuture {
                         Button(action: {
                             editCheckInDate = date
+                            editCheckInLogId = nil
                             showEditCheckIn = true
                         }) {
-                            Image(systemName: "pencil")
+                            Image(systemName: "plus")
                                 .font(.subheadline.bold())
                                 .foregroundColor(.white.opacity(0.6))
                                 .padding(8)
@@ -769,6 +771,20 @@ struct StatisticsView: View {
                                     }
                                     
                                     Spacer()
+                                    
+                                    Button(action: {
+                                        editCheckInDate = log.date
+                                        editCheckInLogId = log.id
+                                        showEditCheckIn = true
+                                    }) {
+                                        Image(systemName: "pencil")
+                                            .font(.caption.bold())
+                                            .foregroundColor(.white.opacity(0.8))
+                                            .padding(6)
+                                            .background(Color.white.opacity(0.1))
+                                            .clipShape(Circle())
+                                    }
+                                    .buttonStyle(.plain)
                                     
                                     Button(action: {
                                         self.logToDelete = log
