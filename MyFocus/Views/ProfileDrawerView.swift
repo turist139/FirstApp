@@ -211,8 +211,8 @@ struct ProfileDrawerView: View {
         let interval = now.timeIntervalSince(start)
         let hours = Int(interval / 3600)
         
-        if hours >= 24 && profile.currentStreakDays > 0 {
-            return "\(profile.currentStreakDays) д."
+        if hours >= 24 {
+            return "\(hours / 24) д."
         } else {
             if interval < 0 { return "только что" }
             

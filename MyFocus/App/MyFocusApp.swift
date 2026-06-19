@@ -46,33 +46,10 @@ struct MyFocusApp: App {
         do {
             container = try ModelContainer(for: schema, configurations: [modelConfiguration])
         } catch {
-            print("Failed to load ModelContainer: \(error.localizedDescription). Resetting database...")
-            
-            // Delete the store files if migration failed (migration error)
-            let fm = FileManager.default
-            let storeDir = storeURL.deletingLastPathComponent()
-            let storeNames = ["default.store", "default.store-shm", "default.store-wal"]
-            for name in storeNames {
-                let fileURL = storeDir.appendingPathComponent(name)
-                try? fm.removeItem(at: fileURL)
-            }
-            
-            // Also clean any other .store or .sqlite files in the store directory
-            if let files = try? fm.contentsOfDirectory(at: storeDir, includingPropertiesForKeys: nil) {
-                for file in files {
-                    let pathExt = file.pathExtension.lowercased()
-                    if pathExt == "store" || pathExt == "sqlite" || file.lastPathComponent.contains("default.store") {
-                        try? fm.removeItem(at: file)
-                    }
-                }
-            }
-            
-            // Try creating the container one more time
-            do {
-                container = try ModelContainer(for: schema, configurations: [modelConfiguration])
-            } catch {
-                fatalError("Could not create ModelContainer after reset: \(error)")
-            }
+            // ВАЖНО: Мы убрали автоматическое удаление базы данных при ошибках миграции.
+            // Теперь, если структура моделей изменится без плана миграции (SchemaMigrationPlan),
+            // приложение упадет здесь (crash), что защитит данные пользователя от случайного удаления.
+            fatalError("Could not create ModelContainer: \(error)")
         }
         
         // Pre-populate default activities if none exist

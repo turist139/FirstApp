@@ -72,59 +72,19 @@ struct DetoxDateHelper {
         for day in sortedDays {
             guard let log = logsByDay[day] else { continue }
             
-            if log.isClean {
-                if day == penaltyDay {
-                    // Penalty day doesn't increment the streak, but preserves continuity
-                    prevDay = day
-                } else {
-                    if let prev = prevDay {
-                        let diff = calendar.dateComponents([.day], from: prev, to: day).day ?? 0
-                        if diff <= 1 {
-                            currentStreak += 1
-                        } else {
-                            currentStreak = 1
-                            profile.streakStartDate = DetoxDateHelper.endOfDetoxDay(for: prev, boundaryHour: boundaryHour)
-                        }
-                    } else {
-                        currentStreak = 1
-                    }
-                    prevDay = day
-                }
-            } else if log.isRescued {
-                // Rescued day: streak is preserved from the previous clean day, but doesn't increment today
-                // We set prevDay to today so that the next clean day knows it is continuous
+            if log.isClean || log.isRescued {
+                // Streak continues
                 prevDay = day
             } else {
                 // Relapse without rescue: streak breaks
-                currentStreak = 0
                 prevDay = nil
                 profile.streakStartDate = log.date
-                
-                let endOfRelapseDay = DetoxDateHelper.endOfDetoxDay(for: log.date, boundaryHour: boundaryHour)
-                let hoursLeft = endOfRelapseDay.timeIntervalSince(log.date) / 3600.0
-                if hoursLeft > 0 && hoursLeft < 6.0 {
-                    // Next day is penalized
-                    penaltyDay = calendar.date(byAdding: .day, value: 1, to: day)
-                } else {
-                    penaltyDay = nil
-                }
-            }
-            
-            if currentStreak > longestStreak {
-                longestStreak = currentStreak
             }
         }
         
-        // Check if the streak has expired
-        if let lastActiveDay = prevDay {
-            let diff = calendar.dateComponents([.day], from: lastActiveDay, to: todayDetoxDay).day ?? 0
-            if diff > 1 {
-                currentStreak = 0
-                profile.streakStartDate = DetoxDateHelper.endOfDetoxDay(for: lastActiveDay, boundaryHour: boundaryHour)
-            }
-        } else {
-            currentStreak = 0
-        }
+        let start = profile.streakStartDate ?? profile.creationDate
+        let activeHours = max(0, Int(Date().timeIntervalSince(start) / 3600.0))
+        currentStreak = activeHours / 24
         
         profile.currentStreakDays = currentStreak
         profile.longestStreakDays = longestStreak

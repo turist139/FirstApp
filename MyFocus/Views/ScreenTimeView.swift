@@ -202,9 +202,13 @@ struct ScreenTimeView: View {
         return max(0, Calendar.current.dateComponents([.hour], from: start, to: Date()).hour ?? 0)
     }
     
+    private var realStreakDays: Int {
+        return activeHours / 24
+    }
+    
     private var countdownCard: some View {
         VStack(spacing: 10) {
-            if activeHours < 24 || activeProfile?.currentStreakDays ?? 0 == 0 {
+            if activeHours < 24 {
                 HStack(spacing: 12) {
                     Image(systemName: "flame.fill")
                         .font(.system(size: 60, weight: .bold))
@@ -224,7 +228,7 @@ struct ScreenTimeView: View {
                     Image(systemName: "flame.fill")
                         .font(.system(size: 60, weight: .bold))
                         .foregroundColor(themeColor)
-                    Text("\(activeProfile?.currentStreakDays ?? 0)")
+                    Text("\(realStreakDays)")
                         .font(.system(size: 72, weight: .bold, design: .rounded))
                         .foregroundColor(themeColor)
                 }
@@ -343,7 +347,7 @@ struct ScreenTimeView: View {
                 .foregroundColor(.white.opacity(0.5))
                 .tracking(1)
             
-            let streak = activeProfile?.currentStreakDays ?? 0
+            let streak = realStreakDays
             
             if streak == 0 {
                 HStack(spacing: 15) {
@@ -442,7 +446,7 @@ struct ScreenTimeView: View {
                             .font(.headline)
                             .foregroundColor(.white)
                         
-                        Text("Ваш стрик сохранен: \(activeProfile?.currentStreakDays ?? 0) дн. Отличная работа!")
+                        Text("Ваш стрик сохранен: \(realStreakDays) дн. Отличная работа!")
                             .font(.caption)
                             .foregroundColor(.white.opacity(0.6))
                     }
@@ -607,7 +611,7 @@ struct ScreenTimeView: View {
     }
     
     private var milestoneProgressBar: some View {
-        let streak = activeProfile?.currentStreakDays ?? 0
+        let streak = realStreakDays
         let milestones = [1, 3, 7, 15, 30]
         
         let next: Int
@@ -711,7 +715,7 @@ struct ScreenTimeView: View {
     }
     
     private func unlockThemesForCurrentStreak() {
-        let streak = activeProfile?.currentStreakDays ?? 0
+        let streak = realStreakDays
         
         func unlock(_ id: String) {
             if !progress.unlockedPaletteIDs.contains(id) {
@@ -754,7 +758,7 @@ struct ScreenTimeView: View {
     }
     
     private func burnPaletteIfExpired() {
-        let streak = activeProfile?.currentStreakDays ?? 0
+        let streak = realStreakDays
         if !PaletteManager.shared.isPaletteUnlocked(id: activePalette, currentStreak: streak) {
             withAnimation {
                 activePalette = "default"
