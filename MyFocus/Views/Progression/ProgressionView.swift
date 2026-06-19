@@ -3,9 +3,27 @@ import SwiftData
 
 struct ProgressionView: View {
     @Query private var progressQuery: [UserProgress]
+    @Query private var profilesQuery: [DetoxProfile]
     
     var progress: UserProgress {
         progressQuery.first ?? UserProgress()
+    }
+    
+    var activeProfile: DetoxProfile? {
+        let activeId = progress.activeProfileId
+        return profilesQuery.first(where: { $0.id == activeId }) ?? profilesQuery.first
+    }
+    
+    private var activeHours: Int {
+        return DetoxDateHelper.calculateActiveHours(from: activeProfile?.streakStartDate, creationDate: activeProfile?.creationDate ?? Date())
+    }
+    
+    private var currentStreakDays: Int {
+        return activeHours / 24
+    }
+    
+    private var longestStreakDays: Int {
+        return activeProfile?.longestStreakDays ?? progress.longestStreakDays
     }
     
     @AppStorage("activePalette", store: .shared) private var activePalette: String = "default"
@@ -20,7 +38,7 @@ struct ProgressionView: View {
                             .foregroundColor(.orange)
                             .shadow(color: .orange.opacity(0.4), radius: 10)
                         
-                        Text("\(progress.currentStreakDays) дн.")
+                        Text("\(currentStreakDays) дн.")
                             .font(.system(size: 40, weight: .bold, design: .rounded))
                             .foregroundColor(.white)
                         
@@ -29,8 +47,8 @@ struct ProgressionView: View {
                             .foregroundColor(.white.opacity(0.6))
                             .tracking(1)
                         
-                        if progress.longestStreakDays > 0 {
-                            Text("Рекорд: \(progress.longestStreakDays) дн.")
+                        if longestStreakDays > 0 {
+                            Text("Рекорд: \(longestStreakDays) дн.")
                                 .font(.caption2)
                                 .foregroundColor(.orange.opacity(0.8))
                                 .padding(.top, 2)
@@ -67,7 +85,7 @@ struct ProgressionView: View {
                             ]
                             
                             ForEach(medals, id: \.0) { days, title, description, color, icon in
-                                let isUnlocked = progress.currentStreakDays >= days
+                                let isUnlocked = currentStreakDays >= days
                                 
                                 HStack(spacing: 16) {
                                     ZStack {
@@ -137,7 +155,7 @@ struct ProgressionView: View {
                             HStack(spacing: 20) {
                                 ForEach(PaletteManager.shared.allPalettes, id: \.self) { key in
                                     let req = streakRequirement(for: key)
-                                    let hasStreak = progress.currentStreakDays >= req
+                                    let hasStreak = currentStreakDays >= req
                                     
                                     Button(action: {
                                         if hasStreak {

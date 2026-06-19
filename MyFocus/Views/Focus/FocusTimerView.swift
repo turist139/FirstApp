@@ -109,9 +109,7 @@ struct FocusTimerView: View {
         if let progress = try? modelContext.fetch(fetchDescriptor).first {
             progress.totalXP += (duration * score) // Example XP formula
             progress.lastActiveDate = Date()
-            // Streak logic here (simplified for now)
-            progress.currentStreakDays += 1
-            
+            // Streak logic for detox is handled in CheckInView
             // Level up logic (every 100 XP)
             if progress.totalXP >= progress.currentLevel * 100 {
                 progress.currentLevel += 1

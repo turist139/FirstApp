@@ -48,7 +48,7 @@
 			<key>uniqueIdentifier</key>
 			<string>4FFD6E74-5421-45A5-BD81-99383DFE1AAC</string>
 		</dict>
-		<key>7AC03514-3247-40A5-BD71-5E80BA064116</key>
+		<key>7408C6A2-9892-4197-9C71-473B6CF8AB65</key>
 		<dict>
 			<key>className</key>
 			<string>IDECommandLineBuildLog</string>
@@ -57,7 +57,7 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
 			<key>fileName</key>
-			<string>7AC03514-3247-40A5-BD71-5E80BA064116.xcactivitylog</string>
+			<string>7408C6A2-9892-4197-9C71-473B6CF8AB65.xcactivitylog</string>
 			<key>hasPrimaryLog</key>
 			<true/>
 			<key>primaryObservable</key>
@@ -82,55 +82,13 @@
 			<key>signature</key>
 			<string>Cleaning project MyFocus with scheme MyFocus</string>
 			<key>timeStartedRecording</key>
-			<real>803605356.49348295</real>
+			<real>803606121.77899897</real>
 			<key>timeStoppedRecording</key>
-			<real>803605356.89725399</real>
+			<real>803606122.26489401</real>
 			<key>title</key>
 			<string>Cleaning project MyFocus with scheme MyFocus</string>
 			<key>uniqueIdentifier</key>
-			<string>7AC03514-3247-40A5-BD71-5E80BA064116</string>
-		</dict>
-		<key>FCB6C930-911B-4D28-809D-D561C2F8827F</key>
-		<dict>
-			<key>className</key>
-			<string>IDECommandLineBuildLog</string>
-			<key>documentTypeString</key>
-			<string>&lt;nil&gt;</string>
-			<key>domainType</key>
-			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
-			<key>fileName</key>
-			<string>FCB6C930-911B-4D28-809D-D561C2F8827F.xcactivitylog</string>
-			<key>hasPrimaryLog</key>
-			<true/>
-			<key>primaryObservable</key>
-			<dict>
-				<key>highLevelStatus</key>
-				<string>S</string>
-				<key>totalNumberOfAnalyzerIssues</key>
-				<integer>0</integer>
-				<key>totalNumberOfErrors</key>
-				<integer>0</integer>
-				<key>totalNumberOfTestFailures</key>
-				<integer>0</integer>
-				<key>totalNumberOfWarnings</key>
-				<integer>0</integer>
-			</dict>
-			<key>schemeIdentifier-containerName</key>
-			<string>MyFocus project</string>
-			<key>schemeIdentifier-schemeName</key>
-			<string>MyFocus</string>
-			<key>schemeIdentifier-sharedScheme</key>
-			<integer>1</integer>
-			<key>signature</key>
-			<string>Cleaning project MyFocus with scheme MyFocus</string>
-			<key>timeStartedRecording</key>
-			<real>803605336.89414895</real>
-			<key>timeStoppedRecording</key>
-			<real>803605337.36123705</real>
-			<key>title</key>
-			<string>Cleaning project MyFocus with scheme MyFocus</string>
-			<key>uniqueIdentifier</key>
-			<string>FCB6C930-911B-4D28-809D-D561C2F8827F</string>
+			<string>7408C6A2-9892-4197-9C71-473B6CF8AB65</string>
 		</dict>
 	</dict>
 </dict>

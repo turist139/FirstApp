@@ -223,7 +223,7 @@
         "key": "Изменить конец сегодняшнего дня",
         "location": {
           "startingColumn": 22,
-          "startingLine": 785
+          "startingLine": 778
         }
       },
       {
@@ -231,7 +231,7 @@
         "key": "Выберите время, в которое для вас закончится текущий день детокса. Это изменение применится ТОЛЬКО на сегодня.",
         "location": {
           "startingColumn": 22,
-          "startingLine": 791
+          "startingLine": 784
         }
       },
       {
@@ -239,7 +239,7 @@
         "key": "Время окончания",
         "location": {
           "startingColumn": 24,
-          "startingLine": 809
+          "startingLine": 802
         }
       },
       {
@@ -247,7 +247,7 @@
         "key": "18:00 (6:00 PM)",
         "location": {
           "startingColumn": 30,
-          "startingLine": 811
+          "startingLine": 804
         }
       },
       {
@@ -255,7 +255,7 @@
         "key": "19:00 (7:00 PM)",
         "location": {
           "startingColumn": 30,
-          "startingLine": 812
+          "startingLine": 805
         }
       },
       {
@@ -263,7 +263,7 @@
         "key": "20:00 (8:00 PM)",
         "location": {
           "startingColumn": 30,
-          "startingLine": 813
+          "startingLine": 806
         }
       },
       {
@@ -271,7 +271,7 @@
         "key": "21:00 (9:00 PM)",
         "location": {
           "startingColumn": 30,
-          "startingLine": 814
+          "startingLine": 807
         }
       },
       {
@@ -279,7 +279,7 @@
         "key": "22:00 (10:00 PM)",
         "location": {
           "startingColumn": 30,
-          "startingLine": 815
+          "startingLine": 808
         }
       },
       {
@@ -287,7 +287,7 @@
         "key": "23:00 (11:00 PM)",
         "location": {
           "startingColumn": 30,
-          "startingLine": 816
+          "startingLine": 809
         }
       },
       {
@@ -295,7 +295,7 @@
         "key": "00:00 (Полночь)",
         "location": {
           "startingColumn": 30,
-          "startingLine": 817
+          "startingLine": 810
         }
       },
       {
@@ -303,7 +303,7 @@
         "key": "01:00 AM",
         "location": {
           "startingColumn": 30,
-          "startingLine": 820
+          "startingLine": 813
         }
       },
       {
@@ -311,7 +311,7 @@
         "key": "02:00 AM",
         "location": {
           "startingColumn": 30,
-          "startingLine": 821
+          "startingLine": 814
         }
       },
       {
@@ -319,7 +319,7 @@
         "key": "03:00 AM",
         "location": {
           "startingColumn": 30,
-          "startingLine": 822
+          "startingLine": 815
         }
       },
       {
@@ -327,7 +327,7 @@
         "key": "04:00 AM",
         "location": {
           "startingColumn": 30,
-          "startingLine": 823
+          "startingLine": 816
         }
       },
       {
@@ -335,7 +335,7 @@
         "key": "05:00 AM",
         "location": {
           "startingColumn": 30,
-          "startingLine": 824
+          "startingLine": 817
         }
       },
       {
@@ -343,7 +343,7 @@
         "key": "06:00 AM",
         "location": {
           "startingColumn": 30,
-          "startingLine": 825
+          "startingLine": 818
         }
       },
       {
@@ -351,7 +351,7 @@
         "key": "Готово",
         "location": {
           "startingColumn": 26,
-          "startingLine": 837
+          "startingLine": 830
         }
       },
       {
@@ -359,7 +359,7 @@
         "key": "Сбросить",
         "location": {
           "startingColumn": 32,
-          "startingLine": 853
+          "startingLine": 846
         }
       },
       {
@@ -367,7 +367,7 @@
         "key": "Отмена",
         "location": {
           "startingColumn": 28,
-          "startingLine": 863
+          "startingLine": 856
         }
       }
     ]
