@@ -72,7 +72,7 @@ struct DetoxDateHelper {
         for day in sortedDays {
             guard let log = logsByDay[day] else { continue }
             
-            if log.isClean || log.isRescued {
+            if log.isClean || log.isRescued || log.isMinorRelapse {
                 // Streak continues
                 prevDay = day
             } else {

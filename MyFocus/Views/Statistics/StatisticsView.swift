@@ -559,9 +559,9 @@ struct StatisticsView: View {
         }
         
         let log: DetoxLog?
-        if let relapse = dayLogs.first(where: { !$0.isClean && !$0.isRescued }) {
+        if let relapse = dayLogs.first(where: { !$0.isClean && !$0.isRescued && !$0.isMinorRelapse }) {
             log = relapse
-        } else if let rescued = dayLogs.first(where: { !$0.isClean && $0.isRescued }) {
+        } else if let rescued = dayLogs.first(where: { !$0.isClean && ($0.isRescued || $0.isMinorRelapse) }) {
             log = rescued
         } else {
             log = dayLogs.first(where: { $0.isClean })
@@ -580,8 +580,8 @@ struct StatisticsView: View {
                     cellColor = .green
                     shadowColor = .green.opacity(0.3)
                 } else {
-                    if log.isRescued {
-                        if log.relapseDuration == "пару минут" {
+                    if log.isRescued || log.isMinorRelapse {
+                        if log.isMinorRelapse {
                             cellColor = .cyan
                             shadowColor = .cyan.opacity(0.3)
                         } else if log.relapseDuration == "до двух часов" || log.relapseDuration == "до часа" {
@@ -739,7 +739,7 @@ struct StatisticsView: View {
                                                 }
                                                 .foregroundColor(.green)
                                                 .bold()
-                                            } else if log.isRescued {
+                                            } else if log.isRescued || log.isMinorRelapse {
                                                 let severity = log.relapseDuration == "пару минут" ? "Малый" : (log.relapseDuration == "до двух часов" || log.relapseDuration == "до часа" ? "Средний" : "Большой")
                                                 let color = log.relapseDuration == "пару минут" ? Color.cyan : (log.relapseDuration == "до двух часов" || log.relapseDuration == "до часа" ? Color.blue : Color(red: 0.3, green: 0.6, blue: 1.0))
                                                 Label {

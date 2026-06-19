@@ -18,6 +18,10 @@ final class DetoxLog {
     // Multi-Detox
     var profileId: UUID?
     
+    var isMinorRelapse: Bool {
+        return !isClean && relapseDuration == "пару минут"
+    }
+    
     init(
         id: UUID = UUID(),
         date: Date = Date(),

@@ -50,8 +50,8 @@ extension PastStreak {
         for log in logs {
             let day = DetoxDateHelper.detoxDay(for: log.date, boundaryHour: boundaryHour)
             if let existing = logsByDay[day] {
-                let existingSeverity = !existing.isClean ? (existing.isRescued ? 1 : 2) : 0
-                let currentSeverity = !log.isClean ? (log.isRescued ? 1 : 2) : 0
+                let existingSeverity = !existing.isClean ? (existing.isRescued || existing.isMinorRelapse ? 1 : 2) : 0
+                let currentSeverity = !log.isClean ? (log.isRescued || log.isMinorRelapse ? 1 : 2) : 0
                 
                 if currentSeverity > existingSeverity {
                     logsByDay[day] = log
@@ -97,7 +97,7 @@ extension PastStreak {
                 }
                 prevDay = day
                 currentStreakEndDate = log.date
-            } else if log.isRescued {
+            } else if log.isRescued || log.isMinorRelapse {
                 prevDay = day
                 currentStreakEndDate = log.date
             } else {
