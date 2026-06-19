@@ -33,20 +33,26 @@ struct DetoxDateHelper {
         }
     }
     
-    static func recalculateStreak(logs: [DetoxLog], boundaryHour: Int, progress: UserProgress) {
+    static func recalculateStreak(logs: [DetoxLog], boundaryHour: Int, profile: DetoxProfile?) {
+        guard let profile = profile else { return }
         let calendar = Calendar.current
         let todayDetoxDay = detoxDay(for: Date(), boundaryHour: boundaryHour)
         
-        // Group logs by their detox day, taking the latest log for each day
+        // Group logs by their detox day, taking the worst-status log for each day
         var logsByDay: [Date: DetoxLog] = [:]
         for log in logs {
             let day = detoxDay(for: log.date, boundaryHour: boundaryHour)
-            // If we already have a log for this day, prefer clean/rescued or just keep the newer one
             if let existing = logsByDay[day] {
-                if !existing.isClean && log.isClean {
+                // Priority: Full relapse (2) > Rescued relapse (1) > Clean day (0)
+                let existingSeverity = !existing.isClean ? (existing.isRescued ? 1 : 2) : 0
+                let currentSeverity = !log.isClean ? (log.isRescued ? 1 : 2) : 0
+                
+                if currentSeverity > existingSeverity {
                     logsByDay[day] = log
-                } else if existing.date < log.date {
-                    logsByDay[day] = log
+                } else if currentSeverity == existingSeverity {
+                    if existing.date < log.date {
+                        logsByDay[day] = log
+                    }
                 }
             } else {
                 logsByDay[day] = log
@@ -55,13 +61,13 @@ struct DetoxDateHelper {
         
         let sortedDays = logsByDay.keys.sorted()
         var currentStreak = 0
-        var longestStreak = progress.longestStreakDays
+        var longestStreak = 0
         
         var prevDay: Date? = nil
         var penaltyDay: Date? = nil
         
         // Default to nil, will be updated by the loop if there are breaks
-        progress.streakStartDate = nil
+        profile.streakStartDate = nil
         
         for day in sortedDays {
             guard let log = logsByDay[day] else { continue }
@@ -77,7 +83,7 @@ struct DetoxDateHelper {
                             currentStreak += 1
                         } else {
                             currentStreak = 1
-                            progress.streakStartDate = DetoxDateHelper.endOfDetoxDay(for: prev, boundaryHour: boundaryHour)
+                            profile.streakStartDate = DetoxDateHelper.endOfDetoxDay(for: prev, boundaryHour: boundaryHour)
                         }
                     } else {
                         currentStreak = 1
@@ -92,7 +98,7 @@ struct DetoxDateHelper {
                 // Relapse without rescue: streak breaks
                 currentStreak = 0
                 prevDay = nil
-                progress.streakStartDate = log.date
+                profile.streakStartDate = log.date
                 
                 let endOfRelapseDay = DetoxDateHelper.endOfDetoxDay(for: log.date, boundaryHour: boundaryHour)
                 let hoursLeft = endOfRelapseDay.timeIntervalSince(log.date) / 3600.0
@@ -114,13 +120,13 @@ struct DetoxDateHelper {
             let diff = calendar.dateComponents([.day], from: lastActiveDay, to: todayDetoxDay).day ?? 0
             if diff > 1 {
                 currentStreak = 0
-                progress.streakStartDate = DetoxDateHelper.endOfDetoxDay(for: lastActiveDay, boundaryHour: boundaryHour)
+                profile.streakStartDate = DetoxDateHelper.endOfDetoxDay(for: lastActiveDay, boundaryHour: boundaryHour)
             }
         } else {
             currentStreak = 0
         }
         
-        progress.currentStreakDays = currentStreak
-        progress.longestStreakDays = max(longestStreak, progress.longestStreakDays)
+        profile.currentStreakDays = currentStreak
+        profile.longestStreakDays = longestStreak
     }
 }

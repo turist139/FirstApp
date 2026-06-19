@@ -19,7 +19,8 @@ struct MyFocusApp: App {
             BreakActivity.self,
             MindfulnessSession.self,
             DetoxLog.self,
-            PastStreak.self
+            PastStreak.self,
+            DetoxProfile.self
         ])
         
         // Setup shared SQLite store for App Groups (falls back to local if App Group is not configured)
@@ -98,10 +99,65 @@ struct MyFocusApp: App {
                 if !UserDefaults.standard.bool(forKey: "didRebuildPastStreaksWithHours3") {
                     let fetch = FetchDescriptor<DetoxLog>(sortBy: [SortDescriptor(\.date)])
                     if let logs = try? context.fetch(fetch) {
-                        PastStreak.rebuildPastStreaks(logs: logs, context: context)
+                        PastStreak.rebuildPastStreaks(logs: logs, context: context) // Will just use nil profileId for now, migration handles it next
                         UserDefaults.standard.set(true, forKey: "didRebuildPastStreaksWithHours3")
                     }
                 }
+            }
+            
+            // Initialize database defaults (UserProgress & default DetoxProfile)
+            let userProgressFetch = FetchDescriptor<UserProgress>()
+            let progressList = (try? context.fetch(userProgressFetch)) ?? []
+            let profilesFetch = FetchDescriptor<DetoxProfile>()
+            let existingProfiles = (try? context.fetch(profilesFetch)) ?? []
+            
+            let progress: UserProgress
+            if let firstProgress = progressList.first {
+                progress = firstProgress
+            } else {
+                let newProgress = UserProgress()
+                context.insert(newProgress)
+                progress = newProgress
+            }
+            
+            if existingProfiles.isEmpty {
+                // Create default profile
+                let defaultProfile = DetoxProfile(
+                    name: "Основной",
+                    icon: "flame.fill",
+                    creationDate: progress.streakStartDate ?? Date(),
+                    detoxHabits: progress.detoxHabits.isEmpty ? ["YouTube", "Новости", "Telegram", "Прямые эфиры"] : progress.detoxHabits,
+                    currentStreakDays: progress.currentStreakDays,
+                    longestStreakDays: progress.longestStreakDays,
+                    lastCheckInDate: progress.lastCheckInDate,
+                    streakStartDate: progress.streakStartDate,
+                    streakSavedToday: progress.streakSavedToday,
+                    streakQuestsCompleted: progress.streakQuestsCompleted
+                )
+                context.insert(defaultProfile)
+                
+                // Assign orphaned logs
+                let logsFetch = FetchDescriptor<DetoxLog>()
+                if let logs = try? context.fetch(logsFetch) {
+                    for log in logs where log.profileId == nil {
+                        log.profileId = defaultProfile.id
+                    }
+                }
+                
+                // Assign orphaned streaks
+                let streaksFetch = FetchDescriptor<PastStreak>()
+                if let streaks = try? context.fetch(streaksFetch) {
+                    for streak in streaks where streak.profileId == nil {
+                        streak.profileId = defaultProfile.id
+                    }
+                }
+                
+                progress.activeProfileId = defaultProfile.id
+                progress.isMigratedToProfiles = true
+                try? context.save()
+            } else if progress.activeProfileId == nil {
+                progress.activeProfileId = existingProfiles.first?.id
+                try? context.save()
             }
         }
         

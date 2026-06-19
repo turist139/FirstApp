@@ -5,6 +5,17 @@ struct StatisticsView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \DetoxLog.date, order: .forward) private var logs: [DetoxLog]
     @Query private var progressQuery: [UserProgress]
+    @Query private var profilesQuery: [DetoxProfile]
+    
+    var activeProfile: DetoxProfile? {
+        let activeId = progress.activeProfileId
+        return profilesQuery.first(where: { $0.id == activeId }) ?? profilesQuery.first
+    }
+    
+    var activeLogs: [DetoxLog] {
+        guard let profileId = activeProfile?.id else { return [] }
+        return logs.filter { $0.profileId == profileId }
+    }
     
     @AppStorage("detoxDayBoundaryHour", store: .shared) private var detoxDayBoundaryHour: Int = 0
     
@@ -13,6 +24,8 @@ struct StatisticsView: View {
     @State private var editCheckInDate: Date = Date()
     @State private var showImpulsesHistory: Bool = false
     @State private var showStreaksHistory: Bool = false
+    @State private var showProfileDrawer: Bool = false
+    @State private var showCreateProfile: Bool = false
     
     enum CalendarMode {
         case last7Days
@@ -48,11 +61,11 @@ struct StatisticsView: View {
     // MARK: - Computed stats
     
     var totalSosCount: Int {
-        logs.reduce(0) { $0 + $1.sosCount }
+        activeLogs.reduce(0) { $0 + $1.sosCount }
     }
     
     var failLogs: [DetoxLog] {
-        logs.filter { !$0.isClean }
+        activeLogs.filter { !$0.isClean }
     }
     
     var failReasonsCount: [(reason: String, count: Int, percentage: Double)] {
@@ -71,8 +84,8 @@ struct StatisticsView: View {
     }
     
     var pastStreaks: [PastStreak] {
-        guard !logs.isEmpty else { return [] }
-        let sortedLogs = logs.sorted { $0.date < $1.date }
+        guard !activeLogs.isEmpty else { return [] }
+        let sortedLogs = activeLogs.sorted { $0.date < $1.date }
         var streaks: [PastStreak] = []
         var currentStreak: [DetoxLog] = []
         let calendar = Calendar.current
@@ -146,13 +159,32 @@ struct StatisticsView: View {
                 .padding()
             }
             .withAmbientGlow()
-            .navigationTitle("Статистика")
+            .navigationTitle("")
             .navigationBarTitleDisplayMode(.inline)
             .toolbarColorScheme(.dark, for: .navigationBar)
             .toolbarBackground(Color.black, for: .navigationBar)
             .background(Color.clear)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        withAnimation(.easeInOut(duration: 0.25)) {
+                            showProfileDrawer = true
+                        }
+                    } label: {
+                        HStack(spacing: 6) {
+                            Image(systemName: activeProfile?.icon ?? "flame.fill")
+                            Text(activeProfile?.name ?? "Статистика")
+                                .font(.title3.bold())
+                            Image(systemName: "chevron.down")
+                                .font(.caption.bold())
+                                .foregroundColor(.white.opacity(0.5))
+                        }
+                        .foregroundColor(.white)
+                    }
+                }
+            }
             .sheet(isPresented: $showEditCheckIn) {
-                CheckInView(targetDate: editCheckInDate)
+                CheckInView(targetDate: editCheckInDate, profile: activeProfile, progress: progress)
             }
             .sheet(isPresented: $showImpulsesHistory) {
                 impulsesHistorySheet
@@ -166,13 +198,33 @@ struct StatisticsView: View {
                     try? modelContext.save()
                     
                     // Recalculate streak!
-                    let remainingLogs = logs.filter { $0.id != targetLog.id }
-                    DetoxDateHelper.recalculateStreak(logs: remainingLogs, boundaryHour: detoxDayBoundaryHour, progress: progress)
+                    let remainingLogs = activeLogs.filter { $0.id != targetLog.id }
+                    if let active = activeProfile {
+                        DetoxDateHelper.recalculateStreak(logs: remainingLogs, boundaryHour: detoxDayBoundaryHour, profile: active)
+                    }
                     selectedDate = selectedDate // trigger update
                 }
                 Button("Отмена", role: .cancel) {}
             } message: { targetLog in
                 Text("Вы уверены, что хотите удалить отчет за \(formatLongDate(targetLog.date))? Данные будут стерты, а ваш стрик пересчитан.")
+            }
+        }
+        .overlay {
+            ProfileDrawerView(
+                profiles: Array(profilesQuery),
+                activeProfile: activeProfile,
+                progress: progress,
+                isOpen: $showProfileDrawer,
+                showCreateProfile: $showCreateProfile
+            )
+            .animation(.easeInOut(duration: 0.25), value: showProfileDrawer)
+        }
+        .sheet(isPresented: $showCreateProfile) {
+            CreateProfileView(progress: progress)
+        }
+        .task(id: activeProfile?.id) {
+            if let active = activeProfile {
+                DetoxDateHelper.recalculateStreak(logs: activeLogs, boundaryHour: detoxDayBoundaryHour, profile: active)
             }
         }
         .withSOSToolbar()
@@ -182,10 +234,10 @@ struct StatisticsView: View {
     
     private var demoDataControls: some View {
         Group {
-            if logs.isEmpty {
+            if activeLogs.isEmpty {
                 HStack {
                     Button(action: {
-                        DetoxMockDataHelper.generateMockData(context: modelContext)
+                        DetoxMockDataHelper.generateMockData(context: modelContext, profileId: activeProfile?.id)
                     }) {
                         Label("Загрузить демо-данные", systemImage: "square.and.arrow.down")
                             .font(.caption.bold())
@@ -374,7 +426,7 @@ struct StatisticsView: View {
                         .foregroundColor(.yellow)
                         .shadow(color: .yellow.opacity(0.4), radius: 6)
                     
-                    Text("\(progress.longestStreakDays) дн")
+                    Text("\(activeProfile?.longestStreakDays ?? 0) дн")
                         .font(.title.bold())
                         .foregroundColor(.white)
                     
@@ -499,9 +551,18 @@ struct StatisticsView: View {
         let isFuture = logDetoxDay > currentDetoxDay
         
         // Find if a log exists for this date matching the detox day
-        let log = logs.first {
+        let dayLogs = activeLogs.filter {
             let logDay = DetoxDateHelper.detoxDay(for: $0.date, boundaryHour: detoxDayBoundaryHour)
             return calendar.isDate(logDay, inSameDayAs: date)
+        }
+        
+        let log: DetoxLog?
+        if let relapse = dayLogs.first(where: { !$0.isClean && !$0.isRescued }) {
+            log = relapse
+        } else if let rescued = dayLogs.first(where: { !$0.isClean && $0.isRescued }) {
+            log = rescued
+        } else {
+            log = dayLogs.first(where: { $0.isClean })
         }
         
         let isSameMonth = calendarMode == .last7Days || calendar.isDate(date, equalTo: currentMonthDate, toGranularity: .month)
@@ -622,8 +683,8 @@ struct StatisticsView: View {
         let targetDetoxDay = DetoxDateHelper.detoxDay(for: date, boundaryHour: detoxDayBoundaryHour)
         let isFuture = targetDetoxDay > currentDetoxDay
         
-        // Find if a log exists
-        let log = logs.first {
+        // Find all logs matching the detox day
+        let dayLogs = activeLogs.filter {
             let logDay = DetoxDateHelper.detoxDay(for: $0.date, boundaryHour: detoxDayBoundaryHour)
             return calendar.isDate(logDay, inSameDayAs: date)
         }
@@ -639,35 +700,18 @@ struct StatisticsView: View {
                     Spacer()
                     
                     if !isFuture {
-                        HStack(spacing: 12) {
-                            if let logToDelete = log {
-                                Button(action: {
-                                    self.logToDelete = logToDelete
-                                    showDeleteConfirmation = true
-                                }) {
-                                    Image(systemName: "trash")
-                                        .font(.subheadline.bold())
-                                        .foregroundColor(.red.opacity(0.8))
-                                        .padding(8)
-                                        .background(Color.red.opacity(0.1))
-                                        .clipShape(Circle())
-                                }
-                                .buttonStyle(.plain)
-                            }
-                            
-                            Button(action: {
-                                editCheckInDate = date
-                                showEditCheckIn = true
-                            }) {
-                                Image(systemName: "pencil")
-                                    .font(.subheadline.bold())
-                                    .foregroundColor(.white.opacity(0.6))
-                                    .padding(8)
-                                    .background(Color.white.opacity(0.1))
-                                    .clipShape(Circle())
-                            }
-                            .buttonStyle(.plain)
+                        Button(action: {
+                            editCheckInDate = date
+                            showEditCheckIn = true
+                        }) {
+                            Image(systemName: "pencil")
+                                .font(.subheadline.bold())
+                                .foregroundColor(.white.opacity(0.6))
+                                .padding(8)
+                                .background(Color.white.opacity(0.1))
+                                .clipShape(Circle())
                         }
+                        .buttonStyle(.plain)
                     }
                 }
                 
@@ -675,85 +719,120 @@ struct StatisticsView: View {
                     Text("Этот день еще не наступил.")
                         .font(.subheadline)
                         .foregroundColor(.white.opacity(0.5))
-                } else if let log = log {
-                    VStack(alignment: .leading, spacing: 10) {
-                        HStack(spacing: 8) {
-                            Text("Статус:")
-                                .foregroundColor(.white.opacity(0.6))
-                            
-                            if log.isClean {
-                                Label {
-                                    Text("Чистый день")
-                                } icon: {
-                                    Image(systemName: "checkmark.seal.fill")
-                                        .foregroundColor(.green)
-                                }
-                                .foregroundColor(.green)
-                                .bold()
-                            } else if log.isRescued {
-                                let severity = log.relapseDuration == "пару минут" ? "Малый" : (log.relapseDuration == "до двух часов" || log.relapseDuration == "до часа" ? "Средний" : "Большой")
-                                let color = log.relapseDuration == "пару минут" ? Color.cyan : (log.relapseDuration == "до двух часов" || log.relapseDuration == "до часа" ? Color.blue : Color(red: 0.3, green: 0.6, blue: 1.0))
-                                Label {
-                                    Text("Неполный срыв (\(severity), спасен)")
-                                } icon: {
-                                    Image(systemName: "exclamationmark.triangle.fill")
-                                        .foregroundColor(color)
-                                }
-                                .foregroundColor(color)
-                                .bold()
-                            } else {
-                                Label {
-                                    Text("Срыв")
-                                } icon: {
-                                    Image(systemName: "xmark.octagon.fill")
-                                        .foregroundColor(.red)
-                                }
-                                .foregroundColor(.red)
-                                .bold()
-                            }
-                        }
-                        
-                        if let tolerance = log.silenceTolerance {
-                            HStack {
-                                Text("Толерантность к тишине:")
-                                    .foregroundColor(.white.opacity(0.6))
-                                Text("\(tolerance) из 5")
-                                    .foregroundColor(.white)
-                            }
-                        }
-                        
-                        if !log.isClean {
-                            if let duration = log.relapseDuration {
+                } else if !dayLogs.isEmpty {
+                    VStack(spacing: 16) {
+                        ForEach(dayLogs) { log in
+                            VStack(alignment: .leading, spacing: 10) {
                                 HStack {
-                                    Text("Длительность срыва:")
-                                        .foregroundColor(.white.opacity(0.6))
-                                    Text(duration)
-                                        .foregroundColor(.white)
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        HStack(spacing: 8) {
+                                            Text("Статус:")
+                                                .foregroundColor(.white.opacity(0.6))
+                                            
+                                            if log.isClean {
+                                                Label {
+                                                    Text("Чистый день")
+                                                } icon: {
+                                                    Image(systemName: "checkmark.seal.fill")
+                                                        .foregroundColor(.green)
+                                                }
+                                                .foregroundColor(.green)
+                                                .bold()
+                                            } else if log.isRescued {
+                                                let severity = log.relapseDuration == "пару минут" ? "Малый" : (log.relapseDuration == "до двух часов" || log.relapseDuration == "до часа" ? "Средний" : "Большой")
+                                                let color = log.relapseDuration == "пару минут" ? Color.cyan : (log.relapseDuration == "до двух часов" || log.relapseDuration == "до часа" ? Color.blue : Color(red: 0.3, green: 0.6, blue: 1.0))
+                                                Label {
+                                                    Text("Неполный срыв (\(severity), спасен)")
+                                                } icon: {
+                                                    Image(systemName: "exclamationmark.triangle.fill")
+                                                        .foregroundColor(color)
+                                                }
+                                                .foregroundColor(color)
+                                                .bold()
+                                            } else {
+                                                Label {
+                                                    Text("Срыв")
+                                                } icon: {
+                                                    Image(systemName: "xmark.octagon.fill")
+                                                        .foregroundColor(.red)
+                                                }
+                                                .foregroundColor(.red)
+                                                .bold()
+                                            }
+                                        }
+                                        
+                                        // Display the exact time of the log!
+                                        Text(formatTime(log.date))
+                                            .font(.caption2)
+                                            .foregroundColor(.white.opacity(0.4))
+                                    }
+                                    
+                                    Spacer()
+                                    
+                                    Button(action: {
+                                        self.logToDelete = log
+                                        showDeleteConfirmation = true
+                                    }) {
+                                        Image(systemName: "trash")
+                                            .font(.caption.bold())
+                                            .foregroundColor(.red.opacity(0.8))
+                                            .padding(6)
+                                            .background(Color.red.opacity(0.1))
+                                            .clipShape(Circle())
+                                    }
+                                    .buttonStyle(.plain)
+                                }
+                                
+                                if let tolerance = log.silenceTolerance {
+                                    HStack {
+                                        Text("Толерантность к тишине:")
+                                            .foregroundColor(.white.opacity(0.6))
+                                        Text("\(tolerance) из 5")
+                                            .foregroundColor(.white)
+                                    }
+                                }
+                                
+                                if !log.isClean {
+                                    if let duration = log.relapseDuration {
+                                        HStack {
+                                            Text("Длительность срыва:")
+                                                .foregroundColor(.white.opacity(0.6))
+                                            Text(duration)
+                                                .foregroundColor(.white)
+                                        }
+                                    }
+                                    
+                                    if let reason = log.failReason {
+                                        HStack {
+                                            Text("Триггер:")
+                                                .foregroundColor(.white.opacity(0.6))
+                                            Text(reason)
+                                                .foregroundColor(.white)
+                                        }
+                                    }
+                                }
+                                
+                                if let notes = log.failNotes, !notes.isEmpty {
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        Text("Заметки / Рефлексия:")
+                                            .foregroundColor(.white.opacity(0.6))
+                                        Text(notes)
+                                            .font(.footnote)
+                                            .foregroundColor(.white.opacity(0.9))
+                                            .padding(10)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                            .background(Color.white.opacity(0.04))
+                                            .cornerRadius(8)
+                                    }
                                 }
                             }
-                            
-                            if let reason = log.failReason {
-                                HStack {
-                                    Text("Триггер:")
-                                        .foregroundColor(.white.opacity(0.6))
-                                    Text(reason)
-                                        .foregroundColor(.white)
-                                }
-                            }
-                        }
-                        
-                        if let notes = log.failNotes, !notes.isEmpty {
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text("Заметки / Рефлексия:")
-                                    .foregroundColor(.white.opacity(0.6))
-                                Text(notes)
-                                    .font(.footnote)
-                                    .foregroundColor(.white.opacity(0.9))
-                                    .padding(10)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .background(Color.white.opacity(0.04))
-                                    .cornerRadius(8)
-                            }
+                            .padding()
+                            .background(Color.white.opacity(0.02))
+                            .cornerRadius(12)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .stroke(Color.white.opacity(0.04), lineWidth: 1)
+                            )
                         }
                     }
                     .font(.subheadline)
@@ -780,7 +859,7 @@ struct StatisticsView: View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 16) {
-                    let logsWithSos = logs.filter { $0.sosCount > 0 }.sorted { $0.date > $1.date }
+                    let logsWithSos = activeLogs.filter { $0.sosCount > 0 }.sorted { $0.date > $1.date }
                     
                     if logsWithSos.isEmpty {
                         VStack(spacing: 20) {

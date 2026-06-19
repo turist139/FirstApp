@@ -16,25 +16,51 @@ struct MotivationCategory: Identifiable, Codable, Equatable {
 }
 
 class MotivationSettings: ObservableObject {
-    @AppStorage("hasCompletedMotivationOnboarding", store: .shared) var hasCompletedOnboarding: Bool = false
-    
-    // We store the JSON representation of [MotivationCategory]
-    @AppStorage("motivationCategoriesJSON", store: .shared) private var categoriesJSON: String = ""
-    
     @Published var categories: [MotivationCategory] = [] {
         didSet {
-            saveToStorage()
+            if !isSavingOrLoading {
+                saveToStorage()
+            }
         }
     }
+    
+    @Published var hasCompletedOnboarding: Bool = false {
+        didSet {
+            if !isSavingOrLoading {
+                saveOnboardingStatus()
+            }
+        }
+    }
+    
+    private var currentProfileId: UUID? = nil
+    private var isSavingOrLoading = false
     
     static let shared = MotivationSettings()
     
     private init() {
-        loadFromStorage()
+        // Will be configured with a profile ID later, but load default for start
+        loadForProfile(id: nil)
     }
     
-    private func loadFromStorage() {
-        if categoriesJSON.isEmpty {
+    private var categoriesKey: String {
+        let suffix = currentProfileId?.uuidString ?? "default"
+        return "motivationCategoriesJSON_\(suffix)"
+    }
+    
+    private var onboardingKey: String {
+        let suffix = currentProfileId?.uuidString ?? "default"
+        return "hasCompletedMotivationOnboarding_\(suffix)"
+    }
+    
+    func loadForProfile(id: UUID?) {
+        isSavingOrLoading = true
+        currentProfileId = id
+        
+        let defaults = UserDefaults.shared
+        hasCompletedOnboarding = defaults.bool(forKey: onboardingKey)
+        
+        let json = defaults.string(forKey: categoriesKey) ?? ""
+        if json.isEmpty {
             // Setup default categories
             categories = [
                 MotivationCategory(title: "Мои цели", subtitle: "Какие мои цели, к чему я стремлюсь?", icon: "target", colorHex: "00FFFF", items: []),
@@ -46,17 +72,28 @@ class MotivationSettings: ObservableObject {
                 MotivationCategory(title: "Дополнительные смыслы", subtitle: "Любые другие важные мысли (свободное поле)", icon: "quote.opening", colorHex: "007AFF", items: [])
             ]
         } else {
-            if let data = categoriesJSON.data(using: .utf8),
+            if let data = json.data(using: .utf8),
                let decoded = try? JSONDecoder().decode([MotivationCategory].self, from: data) {
                 categories = decoded
+            } else {
+                categories = []
             }
         }
+        isSavingOrLoading = false
     }
     
     private func saveToStorage() {
+        let defaults = UserDefaults.shared
         if let encoded = try? JSONEncoder().encode(categories),
            let jsonString = String(data: encoded, encoding: .utf8) {
-            categoriesJSON = jsonString
+            defaults.set(jsonString, forKey: categoriesKey)
+            defaults.synchronize()
         }
+    }
+    
+    private func saveOnboardingStatus() {
+        let defaults = UserDefaults.shared
+        defaults.set(hasCompletedOnboarding, forKey: onboardingKey)
+        defaults.synchronize()
     }
 }

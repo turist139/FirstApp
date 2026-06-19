@@ -15,6 +15,9 @@ final class DetoxLog {
     var relapseDuration: String?
     var sosTimes: [Date]? = []
     
+    // Multi-Detox
+    var profileId: UUID?
+    
     init(
         id: UUID = UUID(),
         date: Date = Date(),
@@ -26,7 +29,8 @@ final class DetoxLog {
         sosCount: Int = 0,
         silenceTolerance: Int? = 3,
         relapseDuration: String? = nil,
-        sosTimes: [Date]? = []
+        sosTimes: [Date]? = [],
+        profileId: UUID? = nil
     ) {
         self.id = id
         self.date = date
@@ -39,5 +43,6 @@ final class DetoxLog {
         self.silenceTolerance = silenceTolerance
         self.relapseDuration = relapseDuration
         self.sosTimes = sosTimes
+        self.profileId = profileId
     }
 }

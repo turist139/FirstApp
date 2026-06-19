@@ -56,6 +56,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Models/DetoxLog.swift,
+				Models/DetoxProfile.swift,
 				Models/UserProgress.swift,
 				Utilities/DetoxDateHelper.swift,
 			);

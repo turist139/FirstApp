@@ -6,6 +6,7 @@ struct MotivationOnboardingView: View {
     
     @State private var currentStep = 0
     @State private var answers: [String] = Array(repeating: "", count: 7)
+    @State private var slideDirection: Edge = .trailing
     
     var body: some View {
         ZStack {
@@ -14,10 +15,6 @@ struct MotivationOnboardingView: View {
             VStack {
                 // Header
                 HStack {
-                    Text("Настройка смыслов")
-                        .font(.title2.bold())
-                        .foregroundColor(.white)
-                    
                     Spacer()
                     
                     Text("\(currentStep + 1)/\(settings.categories.count)")
@@ -46,19 +43,28 @@ struct MotivationOnboardingView: View {
                 .frame(height: 4)
                 .padding(.horizontal)
                 
-                TabView(selection: $currentStep) {
+                // Content Switcher
+                ZStack {
                     ForEach(0..<settings.categories.count, id: \.self) { index in
-                        onboardingStepView(index: index)
-                            .tag(index)
+                        if currentStep == index {
+                            onboardingStepView(index: index)
+                                .transition(.asymmetric(
+                                    insertion: .move(edge: slideDirection == .trailing ? .trailing : .leading),
+                                    removal: .move(edge: slideDirection == .trailing ? .leading : .trailing)
+                                ))
+                        }
                     }
                 }
-                .tabViewStyle(.page(indexDisplayMode: .never))
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
                 
                 // Bottom Buttons
                 HStack(spacing: 16) {
                     if currentStep > 0 {
                         Button(action: {
-                            withAnimation { currentStep -= 1 }
+                            slideDirection = .leading
+                            withAnimation(.easeInOut(duration: 0.3)) {
+                                currentStep -= 1
+                            }
                         }) {
                             Image(systemName: "arrow.left")
                                 .font(.title3.bold())
@@ -71,7 +77,10 @@ struct MotivationOnboardingView: View {
                     
                     Button(action: {
                         if currentStep < settings.categories.count - 1 {
-                            withAnimation { currentStep += 1 }
+                            slideDirection = .trailing
+                            withAnimation(.easeInOut(duration: 0.3)) {
+                                currentStep += 1
+                            }
                         } else {
                             saveAndFinish()
                         }
@@ -93,49 +102,49 @@ struct MotivationOnboardingView: View {
     private func onboardingStepView(index: Int) -> some View {
         let category = settings.categories[index]
         
-        return VStack(alignment: .leading, spacing: 20) {
-            Spacer().frame(height: 20)
-            
-            ZStack {
-                Circle()
-                    .fill(Color(hex: category.colorHex).opacity(0.2))
-                    .frame(width: 80, height: 80)
+        return ScrollView {
+            VStack(alignment: .leading, spacing: 20) {
+                Spacer().frame(height: 20)
                 
-                Image(systemName: category.icon)
-                    .font(.system(size: 32, weight: .bold))
-                    .foregroundColor(Color(hex: category.colorHex))
+                ZStack {
+                    Circle()
+                        .fill(Color(hex: category.colorHex).opacity(0.2))
+                        .frame(width: 80, height: 80)
+                    
+                    Image(systemName: category.icon)
+                        .font(.system(size: 32, weight: .bold))
+                        .foregroundColor(Color(hex: category.colorHex))
+                }
+                .padding(.bottom, 10)
+                
+                Text(category.title)
+                    .font(.largeTitle.bold())
+                    .foregroundColor(.white)
+                
+                Text(category.subtitle)
+                    .font(.title3)
+                    .foregroundColor(.white.opacity(0.7))
+                    .fixedSize(horizontal: false, vertical: true)
+                
+                Text("Каждая новая строка будет сохранена как отдельный пункт.")
+                    .font(.caption)
+                    .foregroundColor(.white.opacity(0.5))
+                    .padding(.top, 10)
+                
+                TextEditor(text: $answers[index])
+                    .font(.body)
+                    .foregroundColor(.white)
+                    .padding(12)
+                    .frame(minHeight: 150)
+                    .background(Color.white.opacity(0.05))
+                    .cornerRadius(16)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 16)
+                            .stroke(Color.white.opacity(0.1), lineWidth: 1)
+                    )
             }
-            .padding(.bottom, 10)
-            
-            Text(category.title)
-                .font(.largeTitle.bold())
-                .foregroundColor(.white)
-            
-            Text(category.subtitle)
-                .font(.title3)
-                .foregroundColor(.white.opacity(0.7))
-                .fixedSize(horizontal: false, vertical: true)
-            
-            Text("Каждая новая строка будет сохранена как отдельный пункт.")
-                .font(.caption)
-                .foregroundColor(.white.opacity(0.5))
-                .padding(.top, 10)
-            
-            TextEditor(text: $answers[index])
-                .font(.body)
-                .foregroundColor(.white)
-                .padding(12)
-                .frame(minHeight: 150)
-                .background(Color.white.opacity(0.05))
-                .cornerRadius(16)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 16)
-                        .stroke(Color.white.opacity(0.1), lineWidth: 1)
-                )
-            
-            Spacer()
+            .padding(.horizontal, 24)
         }
-        .padding(.horizontal, 24)
     }
     
     private func saveAndFinish() {

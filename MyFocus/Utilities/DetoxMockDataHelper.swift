@@ -5,15 +5,17 @@ struct DetoxMockDataHelper {
     
     /// Generates 30 days of realistic mock data for detox logging
     @MainActor
-    static func generateMockData(context: ModelContext) {
+    static func generateMockData(context: ModelContext, profileId: UUID? = nil) {
         let calendar = Calendar.current
         let now = Date()
         
-        // 1. Clear any existing logs first
+        // 1. Clear any existing logs first for this profile
         let fetchDescriptor = FetchDescriptor<DetoxLog>()
         if let existingLogs = try? context.fetch(fetchDescriptor) {
             for log in existingLogs {
-                context.delete(log)
+                if profileId == nil || log.profileId == profileId {
+                    context.delete(log)
+                }
             }
         }
         
@@ -82,51 +84,66 @@ struct DetoxMockDataHelper {
                 failNotes: failNotes,
                 isRescued: isRescued,
                 sosCount: sosCount,
-                sosTimes: sosTimes
+                sosTimes: sosTimes,
+                profileId: profileId
             )
             context.insert(log)
         }
         
-        // 3. Adjust UserProgress to reflect this mock history
+        // 3. Adjust UserProgress or DetoxProfile to reflect this mock history
         // Day -3, -2, -1 were clean, so current streak = 3.
         // Longest streak was Day -23 to Day -5 (19 days, since Day -14 was rescued!).
-        let progressFetch = FetchDescriptor<UserProgress>()
-        if let progress = try? context.fetch(progressFetch).first {
-            progress.currentStreakDays = 3
-            progress.longestStreakDays = 19
-            progress.lastCheckInDate = calendar.date(byAdding: .day, value: -1, to: now)
+        if let profileId = profileId {
+            let profileFetch = FetchDescriptor<DetoxProfile>()
+            if let profiles = try? context.fetch(profileFetch),
+               let profile = profiles.first(where: { $0.id == profileId }) {
+                profile.currentStreakDays = 3
+                profile.longestStreakDays = 19
+                profile.lastCheckInDate = calendar.date(byAdding: .day, value: -1, to: now)
+                profile.streakStartDate = calendar.date(byAdding: .day, value: -3, to: now)
+                profile.streakSavedToday = false
+            }
         } else {
-            let progress = UserProgress(
-                currentStreakDays: 3,
-                longestStreakDays: 19,
-                lastCheckInDate: calendar.date(byAdding: .day, value: -1, to: now)
-            )
-            context.insert(progress)
+            let progressFetch = FetchDescriptor<UserProgress>()
+            if let progress = try? context.fetch(progressFetch).first {
+                progress.currentStreakDays = 3
+                progress.longestStreakDays = 19
+                progress.lastCheckInDate = calendar.date(byAdding: .day, value: -1, to: now)
+            } else {
+                let progress = UserProgress(
+                    currentStreakDays: 3,
+                    longestStreakDays: 19,
+                    lastCheckInDate: calendar.date(byAdding: .day, value: -1, to: now)
+                )
+                context.insert(progress)
+            }
         }
         
         // 4. Generate some mock PastStreaks!
         let pastStreaksFetch = FetchDescriptor<PastStreak>()
         if let existingStreaks = try? context.fetch(pastStreaksFetch) {
             for streak in existingStreaks {
-                context.delete(streak)
+                if profileId == nil || streak.profileId == profileId {
+                    context.delete(streak)
+                }
             }
         }
         
         if let s1Start = calendar.date(byAdding: .day, value: -24, to: now),
            let s1End = calendar.date(byAdding: .day, value: -5, to: now) {
-            let s1 = PastStreak(startDate: s1Start, endDate: s1End, failReason: "Автопилот", failNotes: "Случайно открыл соцсеть.")
+            let s1 = PastStreak(startDate: s1Start, endDate: s1End, failReason: "Автопилот", failNotes: "Случайно открыл соцсеть.", profileId: profileId)
             context.insert(s1)
         }
         
         if let s2Start = calendar.date(byAdding: .day, value: -4, to: now),
            let s2End = calendar.date(byAdding: .hour, value: 14, to: calendar.date(byAdding: .day, value: -2, to: now)!) {
-            let s2 = PastStreak(startDate: s2Start, endDate: s2End, failReason: "Скука", failNotes: "Сорвался вечером от скуки.")
+            let s2 = PastStreak(startDate: s2Start, endDate: s2End, failReason: "Скука", failNotes: "Сорвался вечером от скуки.", profileId: profileId)
             context.insert(s2)
         }
         
         if let s3Start = calendar.date(byAdding: .day, value: -2, to: now),
            let s3End = calendar.date(byAdding: .hour, value: 12, to: s3Start) {
-            let s3 = PastStreak(startDate: s3Start, endDate: s3End, failReason: "Стресс", failNotes: "Тяжелый рабочий день.")
+            let s3 = PastStreak(startDate: s3Start, endDate: s3End, failReason: "Стресс", failNotes: "Тяжелый рабочий день.", profileId: profileId)
             context.insert(s3)
         }
         
@@ -183,6 +200,18 @@ struct DetoxMockDataHelper {
         if let streaks = try? context.fetch(pastStreaksFetch) {
             for streak in streaks {
                 context.delete(streak)
+            }
+        }
+        
+        let profilesFetch = FetchDescriptor<DetoxProfile>()
+        if let profiles = try? context.fetch(profilesFetch) {
+            for profile in profiles {
+                profile.currentStreakDays = 0
+                profile.longestStreakDays = 0
+                profile.lastCheckInDate = nil
+                profile.streakStartDate = nil
+                profile.streakSavedToday = false
+                profile.streakQuestsCompleted = 0
             }
         }
         

@@ -13,11 +13,15 @@ final class UserProgress {
     var lastActiveDate: Date?
     var streakStartDate: Date?
     
-    // Dopamine Detox properties
+    // Dopamine Detox properties (Legacy - used for migration)
     var detoxHabits: [String]
     var lastCheckInDate: Date?
     var streakSavedToday: Bool
     var streakQuestsCompleted: Int
+    
+    // Multi-Detox
+    var activeProfileId: UUID?
+    var isMigratedToProfiles: Bool?
     
     init(
         id: UUID = UUID(),
@@ -32,7 +36,9 @@ final class UserProgress {
         detoxHabits: [String] = ["YouTube", "Новости", "Telegram", "Прямые эфиры"],
         lastCheckInDate: Date? = nil,
         streakSavedToday: Bool = false,
-        streakQuestsCompleted: Int = 0
+        streakQuestsCompleted: Int = 0,
+        activeProfileId: UUID? = nil,
+        isMigratedToProfiles: Bool? = nil
     ) {
         self.id = id
         self.totalXP = totalXP
@@ -47,5 +53,7 @@ final class UserProgress {
         self.lastCheckInDate = lastCheckInDate
         self.streakSavedToday = streakSavedToday
         self.streakQuestsCompleted = streakQuestsCompleted
+        self.activeProfileId = activeProfileId
+        self.isMigratedToProfiles = isMigratedToProfiles
     }
 }

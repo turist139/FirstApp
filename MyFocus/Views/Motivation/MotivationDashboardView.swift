@@ -2,61 +2,66 @@ import SwiftUI
 
 struct MotivationDashboardView: View {
     @ObservedObject var settings = MotivationSettings.shared
-    @State private var showEditSheet = false
+    var onEditRequested: () -> Void
     
     var body: some View {
-        NavigationStack {
-            ZStack {
-                ScrollView {
-                    VStack(spacing: 20) {
-                        ForEach(settings.categories) { category in
-                            if !category.items.isEmpty {
-                                motivationCard(category: category)
-                            }
-                        }
-                        
-                        // If everything is empty (they skipped onboarding)
-                        if settings.categories.allSatisfy({ $0.items.isEmpty }) {
-                            VStack(spacing: 16) {
-                                Image(systemName: "flame.fill")
-                                    .font(.system(size: 60))
-                                    .foregroundColor(.white.opacity(0.3))
-                                Text("Ваши смыслы пока пусты")
-                                    .font(.headline)
-                                    .foregroundColor(.white.opacity(0.6))
-                                Button("Настроить смыслы") {
-                                    showEditSheet = true
-                                }
-                                .padding()
-                                .background(Color.white.opacity(0.1))
-                                .cornerRadius(12)
-                            }
-                            .padding(.top, 50)
+        ZStack {
+            ScrollView {
+                VStack(spacing: 20) {
+                    ForEach(settings.categories) { category in
+                        if !category.items.isEmpty {
+                            motivationCard(category: category)
                         }
                     }
-                    .padding()
-                    .padding(.bottom, 80) // Space for TabBar
-                }
-            }
-            .withAmbientGlow()
-            .navigationTitle("Мои смыслы")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button(action: {
-                        showEditSheet = true
-                    }) {
-                        Image(systemName: "pencil.circle.fill")
-                            .font(.title3)
-                            .foregroundColor(.white)
+                    
+                    // If everything is empty (they skipped onboarding)
+                    if settings.categories.allSatisfy({ $0.items.isEmpty }) {
+                        VStack(spacing: 16) {
+                            Image(systemName: "flame.fill")
+                                .font(.system(size: 60))
+                                .foregroundColor(.white.opacity(0.3))
+                            Text("Ваши смыслы пока пусты")
+                                .font(.headline)
+                                .foregroundColor(.white.opacity(0.6))
+                            Button("Настроить смыслы") {
+                                onEditRequested()
+                            }
+                            .padding()
+                            .background(Color.white.opacity(0.1))
+                            .cornerRadius(12)
+                        }
+                        .padding(.top, 50)
+                    } else {
+                        // Edit button at the bottom of the page
+                        Button(action: {
+                            onEditRequested()
+                        }) {
+                            HStack(spacing: 8) {
+                                Image(systemName: "pencil")
+                                Text("Настроить смыслы")
+                            }
+                            .font(.subheadline.bold())
+                            .foregroundColor(.white.opacity(0.6))
+                            .padding(.horizontal, 20)
+                            .padding(.vertical, 12)
+                            .background(Color.white.opacity(0.05))
+                            .cornerRadius(22)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 22)
+                                    .stroke(Color.white.opacity(0.1), lineWidth: 1)
+                            )
+                        }
+                        .buttonStyle(.plain)
+                        .padding(.top, 15)
                     }
                 }
-            }
-            .sheet(isPresented: $showEditSheet) {
-                MotivationEditView()
+                .padding()
+                .padding(.bottom, 80) // Space for TabBar
             }
         }
-        .withSOSToolbar()
+        .withAmbientGlow()
+        .navigationTitle("")
+        .navigationBarTitleDisplayMode(.inline)
     }
     
     private func motivationCard(category: MotivationCategory) -> some View {
@@ -121,7 +126,7 @@ struct MotivationDashboardView: View {
 }
 
 #Preview {
-    MotivationDashboardView()
+    MotivationDashboardView {}
 }
 
 // MARK: - MotivationFlowLayout

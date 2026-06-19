@@ -5,9 +5,23 @@ struct StreakRecoveryView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
     @Query private var progressQuery: [UserProgress]
+    @Query(sort: \DetoxLog.date, order: .forward) private var logs: [DetoxLog]
+    @Query private var profilesQuery: [DetoxProfile]
+    
+    @AppStorage("detoxDayBoundaryHour", store: .shared) private var detoxDayBoundaryHour: Int = 0
     
     var progress: UserProgress {
         progressQuery.first ?? UserProgress()
+    }
+    
+    var activeProfile: DetoxProfile? {
+        let activeId = progress.activeProfileId
+        return profilesQuery.first(where: { $0.id == activeId }) ?? profilesQuery.first
+    }
+    
+    var activeLogs: [DetoxLog] {
+        guard let profileId = activeProfile?.id else { return [] }
+        return logs.filter { $0.profileId == profileId }
     }
     
     @State private var selectedReason: String = ""
@@ -125,15 +139,18 @@ struct StreakRecoveryView: View {
             let finalReason = selectedReason == "Другое" ? customFailReason : selectedReason
             let now = Date()
             
+            let profileId = activeProfile?.id
+            
             // Create a PastStreak if duration was non-zero
-            let startDate = progress.streakStartDate ?? progress.lastCheckInDate ?? now
+            let startDate = activeProfile?.streakStartDate ?? activeProfile?.lastCheckInDate ?? now
             let hours = Calendar.current.dateComponents([.hour], from: startDate, to: now).hour ?? 0
-            if hours > 0 || progress.currentStreakDays > 0 {
+            if hours > 0 || (activeProfile?.currentStreakDays ?? 0) > 0 {
                 let pastStreak = PastStreak(
                     startDate: startDate,
                     endDate: now,
                     failReason: finalReason,
-                    failNotes: customReflection
+                    failNotes: customReflection,
+                    profileId: profileId
                 )
                 modelContext.insert(pastStreak)
             }
@@ -145,20 +162,30 @@ struct StreakRecoveryView: View {
                 isPartial: true,
                 failReason: finalReason,
                 failNotes: customReflection,
-                isRescued: false
+                isRescued: false,
+                profileId: profileId
             )
             modelContext.insert(log)
             
             // Reset streak
-            progress.currentStreakDays = 0
-            progress.streakStartDate = now
-            progress.lastCheckInDate = now
+            activeProfile?.currentStreakDays = 0
+            activeProfile?.streakStartDate = now
+            activeProfile?.lastCheckInDate = now
             progress.lastActiveDate = now
-            progress.streakSavedToday = false
+            activeProfile?.streakSavedToday = false
+            
+            // Recalculate streak & rebuild past streaks
+            var updatedLogs = activeLogs
+            if !updatedLogs.contains(where: { $0.id == log.id }) {
+                updatedLogs.append(log)
+            }
+            DetoxDateHelper.recalculateStreak(logs: updatedLogs, boundaryHour: detoxDayBoundaryHour, profile: activeProfile)
+            PastStreak.rebuildPastStreaks(logs: updatedLogs, context: modelContext, profileId: profileId)
             
             // Re-schedule notifications
             NotificationManager.shared.scheduleReminders(lastCheckInDate: now)
             
+            try? modelContext.save()
             dismiss()
         }
     }

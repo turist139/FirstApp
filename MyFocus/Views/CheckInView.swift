@@ -5,11 +5,17 @@ struct CheckInView: View {
     var targetDate: Date = Date()
     var targetLogId: UUID? = nil
     var forceNewLog: Bool = false
+    var profile: DetoxProfile?
+    var progress: UserProgress
     
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
-    @Query private var progressQuery: [UserProgress]
     @Query(sort: \DetoxLog.date, order: .forward) private var logs: [DetoxLog]
+    
+    var activeLogs: [DetoxLog] {
+        guard let profileId = profile?.id else { return [] }
+        return logs.filter { $0.profileId == profileId }
+    }
     
     @AppStorage("detoxDayBoundaryHour", store: .shared) private var detoxDayBoundaryHour: Int = 0
     
@@ -21,10 +27,9 @@ struct CheckInView: View {
     @State private var customFailReason: String = ""
     @State private var failNotes: String = ""
     @State private var hasExistingLog: Bool = false
-    
-    var progress: UserProgress {
-        progressQuery.first ?? UserProgress()
-    }
+    @State private var currentTargetDate: Date = Date()
+    @State private var specifyRelapseTime: Bool = false
+    @State private var relapseTime: Date = Date()
     
     let durations = ["пару минут", "до двух часов", "день"]
     let reasons = ["\"один раз\"", "Усталость", "Тревога", "Автопилот", "Скука", "Голод", "Другое"]
@@ -35,7 +40,7 @@ struct CheckInView: View {
                 VStack(spacing: 25) {
                     // 1. Header description
                     VStack(spacing: 6) {
-                        Text(formatTargetDate(targetDate))
+                        Text(formatTargetDate(currentTargetDate))
                             .font(.title2.bold())
                             .foregroundColor(.white)
                         
@@ -175,6 +180,29 @@ struct CheckInView: View {
                             Divider()
                                 .background(Color.white.opacity(0.1))
                             
+                            // Relapse time selection
+                            VStack(alignment: .leading, spacing: 10) {
+                                Toggle("Указать точное время срыва", isOn: $specifyRelapseTime)
+                                    .font(.subheadline.bold())
+                                    .foregroundColor(.white)
+                                    .tint(.green)
+                                
+                                if specifyRelapseTime {
+                                    DatePicker(
+                                        "Время срыва",
+                                        selection: $relapseTime,
+                                        displayedComponents: .hourAndMinute
+                                    )
+                                    .colorScheme(.dark)
+                                    .datePickerStyle(.compact)
+                                    .font(.subheadline)
+                                    .foregroundColor(.white.opacity(0.8))
+                                }
+                            }
+                            
+                            Divider()
+                                .background(Color.white.opacity(0.1))
+                            
                             // Relapse Reason
                             VStack(alignment: .leading, spacing: 8) {
                                 Text("Что послужило триггером?")
@@ -295,6 +323,19 @@ struct CheckInView: View {
                 }
             }
             .onAppear {
+                let calendar = Calendar.current
+                if calendar.component(.hour, from: targetDate) == 0 &&
+                   calendar.component(.minute, from: targetDate) == 0 &&
+                   calendar.component(.second, from: targetDate) == 0 {
+                    if let adjusted = calendar.date(byAdding: .hour, value: detoxDayBoundaryHour + 12, to: targetDate) {
+                        currentTargetDate = adjusted
+                    } else {
+                        currentTargetDate = targetDate
+                    }
+                } else {
+                    currentTargetDate = targetDate
+                }
+                relapseTime = currentTargetDate
                 loadExistingCheckIn()
             }
         }
@@ -311,9 +352,9 @@ struct CheckInView: View {
         if forceNewLog { return }
         let logToEdit: DetoxLog?
         if let id = targetLogId {
-            logToEdit = logs.first { $0.id == id }
+            logToEdit = activeLogs.first { $0.id == id }
         } else {
-            logToEdit = logs.last { DetoxDateHelper.isDateSameDetoxDay($0.date, targetDate, boundaryHour: detoxDayBoundaryHour) }
+            logToEdit = activeLogs.last { DetoxDateHelper.isDateSameDetoxDay($0.date, currentTargetDate, boundaryHour: detoxDayBoundaryHour) }
         }
         
         if let log = logToEdit {
@@ -330,6 +371,43 @@ struct CheckInView: View {
                 failReason = "Другое"
                 customFailReason = loadedReason
             }
+            
+            if !log.isClean {
+                let logTime = log.date
+                let endOfDay = DetoxDateHelper.endOfDetoxDay(for: logTime, boundaryHour: detoxDayBoundaryHour)
+                let diff = endOfDay.timeIntervalSince(logTime)
+                if abs(diff - 1.0) < 5.0 {
+                    specifyRelapseTime = false
+                } else {
+                    specifyRelapseTime = true
+                    relapseTime = logTime
+                }
+            }
+        }
+    }
+    
+    private func getFinalLogDate() -> Date {
+        let calendar = Calendar.current
+        if didRelapse {
+            if specifyRelapseTime {
+                let dateComponents = calendar.dateComponents([.year, .month, .day], from: currentTargetDate)
+                let timeComponents = calendar.dateComponents([.hour, .minute], from: relapseTime)
+                
+                var mergedComponents = DateComponents()
+                mergedComponents.year = dateComponents.year
+                mergedComponents.month = dateComponents.month
+                mergedComponents.day = dateComponents.day
+                mergedComponents.hour = timeComponents.hour
+                mergedComponents.minute = timeComponents.minute
+                mergedComponents.second = 0
+                
+                return calendar.date(from: mergedComponents) ?? currentTargetDate
+            } else {
+                let endOfDay = DetoxDateHelper.endOfDetoxDay(for: currentTargetDate, boundaryHour: detoxDayBoundaryHour)
+                return calendar.date(byAdding: .second, value: -1, to: endOfDay) ?? currentTargetDate
+            }
+        } else {
+            return currentTargetDate
         }
     }
     
@@ -341,15 +419,18 @@ struct CheckInView: View {
         if forceNewLog {
             logToEdit = nil
         } else if let id = targetLogId {
-            logToEdit = logs.first { $0.id == id }
+            logToEdit = activeLogs.first { $0.id == id }
         } else {
-            logToEdit = logs.last { DetoxDateHelper.isDateSameDetoxDay($0.date, targetDate, boundaryHour: detoxDayBoundaryHour) }
+            logToEdit = activeLogs.last { DetoxDateHelper.isDateSameDetoxDay($0.date, currentTargetDate, boundaryHour: detoxDayBoundaryHour) }
         }
         
         let log: DetoxLog
+        let finalDate = getFinalLogDate()
+        
         if let existing = logToEdit {
             log = existing
             log.isClean = !didRelapse
+            log.date = finalDate
             log.silenceTolerance = silenceTolerance
             log.relapseDuration = finalDuration
             log.failReason = finalReason
@@ -357,45 +438,46 @@ struct CheckInView: View {
             log.isRescued = false
         } else {
             log = DetoxLog(
-                date: targetDate,
+                date: finalDate,
                 isClean: !didRelapse,
                 failReason: finalReason,
                 failNotes: failNotes,
                 isRescued: false,
                 silenceTolerance: silenceTolerance,
-                relapseDuration: finalDuration
+                relapseDuration: finalDuration,
+                profileId: profile?.id
             )
             modelContext.insert(log)
         }
         
         // Update user progress lastCheckInDate if targetDate is today or newer
         let todayDetoxDay = DetoxDateHelper.detoxDay(for: Date(), boundaryHour: detoxDayBoundaryHour)
-        let targetDetoxDay = DetoxDateHelper.detoxDay(for: targetDate, boundaryHour: detoxDayBoundaryHour)
+        let targetDetoxDay = DetoxDateHelper.detoxDay(for: finalDate, boundaryHour: detoxDayBoundaryHour)
         if targetDetoxDay >= todayDetoxDay {
-            progress.lastCheckInDate = targetDate
-            progress.lastActiveDate = targetDate
-            progress.streakSavedToday = false
+            profile?.lastCheckInDate = finalDate
+            progress.lastActiveDate = finalDate
+            profile?.streakSavedToday = false
         }
         
-        var allLogs = logs
+        var allLogs = activeLogs
         if !allLogs.contains(where: { $0.id == log.id }) {
             allLogs.append(log)
         }
-        DetoxDateHelper.recalculateStreak(logs: allLogs, boundaryHour: detoxDayBoundaryHour, progress: progress)
-        PastStreak.rebuildPastStreaks(logs: allLogs, context: modelContext)
+        DetoxDateHelper.recalculateStreak(logs: allLogs, boundaryHour: detoxDayBoundaryHour, profile: profile)
+        PastStreak.rebuildPastStreaks(logs: allLogs, context: modelContext, profileId: profile?.id)
         
         // Unlock palettes based on new streak
         unlockThemesForCurrentStreak()
         
         // Reschedule notifications
-        NotificationManager.shared.scheduleReminders(lastCheckInDate: progress.lastCheckInDate ?? Date())
+        NotificationManager.shared.scheduleReminders(lastCheckInDate: profile?.lastCheckInDate ?? Date())
         
         try? modelContext.save()
         dismiss()
     }
     
     private func unlockThemesForCurrentStreak() {
-        let streak = progress.currentStreakDays
+        let streak = profile?.currentStreakDays ?? 0
         
         func unlock(_ id: String) {
             if !progress.unlockedPaletteIDs.contains(id) {
@@ -417,9 +499,9 @@ struct CheckInView: View {
         if forceNewLog {
             logToEdit = nil
         } else if let id = targetLogId {
-            logToEdit = logs.first { $0.id == id }
+            logToEdit = activeLogs.first { $0.id == id }
         } else {
-            logToEdit = logs.last { DetoxDateHelper.isDateSameDetoxDay($0.date, targetDate, boundaryHour: detoxDayBoundaryHour) }
+            logToEdit = activeLogs.last { DetoxDateHelper.isDateSameDetoxDay($0.date, currentTargetDate, boundaryHour: detoxDayBoundaryHour) }
         }
         
         if let log = logToEdit {
@@ -427,18 +509,18 @@ struct CheckInView: View {
             try? modelContext.save()
             
             // Recalculate streak
-            var remainingLogs = logs
+            var remainingLogs = activeLogs
             remainingLogs.removeAll { $0.id == log.id }
-            DetoxDateHelper.recalculateStreak(logs: remainingLogs, boundaryHour: detoxDayBoundaryHour, progress: progress)
+            DetoxDateHelper.recalculateStreak(logs: remainingLogs, boundaryHour: detoxDayBoundaryHour, profile: profile)
             
             // Unset check-in dates for today if applicable
             let todayDetoxDay = DetoxDateHelper.detoxDay(for: Date(), boundaryHour: detoxDayBoundaryHour)
-            let targetDetoxDay = DetoxDateHelper.detoxDay(for: targetDate, boundaryHour: detoxDayBoundaryHour)
+            let targetDetoxDay = DetoxDateHelper.detoxDay(for: currentTargetDate, boundaryHour: detoxDayBoundaryHour)
             if targetDetoxDay >= todayDetoxDay {
                 if let lastLog = remainingLogs.filter({ $0.isClean }).last {
-                    progress.lastCheckInDate = lastLog.date
+                    profile?.lastCheckInDate = lastLog.date
                 } else {
-                    progress.lastCheckInDate = nil
+                    profile?.lastCheckInDate = nil
                 }
             }
         }

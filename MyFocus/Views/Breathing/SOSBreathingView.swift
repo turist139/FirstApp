@@ -5,6 +5,8 @@ import SwiftData
 struct SOSBreathingView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
+    @Query private var progressQuery: [UserProgress]
+    
     @State private var timeRemaining: Int = 90
     @State private var timer: Timer?
     @State private var isInhaling: Bool = false
@@ -251,7 +253,10 @@ struct SOSBreathingView: View {
     private func incrementSOSCount() {
         let today = Date()
         let calendar = Calendar.current
-        let fetchDescriptor = FetchDescriptor<DetoxLog>()
+        let activeProfileId = progressQuery.first?.activeProfileId ?? UUID()
+        let fetchDescriptor = FetchDescriptor<DetoxLog>(predicate: #Predicate<DetoxLog> { log in
+            log.profileId == activeProfileId
+        })
         if let logs = try? modelContext.fetch(fetchDescriptor) {
             if let todayLog = logs.first(where: { calendar.isDate($0.date, inSameDayAs: today) }) {
                 todayLog.sosCount += 1
@@ -260,7 +265,7 @@ struct SOSBreathingView: View {
                 }
                 todayLog.sosTimes?.append(today)
             } else {
-                let newLog = DetoxLog(date: today, isClean: true, sosCount: 1, sosTimes: [today])
+                let newLog = DetoxLog(date: today, isClean: true, sosCount: 1, sosTimes: [today], profileId: activeProfileId)
                 modelContext.insert(newLog)
             }
             try? modelContext.save()

@@ -9,6 +9,9 @@ final class PastStreak {
     var failReason: String?
     var failNotes: String?
     
+    // Multi-Detox
+    var profileId: UUID?
+    
     var durationInHours: Int {
         let diff = Calendar.current.dateComponents([.hour], from: startDate, to: endDate).hour ?? 0
         return max(0, diff)
@@ -19,21 +22,22 @@ final class PastStreak {
         return max(0, diff)
     }
     
-    init(id: UUID = UUID(), startDate: Date, endDate: Date, failReason: String? = nil, failNotes: String? = nil) {
+    init(id: UUID = UUID(), startDate: Date, endDate: Date, failReason: String? = nil, failNotes: String? = nil, profileId: UUID? = nil) {
         self.id = id
         self.startDate = startDate
         self.endDate = endDate
         self.failReason = failReason
         self.failNotes = failNotes
+        self.profileId = profileId
     }
 }
 
 extension PastStreak {
     @MainActor
-    static func rebuildPastStreaks(logs: [DetoxLog], context: ModelContext) {
+    static func rebuildPastStreaks(logs: [DetoxLog], context: ModelContext, profileId: UUID? = nil) {
         let fetch = FetchDescriptor<PastStreak>()
         if let existing = try? context.fetch(fetch) {
-            for streak in existing {
+            for streak in existing where streak.profileId == profileId {
                 context.delete(streak)
             }
         }
@@ -41,7 +45,27 @@ extension PastStreak {
         let boundaryHour = UserDefaults.standard.integer(forKey: "detoxDayBoundaryHour")
         let calendar = Calendar.current
         
-        let sortedLogs = logs.sorted { $0.date < $1.date }
+        // Group logs by day using severity priority: Full relapse (2) > Rescued relapse (1) > Clean day (0)
+        var logsByDay: [Date: DetoxLog] = [:]
+        for log in logs {
+            let day = DetoxDateHelper.detoxDay(for: log.date, boundaryHour: boundaryHour)
+            if let existing = logsByDay[day] {
+                let existingSeverity = !existing.isClean ? (existing.isRescued ? 1 : 2) : 0
+                let currentSeverity = !log.isClean ? (log.isRescued ? 1 : 2) : 0
+                
+                if currentSeverity > existingSeverity {
+                    logsByDay[day] = log
+                } else if currentSeverity == existingSeverity {
+                    if existing.date < log.date {
+                        logsByDay[day] = log
+                    }
+                }
+            } else {
+                logsByDay[day] = log
+            }
+        }
+        
+        let sortedLogs = logsByDay.values.sorted { $0.date < $1.date }
         
         var prevDay: Date? = nil
         var currentStreakStartDate: Date? = nil
@@ -57,7 +81,7 @@ extension PastStreak {
                     // Streak broken by gap
                     if let start = currentStreakStartDate, let end = currentStreakEndDate {
                         let endOfPrevDay = DetoxDateHelper.endOfDetoxDay(for: end, boundaryHour: boundaryHour)
-                        context.insert(PastStreak(startDate: start, endDate: endOfPrevDay, failReason: "Пропущенные дни", failNotes: "Стрик прерван из-за пропущенных чекинов"))
+                        context.insert(PastStreak(startDate: start, endDate: endOfPrevDay, failReason: "Пропущенные дни", failNotes: "Стрик прерван из-за пропущенных чекинов", profileId: profileId))
                     }
                     currentStreakStartDate = log.date
                 }
@@ -82,7 +106,7 @@ extension PastStreak {
                     let endDate = log.date
                     let reason = log.failReason ?? "Срыв"
                     let notes = log.failNotes
-                    context.insert(PastStreak(startDate: start, endDate: endDate, failReason: reason, failNotes: notes))
+                    context.insert(PastStreak(startDate: start, endDate: endDate, failReason: reason, failNotes: notes, profileId: profileId))
                 }
                 
                 currentStreakStartDate = log.date
@@ -105,7 +129,7 @@ extension PastStreak {
             if diff > 1 {
                 if let start = currentStreakStartDate, let end = currentStreakEndDate {
                     let endOfPrevDay = DetoxDateHelper.endOfDetoxDay(for: end, boundaryHour: boundaryHour)
-                    context.insert(PastStreak(startDate: start, endDate: endOfPrevDay, failReason: "Пропущенные дни", failNotes: "Стрик прерван из-за пропущенных чекинов"))
+                    context.insert(PastStreak(startDate: start, endDate: endOfPrevDay, failReason: "Пропущенные дни", failNotes: "Стрик прерван из-за пропущенных чекинов", profileId: profileId))
                 }
             }
         }
@@ -116,11 +140,11 @@ extension PastStreak {
             let now = Date()
                 if let s2Start = calendar.date(byAdding: .day, value: -8, to: now),
                    let s2End = calendar.date(byAdding: .hour, value: 14, to: calendar.date(byAdding: .day, value: -5, to: now)!) {
-                    context.insert(PastStreak(startDate: s2Start, endDate: s2End, failReason: "Скука", failNotes: "Сорвался вечером от скуки. (Мок-данные)"))
+                    context.insert(PastStreak(startDate: s2Start, endDate: s2End, failReason: "Скука", failNotes: "Сорвался вечером от скуки. (Мок-данные)", profileId: profileId))
                 }
                 if let s3Start = calendar.date(byAdding: .day, value: -14, to: now),
                    let s3End = calendar.date(byAdding: .hour, value: 12, to: calendar.date(byAdding: .day, value: -10, to: now)!) {
-                    context.insert(PastStreak(startDate: s3Start, endDate: s3End, failReason: "Стресс", failNotes: "Тяжелый рабочий день. (Мок-данные)"))
+                    context.insert(PastStreak(startDate: s3Start, endDate: s3End, failReason: "Стресс", failNotes: "Тяжелый рабочий день. (Мок-данные)", profileId: profileId))
                 }
         }
         
