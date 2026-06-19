@@ -54,14 +54,25 @@ struct ProfileDrawerView: View {
                     .padding(.bottom, 20)
                     
                     // Profiles list
-                    ScrollView {
-                        VStack(spacing: 10) {
-                            ForEach(profiles) { profile in
-                                profileRow(profile)
-                            }
+                    List {
+                        ForEach(profiles) { profile in
+                            profileRow(profile)
+                                .listRowInsets(EdgeInsets(top: 5, leading: 16, bottom: 5, trailing: 16))
+                                .listRowBackground(Color.clear)
+                                .listRowSeparator(.hidden)
+                                .swipeActions(edge: .leading, allowsFullSwipe: true) {
+                                    Button(role: .destructive) {
+                                        profileToDelete = profile
+                                        showDeleteConfirmation = true
+                                    } label: {
+                                        Label("Удалить", systemImage: "trash")
+                                    }
+                                }
                         }
-                        .padding(.horizontal, 16)
                     }
+                    .listStyle(.plain)
+                    .scrollContentBackground(.hidden)
+                    .padding(.horizontal, 0)
                     
                     Spacer()
                     
@@ -139,69 +150,57 @@ struct ProfileDrawerView: View {
             return profile.id == activeId
         }()
         
-        HStack(spacing: 14) {
-            // Icon
-            ZStack {
-                Circle()
-                    .fill(isActive ? themeColor.opacity(0.2) : Color.white.opacity(0.07))
-                    .frame(width: 44, height: 44)
-                
-                Image(systemName: profile.icon)
-                    .font(.system(size: 18))
-                    .foregroundColor(isActive ? themeColor : .white.opacity(0.6))
-            }
-            
-            // Name + elapsed time
-            VStack(alignment: .leading, spacing: 3) {
-                Text(profile.name)
-                    .font(.subheadline.bold())
-                    .foregroundColor(isActive ? .white : .white.opacity(0.8))
-                
-                Text(elapsedTimeString(for: profile))
-                    .font(.caption)
-                    .foregroundColor(isActive ? themeColor.opacity(0.8) : .white.opacity(0.4))
-            }
-            
-            Spacer()
-            
-            // Active indicator
-            if isActive {
-                Image(systemName: "checkmark.circle.fill")
-                    .foregroundColor(themeColor)
-                    .font(.body)
-            }
-            
-            // Delete button
-            Button(action: {
-                profileToDelete = profile
-                showDeleteConfirmation = true
-            }) {
-                Image(systemName: "trash")
-                    .foregroundColor(.red.opacity(0.8))
-                    .font(.body)
-                    .padding(8)
-                    .background(Color.white.opacity(0.001)) // Make tap target bigger
-            }
-            .buttonStyle(.plain)
-        }
-        .padding(.horizontal, 14)
-        .padding(.vertical, 12)
-        .background(
-            RoundedRectangle(cornerRadius: 14)
-                .fill(isActive ? themeColor.opacity(0.08) : Color.white.opacity(0.04))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 14)
-                        .stroke(isActive ? themeColor.opacity(0.3) : Color.clear, lineWidth: 1)
-                )
-        )
-        .contentShape(Rectangle())
-        .onTapGesture {
+        Button {
             progress.activeProfileId = profile.id
             try? modelContext.save()
             withAnimation(.easeInOut(duration: 0.25)) {
                 isOpen = false
             }
+        } label: {
+            HStack(spacing: 14) {
+                // Icon
+                ZStack {
+                    Circle()
+                        .fill(isActive ? themeColor.opacity(0.2) : Color.white.opacity(0.07))
+                        .frame(width: 44, height: 44)
+                    
+                    Image(systemName: profile.icon)
+                        .font(.system(size: 18))
+                        .foregroundColor(isActive ? themeColor : .white.opacity(0.6))
+                }
+                
+                // Name + elapsed time
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(profile.name)
+                        .font(.subheadline.bold())
+                        .foregroundColor(isActive ? .white : .white.opacity(0.8))
+                    
+                    Text(elapsedTimeString(for: profile))
+                        .font(.caption)
+                        .foregroundColor(isActive ? themeColor.opacity(0.8) : .white.opacity(0.4))
+                }
+                
+                Spacer()
+                
+                // Active indicator
+                if isActive {
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundColor(themeColor)
+                        .font(.body)
+                }
+            }
+            .padding(.horizontal, 14)
+            .padding(.vertical, 12)
+            .background(
+                RoundedRectangle(cornerRadius: 14)
+                    .fill(isActive ? themeColor.opacity(0.08) : Color.white.opacity(0.04))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 14)
+                            .stroke(isActive ? themeColor.opacity(0.3) : Color.clear, lineWidth: 1)
+                    )
+            )
         }
+        .buttonStyle(.plain)
     }
     
     // MARK: - Time formatting
