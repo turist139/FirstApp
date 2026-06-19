@@ -142,7 +142,7 @@ struct StreakRecoveryView: View {
             let profileId = activeProfile?.id
             
             // Create a PastStreak if duration was non-zero
-            let startDate = activeProfile?.streakStartDate ?? activeProfile?.lastCheckInDate ?? now
+            let startDate = activeProfile?.streakStartDate ?? activeProfile?.creationDate ?? now
             let hours = Calendar.current.dateComponents([.hour], from: startDate, to: now).hour ?? 0
             if hours > 0 || (activeProfile?.currentStreakDays ?? 0) > 0 {
                 let pastStreak = PastStreak(

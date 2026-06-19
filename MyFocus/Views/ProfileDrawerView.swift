@@ -207,7 +207,7 @@ struct ProfileDrawerView: View {
     // MARK: - Time formatting
     
     private func elapsedTimeString(for profile: DetoxProfile) -> String {
-        let start = profile.streakStartDate ?? profile.lastCheckInDate ?? profile.creationDate
+        let start = profile.streakStartDate ?? profile.creationDate
         let interval = now.timeIntervalSince(start)
         let hours = Int(interval / 3600)
         
