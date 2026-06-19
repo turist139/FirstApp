@@ -198,16 +198,30 @@ struct ScreenTimeView: View {
     // MARK: - Subviews
     
     private var activeHours: Int {
-        return DetoxDateHelper.calculateActiveHours(from: activeProfile?.streakStartDate, creationDate: activeProfile?.creationDate ?? Date(), boundaryHour: currentBoundaryHour)
+        return DetoxDateHelper.calculateActiveHours(from: activeProfile?.streakStartDate, creationDate: activeProfile?.creationDate ?? Date())
     }
     
     private var realStreakDays: Int {
-        return activeHours / 24
+        return DetoxDateHelper.calculateStreakDays(from: activeProfile?.streakStartDate, creationDate: activeProfile?.creationDate ?? Date(), boundaryHour: currentBoundaryHour)
+    }
+    
+    private func hoursString(for hours: Int) -> String {
+        let mod10 = hours % 10
+        let mod100 = hours % 100
+        if mod100 >= 11 && mod100 <= 14 {
+            return "часов детокса"
+        } else if mod10 == 1 {
+            return "час детокса"
+        } else if mod10 >= 2 && mod10 <= 4 {
+            return "часа детокса"
+        } else {
+            return "часов детокса"
+        }
     }
     
     private var countdownCard: some View {
         VStack(spacing: 10) {
-            if activeHours < 24 {
+            if realStreakDays < 1 {
                 HStack(spacing: 12) {
                     Image(systemName: "flame.fill")
                         .font(.system(size: 60, weight: .bold))
@@ -218,7 +232,7 @@ struct ScreenTimeView: View {
                 }
                 .shadow(color: themeColor.opacity(0.4), radius: 12)
                 
-                Text(activeHours == 1 || (activeHours > 20 && activeHours % 10 == 1) ? "час детокса".uppercased() : (activeHours >= 2 && activeHours <= 4 ? "часа детокса".uppercased() : "часов детокса".uppercased()))
+                Text(hoursString(for: activeHours).uppercased())
                     .font(.caption.bold())
                     .foregroundColor(.white.opacity(0.5))
                     .tracking(2)

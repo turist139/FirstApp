@@ -10,6 +10,7 @@
 		C603F3A12FE3E47300A87840 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C603F3A02FE3E47300A87840 /* WidgetKit.framework */; };
 		C603F3A32FE3E47300A87840 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C603F3A22FE3E47300A87840 /* SwiftUI.framework */; };
 		C603F3B22FE3E47500A87840 /* MyFocusWidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C603F39E2FE3E47300A87840 /* MyFocusWidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		C603F7302FE6053D00A87840 /* Final.icon in Resources */ = {isa = PBXBuildFile; fileRef = C603F72F2FE6053D00A87840 /* Final.icon */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +43,7 @@
 		C603F3A02FE3E47300A87840 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		C603F3A22FE3E47300A87840 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		C603F3C32FE4022900A87840 /* MyFocusWidgetsExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MyFocusWidgetsExtension.entitlements; sourceTree = "<group>"; };
+		C603F72F2FE6053D00A87840 /* Final.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = Final.icon; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -130,6 +132,7 @@
 		C603F39F2FE3E47300A87840 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C603F72F2FE6053D00A87840 /* Final.icon */,
 				C603F3A02FE3E47300A87840 /* WidgetKit.framework */,
 				C603F3A22FE3E47300A87840 /* SwiftUI.framework */,
 			);
@@ -228,6 +231,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C603F7302FE6053D00A87840 /* Final.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -390,8 +394,9 @@
 		C603F26F2FE3E02A00A87840 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = Final;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = MyFocus/MyFocus.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -423,8 +428,9 @@
 		C603F2702FE3E02A00A87840 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = Final;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = MyFocus/MyFocus.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
