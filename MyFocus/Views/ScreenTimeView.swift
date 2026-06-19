@@ -168,6 +168,7 @@ struct ScreenTimeView: View {
             }
             .sheet(isPresented: $showCreateProfile) {
                 CreateProfileView(progress: progress)
+                    .presentationDetents([.large])
             }
             .sheet(isPresented: $showTodayBoundaryPicker) {
                 todayBoundaryPickerSheet

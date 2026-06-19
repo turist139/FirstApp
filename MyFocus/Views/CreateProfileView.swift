@@ -70,6 +70,7 @@ struct CreateProfileView: View {
             }
             .navigationTitle("Новый Детокс")
             .navigationBarTitleDisplayMode(.inline)
+            .scrollDismissesKeyboard(.interactively)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Отмена") { dismiss() }
