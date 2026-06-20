@@ -14,18 +14,24 @@ struct ProgressionView: View {
         return profilesQuery.first(where: { $0.id == activeId }) ?? profilesQuery.first
     }
     
-    private var activeHours: Int {
-        return DetoxDateHelper.calculateActiveHours(from: activeProfile?.streakStartDate, creationDate: activeProfile?.creationDate ?? Date())
+    private var maxActiveStreakDays: Int {
+        var maxDays = 0
+        for profile in profilesQuery {
+            let hours = DetoxDateHelper.calculateActiveHours(from: profile.streakStartDate, creationDate: profile.creationDate)
+            let days = hours / 24
+            if days > maxDays {
+                maxDays = days
+            }
+        }
+        return maxDays
     }
     
-    private var currentStreakDays: Int {
-        return activeHours / 24
+    private var maxLongestStreakDays: Int {
+        let maxProfileRecord = profilesQuery.map { $0.longestStreakDays }.max() ?? 0
+        return max(maxProfileRecord, progress.longestStreakDays)
     }
     
-    private var longestStreakDays: Int {
-        return activeProfile?.longestStreakDays ?? progress.longestStreakDays
-    }
-    
+
     @AppStorage("activePalette", store: .shared) private var activePalette: String = "default"
     
     var body: some View {
@@ -38,7 +44,7 @@ struct ProgressionView: View {
                             .foregroundColor(.orange)
                             .shadow(color: .orange.opacity(0.4), radius: 10)
                         
-                        Text("\(currentStreakDays) дн.")
+                        Text("\(maxActiveStreakDays) дн.")
                             .font(.system(size: 40, weight: .bold, design: .rounded))
                             .foregroundColor(.white)
                         
@@ -47,8 +53,8 @@ struct ProgressionView: View {
                             .foregroundColor(.white.opacity(0.6))
                             .tracking(1)
                         
-                        if longestStreakDays > 0 {
-                            Text("Рекорд: \(longestStreakDays) дн.")
+                        if maxLongestStreakDays > 0 {
+                            Text("Рекорд: \(maxLongestStreakDays) дн.")
                                 .font(.caption2)
                                 .foregroundColor(.orange.opacity(0.8))
                                 .padding(.top, 2)
@@ -85,7 +91,7 @@ struct ProgressionView: View {
                             ]
                             
                             ForEach(medals, id: \.0) { days, title, description, color, icon in
-                                let isUnlocked = currentStreakDays >= days
+                                let isUnlocked = maxActiveStreakDays >= days
                                 
                                 HStack(spacing: 16) {
                                     ZStack {
@@ -155,7 +161,7 @@ struct ProgressionView: View {
                             HStack(spacing: 20) {
                                 ForEach(PaletteManager.shared.allPalettes, id: \.self) { key in
                                     let req = streakRequirement(for: key)
-                                    let hasStreak = currentStreakDays >= req
+                                    let hasStreak = maxActiveStreakDays >= req
                                     
                                     Button(action: {
                                         if hasStreak {
