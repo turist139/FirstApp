@@ -1,6 +1,6 @@
 import Foundation
 import Combine
-import UserNotifications
+@preconcurrency import UserNotifications
 import AVFoundation
 #if canImport(UIKit)
 import UIKit
@@ -74,6 +74,8 @@ class TimerManager: ObservableObject {
     
     private func scheduleNotification() {
         let center = UNUserNotificationCenter.current()
+        let targetDate = self.targetEndDate
+        
         center.requestAuthorization(options: [.alert, .sound]) { granted, error in
             guard granted else { return }
             
@@ -82,7 +84,7 @@ class TimerManager: ObservableObject {
             content.body = "Отличная работа. Пора сделать перерыв."
             content.sound = .default
             
-            if let targetDate = self.targetEndDate {
+            if let targetDate = targetDate {
                 let timeInterval = targetDate.timeIntervalSince(Date())
                 guard timeInterval > 0 else { return }
                 

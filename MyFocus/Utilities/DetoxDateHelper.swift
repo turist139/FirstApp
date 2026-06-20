@@ -65,8 +65,6 @@ struct DetoxDateHelper {
     
     static func recalculateStreak(logs: [DetoxLog], boundaryHour: Int, profile: DetoxProfile?) {
         guard let profile = profile else { return }
-        let calendar = Calendar.current
-        let todayDetoxDay = detoxDay(for: Date(), boundaryHour: boundaryHour)
         
         // Group logs by their detox day, taking the worst-status log for each day
         var logsByDay: [Date: DetoxLog] = [:]
@@ -93,10 +91,7 @@ struct DetoxDateHelper {
         
         let sortedDays = logsByDay.keys.sorted()
         var currentStreak = 0
-        var longestStreak = 0
-        
-        var prevDay: Date? = nil
-        var penaltyDay: Date? = nil
+        let longestStreak = 0
         
         // Default to nil, will be updated by the loop if there are breaks
         profile.streakStartDate = nil
@@ -108,10 +103,8 @@ struct DetoxDateHelper {
             
             if log.isClean || log.isRescued || isMinor {
                 // Streak continues
-                prevDay = day
             } else {
                 // Relapse without rescue: streak breaks
-                prevDay = nil
                 profile.streakStartDate = log.date
             }
         }

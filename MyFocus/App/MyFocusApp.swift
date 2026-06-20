@@ -162,7 +162,7 @@ struct MyFocusApp: App {
             }
         }
         .modelContainer(sharedModelContainer)
-        .onChange(of: scenePhase) { newPhase in
+        .onChange(of: scenePhase) { oldPhase, newPhase in
             if newPhase == .active {
                 timerManager.updateFromBackground()
             }
