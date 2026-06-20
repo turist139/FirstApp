@@ -59,6 +59,7 @@ struct MotivationDashboardView: View {
                 .padding(.bottom, 80) // Space for TabBar
             }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .withAmbientGlow()
         .navigationTitle("")
         .navigationBarTitleDisplayMode(.inline)

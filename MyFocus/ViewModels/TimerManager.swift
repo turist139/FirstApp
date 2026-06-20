@@ -36,8 +36,8 @@ class TimerManager: ObservableObject {
         scheduleNotification()
         
         timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
-            Task { @MainActor in
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
+            Task { @MainActor [weak self] in
                 self?.tick()
             }
         }

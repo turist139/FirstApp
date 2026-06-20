@@ -873,7 +873,7 @@ struct FlowLayout: View {
     init<Content: View>(spacing: CGFloat, @ViewBuilder content: @escaping () -> Content) {
         self.spacing = spacing
         self.content = {
-            if let group = content() as? TupleView<Any> {
+            if content() is TupleView<Any> {
                 // If it is tuple, we convert to list
                 return []
             }
