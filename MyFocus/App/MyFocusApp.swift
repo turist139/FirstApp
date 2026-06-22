@@ -1,6 +1,7 @@
 import SwiftUI
 import SwiftData
 import UserNotifications
+import WidgetKit
 
 @main
 struct MyFocusApp: App {
@@ -136,10 +137,23 @@ struct MyFocusApp: App {
                 progress.activeProfileId = existingProfiles.first?.id
                 try? context.save()
             }
+            
+            // Sync profile list to UserDefaults for widget EntityQuery
+            let allProfiles = existingProfiles.isEmpty ? [] : existingProfiles
+            MyFocusApp.syncProfileListToDefaults(profiles: allProfiles)
         }
         
         return container
     }()
+    
+    /// Writes the profile list as JSON to shared UserDefaults so the widget EntityQuery can read it without creating a ModelContainer.
+    static func syncProfileListToDefaults(profiles: [DetoxProfile]) {
+        let dicts = profiles.map { ["id": $0.id.uuidString, "name": $0.name] }
+        if let data = try? JSONEncoder().encode(dicts) {
+            let defaults = UserDefaults(suiteName: "group.com.gg.MyFocus") ?? .standard
+            defaults.set(data, forKey: "widgetProfilesList")
+        }
+    }
 
     var body: some Scene {
         WindowGroup {
@@ -165,6 +179,15 @@ struct MyFocusApp: App {
         .onChange(of: scenePhase) { oldPhase, newPhase in
             if newPhase == .active {
                 timerManager.updateFromBackground()
+                // Sync profiles to UserDefaults and reload widgets
+                Task { @MainActor in
+                    let context = sharedModelContainer.mainContext
+                    let profilesFetch = FetchDescriptor<DetoxProfile>()
+                    if let profiles = try? context.fetch(profilesFetch) {
+                        MyFocusApp.syncProfileListToDefaults(profiles: profiles)
+                    }
+                    WidgetCenter.shared.reloadAllTimelines()
+                }
             }
         }
     }

@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import WidgetKit
 
 struct CreateProfileView: View {
     @Environment(\.modelContext) private var modelContext
@@ -85,6 +86,14 @@ struct CreateProfileView: View {
                         modelContext.insert(newProfile)
                         progress.activeProfileId = newProfile.id
                         try? modelContext.save()
+                        
+                        // Sync profile list to widget
+                        let profilesFetch = FetchDescriptor<DetoxProfile>()
+                        if let allProfiles = try? modelContext.fetch(profilesFetch) {
+                            MyFocusApp.syncProfileListToDefaults(profiles: allProfiles)
+                        }
+                        WidgetCenter.shared.reloadAllTimelines()
+                        
                         dismiss()
                     }
                     .disabled(name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)

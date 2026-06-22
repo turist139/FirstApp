@@ -754,6 +754,24 @@ struct StatisticsView: View {
         return formatter.string(from: date)
     }
     
+    private func formattedRelapseDuration(for log: DetoxLog) -> String? {
+        if let endDate = log.endDate, endDate > log.date {
+            let diff = endDate.timeIntervalSince(log.date)
+            let days = Int(diff / 86400)
+            let hours = Int((diff.truncatingRemainder(dividingBy: 86400)) / 3600)
+            let minutes = Int((diff.truncatingRemainder(dividingBy: 3600)) / 60)
+            
+            var components: [String] = []
+            if days > 0 { components.append("\(days) дн") }
+            if hours > 0 { components.append("\(hours) ч") }
+            if minutes > 0 { components.append("\(minutes) мин") }
+            if components.isEmpty { components.append("Меньше минуты") }
+            return components.joined(separator: " ")
+        } else {
+            return log.relapseDuration
+        }
+    }
+    
     private var selectedDayDetailsCard: some View {
         guard let date = selectedDate else { return AnyView(EmptyView()) }
         

@@ -29,22 +29,38 @@ struct WidgetProfile: AppEntity {
     static var defaultQuery = WidgetProfileQuery()
 }
 
-// MARK: - EntityQuery
+// MARK: - EntityQuery (reads from UserDefaults, NOT SwiftData)
 
 struct WidgetProfileQuery: EntityQuery {
     func entities(for identifiers: [String]) async throws -> [WidgetProfile] {
-        return loadAllProfiles().filter { identifiers.contains($0.id) }
+        let all = Self.loadProfilesFromDefaults()
+        return all.filter { identifiers.contains($0.id) }
     }
     
     func suggestedEntities() async throws -> [WidgetProfile] {
-        return loadAllProfiles()
+        return Self.loadProfilesFromDefaults()
     }
     
     func defaultResult() async -> WidgetProfile? {
-        return loadAllProfiles().first
+        return Self.loadProfilesFromDefaults().first
     }
     
-    private func loadAllProfiles() -> [WidgetProfile] {
+    /// Reads cached profile list from shared UserDefaults (written by the main app)
+    static func loadProfilesFromDefaults() -> [WidgetProfile] {
+        let defaults = UserDefaults(suiteName: "group.com.gg.MyFocus") ?? .standard
+        guard let data = defaults.data(forKey: "widgetProfilesList"),
+              let decoded = try? JSONDecoder().decode([[String: String]].self, from: data) else {
+            // Fallback: try reading from SwiftData directly
+            return loadProfilesFromSwiftData()
+        }
+        return decoded.compactMap { dict in
+            guard let id = dict["id"], let name = dict["name"] else { return nil }
+            return WidgetProfile(id: id, name: name)
+        }
+    }
+    
+    /// Fallback: reads profiles from SwiftData (used when UserDefaults cache doesn't exist yet)
+    private static func loadProfilesFromSwiftData() -> [WidgetProfile] {
         let schema = Schema([FocusSession.self, UserProgress.self, BreakActivity.self, MindfulnessSession.self, DetoxLog.self, PastStreak.self, DetoxProfile.self])
         var storeURL: URL
         if let sharedURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.gg.MyFocus") {
@@ -62,7 +78,16 @@ struct WidgetProfileQuery: EntityQuery {
         let context = ModelContext(container)
         let profilesFetch = FetchDescriptor<DetoxProfile>()
         let profiles = (try? context.fetch(profilesFetch)) ?? []
-        return profiles.map { WidgetProfile(id: $0.id.uuidString, name: $0.name) }
+        let result = profiles.map { WidgetProfile(id: $0.id.uuidString, name: $0.name) }
+        
+        // Cache for future use
+        let dicts = result.map { ["id": $0.id, "name": $0.name] }
+        if let data = try? JSONEncoder().encode(dicts) {
+            let defaults = UserDefaults(suiteName: "group.com.gg.MyFocus") ?? .standard
+            defaults.set(data, forKey: "widgetProfilesList")
+        }
+        
+        return result
     }
 }
 
@@ -87,7 +112,7 @@ struct StreakEntry: TimelineEntry {
     let paletteName: String
     let hasCheckedInToday: Bool
     let profileName: String
-    let debugInfo: String // temporary debug
+    let debugInfo: String
 }
 
 // MARK: - Provider
@@ -112,7 +137,8 @@ struct StreakProvider: AppIntentTimelineProvider {
         let paletteName = sharedDefaults.string(forKey: "activePalette") ?? "default"
         let boundaryHour = sharedDefaults.integer(forKey: "detoxDayBoundaryHour")
         
-        // Debug: track whether we received a profile from the intent
+        // Timestamp for debug
+        let ts = Int(Date().timeIntervalSince1970) % 100000
         let receivedProfileId = widgetProfile?.id ?? "NIL"
         let receivedProfileName = widgetProfile?.name ?? "NIL"
         
@@ -127,7 +153,7 @@ struct StreakProvider: AppIntentTimelineProvider {
         
         let config = ModelConfiguration(url: storeURL)
         guard let container = try? ModelContainer(for: schema, configurations: [config]) else {
-            return StreakEntry(date: Date(), streakDays: 0, activeHours: 0, paletteName: paletteName, hasCheckedInToday: false, profileName: "Трекинг", debugInfo: "no container")
+            return StreakEntry(date: Date(), streakDays: 0, activeHours: 0, paletteName: paletteName, hasCheckedInToday: false, profileName: "Трекинг", debugInfo: "T\(ts) no_container")
         }
         
         let context = ModelContext(container)
@@ -137,27 +163,21 @@ struct StreakProvider: AppIntentTimelineProvider {
         let profilesFetch = FetchDescriptor<DetoxProfile>()
         let profiles = (try? context.fetch(profilesFetch)) ?? []
         
-        // Try to find the profile selected in widget configuration
         var activeProfile: DetoxProfile?
-        var debugMsg = "intent_id=\(receivedProfileId) intent_name=\(receivedProfileName)"
+        var debugMsg = "T\(ts) id=\(receivedProfileId.prefix(8)) n=\(receivedProfileName)"
         
         if let widgetProfileIdString = widgetProfile?.id,
            !widgetProfileIdString.isEmpty,
            let widgetProfileId = UUID(uuidString: widgetProfileIdString) {
             activeProfile = profiles.first { $0.id == widgetProfileId }
-            if activeProfile != nil {
-                debugMsg += " MATCHED"
-            } else {
-                debugMsg += " NOT_FOUND_IN_\(profiles.count)_PROFILES"
-            }
+            debugMsg += activeProfile != nil ? " OK" : " !FOUND(\(profiles.count))"
         } else {
-            debugMsg += " NO_INTENT"
+            debugMsg += " NO_SEL"
         }
         
-        // Fallback to active profile
         if activeProfile == nil {
             activeProfile = profiles.first { $0.id == progress.activeProfileId } ?? profiles.first
-            debugMsg += " FALLBACK=\(activeProfile?.name ?? "nil")"
+            debugMsg += " FB=\(activeProfile?.name ?? "nil")"
         }
         
         let pName = activeProfile?.name ?? "Трекинг"
@@ -285,12 +305,12 @@ struct StreakWidgetEntryView : View {
                                 .foregroundColor(.white.opacity(0.4))
                         }
                         
-                        // DEBUG: показывает что пришло из intent
+                        // DEBUG
                         Text(entry.debugInfo)
                             .font(.system(size: 6))
-                            .foregroundColor(.yellow.opacity(0.7))
+                            .foregroundColor(.yellow.opacity(0.8))
                             .lineLimit(2)
-                            .minimumScaleFactor(0.5)
+                            .minimumScaleFactor(0.3)
                         
                     } else {
                         HStack(spacing: 20) {
@@ -360,9 +380,9 @@ struct StreakWidgetEntryView : View {
                                 // DEBUG
                                 Text(entry.debugInfo)
                                     .font(.system(size: 6))
-                                    .foregroundColor(.yellow.opacity(0.7))
+                                    .foregroundColor(.yellow.opacity(0.8))
                                     .lineLimit(2)
-                                    .minimumScaleFactor(0.5)
+                                    .minimumScaleFactor(0.3)
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
                         }
