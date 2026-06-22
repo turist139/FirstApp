@@ -5,6 +5,7 @@ import SwiftData
 final class DetoxLog {
     var id: UUID
     var date: Date
+    var endDate: Date?
     var isClean: Bool
     var isPartial: Bool
     var failReason: String?
@@ -25,6 +26,7 @@ final class DetoxLog {
     init(
         id: UUID = UUID(),
         date: Date = Date(),
+        endDate: Date? = nil,
         isClean: Bool = true,
         isPartial: Bool = false,
         failReason: String? = nil,
@@ -38,6 +40,7 @@ final class DetoxLog {
     ) {
         self.id = id
         self.date = date
+        self.endDate = endDate
         self.isClean = isClean
         self.isPartial = isPartial
         self.failReason = failReason

@@ -30,6 +30,8 @@ struct CheckInView: View {
     @State private var currentTargetDate: Date = Date()
     @State private var specifyRelapseTime: Bool = false
     @State private var relapseTime: Date = Date()
+    @State private var specifyRelapseEndDate: Bool = false
+    @State private var relapseEndDate: Date = Date()
     
     let durations = ["пару минут", "до двух часов", "день"]
     let reasons = ["\"один раз\"", "Усталость", "Тревога", "Автопилот", "Скука", "Голод", "Другое"]
@@ -180,18 +182,39 @@ struct CheckInView: View {
                             Divider()
                                 .background(Color.white.opacity(0.1))
                             
-                            // Relapse time selection
                             VStack(alignment: .leading, spacing: 10) {
-                                Toggle("Указать точное время срыва", isOn: $specifyRelapseTime)
+                                Toggle("Указать начало срыва", isOn: $specifyRelapseTime)
                                     .font(.subheadline.bold())
                                     .foregroundColor(.white)
                                     .tint(.green)
                                 
                                 if specifyRelapseTime {
                                     DatePicker(
-                                        "Время срыва",
+                                        "Время начала",
                                         selection: $relapseTime,
-                                        displayedComponents: .hourAndMinute
+                                        displayedComponents: [.date, .hourAndMinute]
+                                    )
+                                    .colorScheme(.dark)
+                                    .datePickerStyle(.compact)
+                                    .font(.subheadline)
+                                    .foregroundColor(.white.opacity(0.8))
+                                }
+                            }
+                            
+                            Divider()
+                                .background(Color.white.opacity(0.1))
+                                
+                            VStack(alignment: .leading, spacing: 10) {
+                                Toggle("Указать конец срыва", isOn: $specifyRelapseEndDate)
+                                    .font(.subheadline.bold())
+                                    .foregroundColor(.white)
+                                    .tint(.green)
+                                
+                                if specifyRelapseEndDate {
+                                    DatePicker(
+                                        "Время окончания",
+                                        selection: $relapseEndDate,
+                                        displayedComponents: [.date, .hourAndMinute]
                                     )
                                     .colorScheme(.dark)
                                     .datePickerStyle(.compact)
@@ -336,6 +359,7 @@ struct CheckInView: View {
                     currentTargetDate = targetDate
                 }
                 relapseTime = currentTargetDate
+                relapseEndDate = currentTargetDate
                 loadExistingCheckIn()
             }
         }
@@ -373,41 +397,26 @@ struct CheckInView: View {
             }
             
             if !log.isClean {
-                let logTime = log.date
-                let endOfDay = DetoxDateHelper.endOfDetoxDay(for: logTime, boundaryHour: detoxDayBoundaryHour)
-                let diff = endOfDay.timeIntervalSince(logTime)
-                if abs(diff - 1.0) < 5.0 {
-                    specifyRelapseTime = false
+                specifyRelapseTime = true
+                relapseTime = log.date
+                if let end = log.endDate {
+                    specifyRelapseEndDate = true
+                    relapseEndDate = end
                 } else {
-                    specifyRelapseTime = true
-                    relapseTime = logTime
+                    specifyRelapseEndDate = false
+                    relapseEndDate = log.date
                 }
             }
         }
     }
     
     private func getFinalLogDate() -> Date {
-        let calendar = Calendar.current
         if didRelapse {
             if specifyRelapseTime {
-                let targetDetoxDay = DetoxDateHelper.detoxDay(for: currentTargetDate, boundaryHour: detoxDayBoundaryHour)
-                let timeComponents = calendar.dateComponents([.hour, .minute], from: relapseTime)
-                
-                var mergedComponents = calendar.dateComponents([.year, .month, .day], from: targetDetoxDay)
-                mergedComponents.hour = timeComponents.hour
-                mergedComponents.minute = timeComponents.minute
-                mergedComponents.second = 0
-                
-                var finalDate = calendar.date(from: mergedComponents) ?? currentTargetDate
-                
-                if let h = timeComponents.hour, h < detoxDayBoundaryHour {
-                    finalDate = calendar.date(byAdding: .day, value: 1, to: finalDate) ?? finalDate
-                }
-                
-                return finalDate
+                return relapseTime
             } else {
                 let endOfDay = DetoxDateHelper.endOfDetoxDay(for: currentTargetDate, boundaryHour: detoxDayBoundaryHour)
-                return calendar.date(byAdding: .second, value: -1, to: endOfDay) ?? currentTargetDate
+                return Calendar.current.date(byAdding: .second, value: -1, to: endOfDay) ?? currentTargetDate
             }
         } else {
             return currentTargetDate
@@ -429,11 +438,13 @@ struct CheckInView: View {
         
         let log: DetoxLog
         let finalDate = getFinalLogDate()
+        let finalEndDate = (didRelapse && specifyRelapseEndDate) ? relapseEndDate : nil
         
         if let existing = logToEdit {
             log = existing
             log.isClean = !didRelapse
             log.date = finalDate
+            log.endDate = finalEndDate
             log.silenceTolerance = silenceTolerance
             log.relapseDuration = finalDuration
             log.failReason = finalReason
@@ -442,6 +453,7 @@ struct CheckInView: View {
         } else {
             log = DetoxLog(
                 date: finalDate,
+                endDate: finalEndDate,
                 isClean: !didRelapse,
                 failReason: finalReason,
                 failNotes: failNotes,
