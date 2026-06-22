@@ -602,9 +602,12 @@ struct StatisticsView: View {
         let isFuture = logDetoxDay > currentDetoxDay
         
         // Find if a log exists for this date matching the detox day
-        let dayLogs = activeLogs.filter {
-            let logDay = DetoxDateHelper.detoxDay(for: $0.date, boundaryHour: detoxDayBoundaryHour)
-            return calendar.isDate(logDay, inSameDayAs: date)
+        let cellDayStart = calendar.startOfDay(for: date)
+        let dayLogs: [DetoxLog] = activeLogs.filter { (log: DetoxLog) -> Bool in
+            let logStartDay: Date = calendar.startOfDay(for: DetoxDateHelper.detoxDay(for: log.date, boundaryHour: detoxDayBoundaryHour))
+            let fallbackDate: Date = log.endDate ?? log.date
+            let logEndDay: Date = calendar.startOfDay(for: DetoxDateHelper.detoxDay(for: fallbackDate, boundaryHour: detoxDayBoundaryHour))
+            return cellDayStart >= logStartDay && cellDayStart <= logEndDay
         }
         
         let log: DetoxLog?
@@ -724,6 +727,13 @@ struct StatisticsView: View {
         return formatter.string(from: date)
     }
     
+    private func formatShortDateAndTime(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "d MMM, HH:mm"
+        formatter.locale = Locale(identifier: "ru_RU")
+        return formatter.string(from: date)
+    }
+    
     private var selectedDayDetailsCard: some View {
         guard let date = selectedDate else { return AnyView(EmptyView()) }
         
@@ -733,9 +743,12 @@ struct StatisticsView: View {
         let isFuture = targetDetoxDay > currentDetoxDay
         
         // Find all logs matching the detox day
-        let dayLogs = activeLogs.filter {
-            let logDay = DetoxDateHelper.detoxDay(for: $0.date, boundaryHour: detoxDayBoundaryHour)
-            return calendar.isDate(logDay, inSameDayAs: date)
+        let cellDayStart = calendar.startOfDay(for: date)
+        let dayLogs: [DetoxLog] = activeLogs.filter { (log: DetoxLog) -> Bool in
+            let logStartDay: Date = calendar.startOfDay(for: DetoxDateHelper.detoxDay(for: log.date, boundaryHour: detoxDayBoundaryHour))
+            let fallbackDate: Date = log.endDate ?? log.date
+            let logEndDay: Date = calendar.startOfDay(for: DetoxDateHelper.detoxDay(for: fallbackDate, boundaryHour: detoxDayBoundaryHour))
+            return cellDayStart >= logStartDay && cellDayStart <= logEndDay
         }
         
         return AnyView(
@@ -810,9 +823,21 @@ struct StatisticsView: View {
                                         }
                                         
                                         // Display the exact time of the log!
-                                        Text(formatTime(log.date))
-                                            .font(.caption2)
-                                            .foregroundColor(.white.opacity(0.4))
+                                        if let endDate = log.endDate {
+                                            if calendar.isDate(log.date, inSameDayAs: endDate) {
+                                                Text("\(formatTime(log.date)) — \(formatTime(endDate))")
+                                                    .font(.caption2)
+                                                    .foregroundColor(.white.opacity(0.4))
+                                            } else {
+                                                Text("\(formatShortDateAndTime(log.date)) — \(formatShortDateAndTime(endDate))")
+                                                    .font(.caption2)
+                                                    .foregroundColor(.white.opacity(0.4))
+                                            }
+                                        } else {
+                                            Text(formatTime(log.date))
+                                                .font(.caption2)
+                                                .foregroundColor(.white.opacity(0.4))
+                                        }
                                     }
                                     
                                     Spacer()
