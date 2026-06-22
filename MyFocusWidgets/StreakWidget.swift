@@ -123,10 +123,9 @@ struct StreakProvider: AppIntentTimelineProvider {
         let pName = activeProfile?.name ?? "Трекинг"
 
         
-        let isMainProfile = activeProfile?.id == progress.activeProfileId
-        let streakStartDate = activeProfile?.streakStartDate ?? (isMainProfile ? progress.streakStartDate : (activeProfile?.creationDate ?? Date()))
+        let streakStartDate = activeProfile?.streakStartDate ?? (activeProfile?.creationDate ?? Date())
         let creationDate = activeProfile?.creationDate ?? Date()
-        let lastCheckIn = activeProfile?.lastCheckInDate ?? (isMainProfile ? progress.lastCheckInDate : nil)
+        let lastCheckIn = activeProfile?.lastCheckInDate
         
         var hasCheckedIn = false
         if let lastCheck = lastCheckIn {
