@@ -1216,7 +1216,7 @@ struct StatisticsView: View {
                                 
                                 Spacer()
                                 
-                                if let duration = log.relapseDuration {
+                                if let duration = formattedRelapseDuration(for: log) {
                                     Text(duration)
                                         .font(.caption.bold())
                                         .foregroundColor(.orange)
