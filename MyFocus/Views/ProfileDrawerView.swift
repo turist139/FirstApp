@@ -10,6 +10,7 @@ struct ProfileDrawerView: View {
     @Binding var isOpen: Bool
     @Binding var showCreateProfile: Bool
     
+    @AppStorage("detoxDayBoundaryHour", store: UserDefaults(suiteName: "group.com.gg.MyFocus") ?? .standard) private var detoxDayBoundaryHour: Int = 0
     @AppStorage("activePalette", store: .shared) private var activePalette: String = "default"
     var themeColor: Color {
         PaletteManager.shared.paletteColors[activePalette]?.first ?? .green
@@ -208,11 +209,11 @@ struct ProfileDrawerView: View {
     
     private func elapsedTimeString(for profile: DetoxProfile) -> String {
         let start = profile.streakStartDate ?? profile.creationDate
+        let days = DetoxDateHelper.calculateStreakDays(from: start, creationDate: profile.creationDate, currentBoundaryHour: detoxDayBoundaryHour, startBoundaryHour: profile.streakStartBoundaryHour)
         let interval = now.timeIntervalSince(start)
-        let hours = Int(interval / 3600)
         
-        if hours >= 24 {
-            return "\(hours / 24) д."
+        if days >= 1 {
+            return "\(days) д."
         } else {
             if interval < 0 { return "только что" }
             

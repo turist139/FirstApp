@@ -179,6 +179,11 @@ struct ScreenTimeView: View {
 
                 burnPaletteIfExpired()
             }
+            .task(id: activeProfile?.id) {
+                if let active = activeProfile {
+                    DetoxDateHelper.recalculateStreak(logs: activeLogs, boundaryHour: detoxDayBoundaryHour, profile: active)
+                }
+            }
             .onReceive(timer) { _ in
                 updateCountdown()
             }
@@ -202,7 +207,7 @@ struct ScreenTimeView: View {
     }
     
     private var realStreakDays: Int {
-        return DetoxDateHelper.calculateStreakDays(from: activeProfile?.streakStartDate, creationDate: activeProfile?.creationDate ?? Date(), boundaryHour: currentBoundaryHour)
+        return DetoxDateHelper.calculateStreakDays(from: activeProfile?.streakStartDate, creationDate: activeProfile?.creationDate ?? Date(), currentBoundaryHour: currentBoundaryHour, startBoundaryHour: activeProfile?.streakStartBoundaryHour)
     }
     
     private func hoursString(for hours: Int) -> String {

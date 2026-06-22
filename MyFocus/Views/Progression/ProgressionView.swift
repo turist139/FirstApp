@@ -14,11 +14,12 @@ struct ProgressionView: View {
         return profilesQuery.first(where: { $0.id == activeId }) ?? profilesQuery.first
     }
     
+    @AppStorage("detoxDayBoundaryHour", store: UserDefaults(suiteName: "group.com.gg.MyFocus") ?? .standard) private var detoxDayBoundaryHour: Int = 0
+
     private var maxActiveStreakDays: Int {
         var maxDays = 0
         for profile in profilesQuery {
-            let hours = DetoxDateHelper.calculateActiveHours(from: profile.streakStartDate, creationDate: profile.creationDate)
-            let days = hours / 24
+            let days = DetoxDateHelper.calculateStreakDays(from: profile.streakStartDate, creationDate: profile.creationDate, currentBoundaryHour: detoxDayBoundaryHour, startBoundaryHour: profile.streakStartBoundaryHour)
             if days > maxDays {
                 maxDays = days
             }
@@ -27,8 +28,7 @@ struct ProgressionView: View {
     }
     
     private var maxLongestStreakDays: Int {
-        let maxProfileRecord = profilesQuery.map { $0.longestStreakDays }.max() ?? 0
-        return max(maxProfileRecord, progress.longestStreakDays)
+        return profilesQuery.map { $0.longestStreakDays }.max() ?? 0
     }
     
 

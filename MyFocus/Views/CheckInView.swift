@@ -390,18 +390,21 @@ struct CheckInView: View {
         let calendar = Calendar.current
         if didRelapse {
             if specifyRelapseTime {
-                let dateComponents = calendar.dateComponents([.year, .month, .day], from: currentTargetDate)
+                let targetDetoxDay = DetoxDateHelper.detoxDay(for: currentTargetDate, boundaryHour: detoxDayBoundaryHour)
                 let timeComponents = calendar.dateComponents([.hour, .minute], from: relapseTime)
                 
-                var mergedComponents = DateComponents()
-                mergedComponents.year = dateComponents.year
-                mergedComponents.month = dateComponents.month
-                mergedComponents.day = dateComponents.day
+                var mergedComponents = calendar.dateComponents([.year, .month, .day], from: targetDetoxDay)
                 mergedComponents.hour = timeComponents.hour
                 mergedComponents.minute = timeComponents.minute
                 mergedComponents.second = 0
                 
-                return calendar.date(from: mergedComponents) ?? currentTargetDate
+                var finalDate = calendar.date(from: mergedComponents) ?? currentTargetDate
+                
+                if let h = timeComponents.hour, h < detoxDayBoundaryHour {
+                    finalDate = calendar.date(byAdding: .day, value: 1, to: finalDate) ?? finalDate
+                }
+                
+                return finalDate
             } else {
                 let endOfDay = DetoxDateHelper.endOfDetoxDay(for: currentTargetDate, boundaryHour: detoxDayBoundaryHour)
                 return calendar.date(byAdding: .second, value: -1, to: endOfDay) ?? currentTargetDate

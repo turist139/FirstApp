@@ -13,6 +13,7 @@ final class DetoxProfile {
     var longestStreakDays: Int
     var lastCheckInDate: Date?
     var streakStartDate: Date?
+    var streakStartBoundaryHour: Int?
     var streakSavedToday: Bool
     var streakQuestsCompleted: Int
     
@@ -26,6 +27,7 @@ final class DetoxProfile {
         longestStreakDays: Int = 0,
         lastCheckInDate: Date? = nil,
         streakStartDate: Date? = nil,
+        streakStartBoundaryHour: Int? = nil,
         streakSavedToday: Bool = false,
         streakQuestsCompleted: Int = 0
     ) {
@@ -38,6 +40,7 @@ final class DetoxProfile {
         self.longestStreakDays = longestStreakDays
         self.lastCheckInDate = lastCheckInDate
         self.streakStartDate = streakStartDate
+        self.streakStartBoundaryHour = streakStartBoundaryHour
         self.streakSavedToday = streakSavedToday
         self.streakQuestsCompleted = streakQuestsCompleted
     }

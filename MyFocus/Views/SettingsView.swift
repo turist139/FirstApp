@@ -1,6 +1,7 @@
 import SwiftUI
 import SwiftData
 import AVFoundation
+import WidgetKit
 
 struct SettingsView: View {
     @Environment(\.modelContext) private var modelContext
@@ -419,6 +420,7 @@ struct SettingsView: View {
                 // Optionally reschedule if day boundary hour changes
                 let lastCheck = progressQuery.first?.lastCheckInDate ?? Date()
                 NotificationManager.shared.scheduleReminders(lastCheckInDate: lastCheck)
+                WidgetCenter.shared.reloadAllTimelines()
             }
             .sheet(isPresented: $showEveningOverrideSheet) {
                 overrideSheet(

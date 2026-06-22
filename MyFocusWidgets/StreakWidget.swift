@@ -65,7 +65,7 @@ struct StreakProvider: TimelineProvider {
             let overrideDate = sharedDefaults.string(forKey: "todayBoundaryOverrideDate") ?? ""
             let overrideHour = sharedDefaults.integer(forKey: "todayBoundaryHourOverride")
             
-            let defaultDetoxDay = DetoxDateHelper_Widget.detoxDay(for: Date(), boundaryHour: boundaryHour)
+            let defaultDetoxDay = DetoxDateHelper.detoxDay(for: Date(), boundaryHour: boundaryHour)
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd"
             let currentDateString = formatter.string(from: defaultDetoxDay)
@@ -73,11 +73,12 @@ struct StreakProvider: TimelineProvider {
                 finalBoundary = overrideHour
             }
             
-            hasCheckedIn = DetoxDateHelper_Widget.isDateSameDetoxDay(lastCheck, Date(), boundaryHour: finalBoundary)
+            hasCheckedIn = DetoxDateHelper.isDateSameDetoxDay(lastCheck, Date(), boundaryHour: finalBoundary)
         }
         
-        let activeHours = DetoxDateHelper_Widget.calculateActiveHours(from: streakStartDate, creationDate: creationDate)
-        let currentStreak = activeHours / 24
+        let streakStartBoundaryHour = activeProfile?.streakStartBoundaryHour
+        let activeHours = DetoxDateHelper.calculateActiveHours(from: streakStartDate, creationDate: creationDate)
+        let currentStreak = DetoxDateHelper.calculateStreakDays(from: streakStartDate, creationDate: creationDate, currentBoundaryHour: boundaryHour, startBoundaryHour: streakStartBoundaryHour)
         
         return StreakEntry(
             date: Date(),
@@ -305,70 +306,7 @@ struct StreakWidget: Widget {
     }
 }
 
-// MARK: - Date helper specific to widgets to ensure no compilation dependency
-struct DetoxDateHelper_Widget {
-    static func detoxDay(for date: Date, boundaryHour: Int) -> Date {
-        let calendar = Calendar.current
-        var components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
-        let hour = components.hour ?? 0
-        
-        if hour < boundaryHour {
-            if let prevDay = calendar.date(byAdding: .day, value: -1, to: date) {
-                components = calendar.dateComponents([.year, .month, .day], from: prevDay)
-            }
-        } else {
-            components = calendar.dateComponents([.year, .month, .day], from: date)
-        }
-        
-        components.hour = 0
-        components.minute = 0
-        components.second = 0
-        return calendar.date(from: components) ?? date
-    }
-    
-    static func endOfDetoxDay(for date: Date, boundaryHour: Int) -> Date {
-        let dayStart = detoxDay(for: date, boundaryHour: boundaryHour)
-        let calendar = Calendar.current
-        guard let nextDay = calendar.date(byAdding: .day, value: 1, to: dayStart) else { return date }
-        return calendar.date(byAdding: .hour, value: boundaryHour, to: nextDay) ?? date
-    }
-    
-    static func isDateSameDetoxDay(_ date1: Date, _ date2: Date, boundaryHour: Int) -> Bool {
-        let day1 = detoxDay(for: date1, boundaryHour: boundaryHour)
-        let day2 = detoxDay(for: date2, boundaryHour: boundaryHour)
-        return Calendar.current.isDate(day1, inSameDayAs: day2)
-    }
-    
-    static func calculateActiveHours(from relapseDate: Date?, creationDate: Date) -> Int {
-        let start = relapseDate ?? creationDate
-        let now = Date()
-        if start > now { return 0 }
-        return Int(now.timeIntervalSince(start) / 3600.0)
-    }
-    
-    static func calculateStreakDays(from relapseDate: Date?, creationDate: Date, boundaryHour: Int) -> Int {
-        var start: Date
-        if let relapseDate = relapseDate {
-            let endOfRelapseDay = endOfDetoxDay(for: relapseDate, boundaryHour: boundaryHour)
-            let remainingHours = endOfRelapseDay.timeIntervalSince(relapseDate) / 3600.0
-            
-            if remainingHours < 6 {
-                start = endOfRelapseDay
-            } else {
-                start = relapseDate
-            }
-        } else {
-            start = creationDate
-        }
-        
-        let now = Date()
-        if start > now {
-            return 0
-        } else {
-            return Int(now.timeIntervalSince(start) / (3600.0 * 24.0))
-        }
-    }
-}
+
 
 struct PaletteColors_Widget {
     static func colors(for name: String) -> [Color] {

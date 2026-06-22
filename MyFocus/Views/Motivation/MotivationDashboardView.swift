@@ -68,7 +68,7 @@ struct MotivationDashboardView: View {
     private func motivationCard(category: MotivationCategory) -> some View {
         let baseColor = Color(hex: category.colorHex)
         
-        return VStack(alignment: .leading, spacing: 16) {
+        return VStack(alignment: .center, spacing: 16) {
             HStack(spacing: 14) {
                 ZStack {
                     Circle()
@@ -84,8 +84,6 @@ struct MotivationDashboardView: View {
                 Text(category.title)
                     .font(.title3.bold())
                     .foregroundColor(.white)
-                
-                Spacer()
             }
             
             MotivationFlowLayout(spacing: 10) {
@@ -93,7 +91,7 @@ struct MotivationDashboardView: View {
                     Text(item.text)
                         .font(.subheadline.weight(.medium))
                         .foregroundColor(.white)
-                        .multilineTextAlignment(.leading)
+                        .multilineTextAlignment(.center)
                         .fixedSize(horizontal: false, vertical: true)
                         .padding(.horizontal, 16)
                         .padding(.vertical, 12)
@@ -135,7 +133,7 @@ struct MotivationFlowLayout: Layout {
     var spacing: CGFloat = 8
     
     func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
-        let result = FlowResult(in: proposal.width ?? 0, subviews: subviews, spacing: spacing)
+        let result = FlowResult(in: proposal.width ?? .infinity, subviews: subviews, spacing: spacing)
         return result.size
     }
     
@@ -143,7 +141,7 @@ struct MotivationFlowLayout: Layout {
         let result = FlowResult(in: bounds.width, subviews: subviews, spacing: spacing)
         for (index, subview) in subviews.enumerated() {
             let point = result.points[index]
-            subview.place(at: CGPoint(x: point.x + bounds.minX, y: point.y + bounds.minY), proposal: .unspecified)
+            subview.place(at: CGPoint(x: point.x + bounds.minX, y: point.y + bounds.minY), proposal: ProposedViewSize(width: bounds.width, height: nil))
         }
     }
     
@@ -152,26 +150,44 @@ struct MotivationFlowLayout: Layout {
         var points: [CGPoint] = []
         
         init(in maxWidth: CGFloat, subviews: Subviews, spacing: CGFloat) {
+            var lines: [[(index: Int, size: CGSize)]] = []
+            var currentLine: [(index: Int, size: CGSize)] = []
             var currentX: CGFloat = 0
-            var currentY: CGFloat = 0
-            var lineHeight: CGFloat = 0
             
-            for subview in subviews {
-                let size = subview.sizeThatFits(.unspecified)
+            for (index, subview) in subviews.enumerated() {
+                let size = subview.sizeThatFits(ProposedViewSize(width: maxWidth, height: nil))
                 
-                if currentX + size.width > maxWidth && currentX > 0 {
-                    // Move to next line
+                if currentX + size.width > maxWidth && !currentLine.isEmpty {
+                    lines.append(currentLine)
+                    currentLine = []
                     currentX = 0
-                    currentY += lineHeight + spacing
-                    lineHeight = 0
                 }
                 
-                points.append(CGPoint(x: currentX, y: currentY))
-                lineHeight = max(lineHeight, size.height)
+                currentLine.append((index, size))
                 currentX += size.width + spacing
             }
+            if !currentLine.isEmpty {
+                lines.append(currentLine)
+            }
             
-            self.size = CGSize(width: maxWidth, height: currentY + lineHeight)
+            var currentY: CGFloat = 0
+            points = Array(repeating: .zero, count: subviews.count)
+            
+            for line in lines {
+                let lineWidth = line.reduce(0) { $0 + $1.size.width } + CGFloat(line.count - 1) * spacing
+                var xOffset = max(0, (maxWidth - lineWidth) / 2)
+                var lineHeight: CGFloat = 0
+                
+                for item in line {
+                    points[item.index] = CGPoint(x: xOffset, y: currentY)
+                    xOffset += item.size.width + spacing
+                    lineHeight = max(lineHeight, item.size.height)
+                }
+                currentY += lineHeight + spacing
+            }
+            
+            let totalHeight = currentY > 0 ? currentY - spacing : 0
+            self.size = CGSize(width: maxWidth, height: totalHeight)
         }
     }
 }

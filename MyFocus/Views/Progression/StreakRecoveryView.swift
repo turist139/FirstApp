@@ -170,6 +170,7 @@ struct StreakRecoveryView: View {
             // Reset streak
             activeProfile?.currentStreakDays = 0
             activeProfile?.streakStartDate = now
+            activeProfile?.streakStartBoundaryHour = detoxDayBoundaryHour
             activeProfile?.lastCheckInDate = now
             progress.lastActiveDate = now
             activeProfile?.streakSavedToday = false

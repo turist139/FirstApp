@@ -20,9 +20,13 @@ struct StatisticsView: View {
     @AppStorage("detoxDayBoundaryHour", store: .shared) private var detoxDayBoundaryHour: Int = 0
     
     @State private var selectedDate: Date? = Date()
-    @State private var showEditCheckIn: Bool = false
-    @State private var editCheckInDate: Date = Date()
-    @State private var editCheckInLogId: UUID? = nil
+    struct CheckInSheetItem: Identifiable {
+        let id = UUID()
+        let date: Date
+        let logId: UUID?
+        var forceNewLog: Bool = false
+    }
+    @State private var checkInSheetItem: CheckInSheetItem? = nil
     @State private var showImpulsesHistory: Bool = false
     @State private var showStreaksHistory: Bool = false
     @State private var showProfileDrawer: Bool = false
@@ -50,7 +54,7 @@ struct StatisticsView: View {
         let length: Int
         let duration: TimeInterval?
         let startDate: Date
-        let endDate: Date
+        let endDate: Date?
         let reason: String
         let notes: String?
     }
@@ -85,17 +89,34 @@ struct StatisticsView: View {
     }
     
     var pastStreaks: [PastStreak] {
-        guard !activeLogs.isEmpty else { return [] }
+        guard let active = activeProfile, !activeLogs.isEmpty else { return [] }
         let sortedLogs = activeLogs.sorted { $0.date < $1.date }
         var streaks: [PastStreak] = []
         var currentStreak: [DetoxLog] = []
         let calendar = Calendar.current
-        var lastStreakStartDate = sortedLogs.first!.date
+        var lastStreakStartDate = active.creationDate
+        
+        let firstLog = sortedLogs.first!
+        let creationDetoxDay = DetoxDateHelper.detoxDay(for: active.creationDate, boundaryHour: detoxDayBoundaryHour)
+        let log1DetoxDay = DetoxDateHelper.detoxDay(for: firstLog.date, boundaryHour: detoxDayBoundaryHour)
+        let initialDaysDiff = calendar.dateComponents([.day], from: creationDetoxDay, to: log1DetoxDay).day ?? 0
+        
+        if initialDaysDiff > 1 {
+            let effectiveStart = DetoxDateHelper.getEffectiveStartDay(for: lastStreakStartDate, boundaryHour: detoxDayBoundaryHour)
+            let endDetoxDay = calendar.date(byAdding: .day, value: 1, to: creationDetoxDay) ?? creationDetoxDay
+            let length = DetoxDateHelper.calculateStreakDaysBetween(effectiveStartDay: effectiveStart, endDetoxDay: endDetoxDay)
+            let duration = endDetoxDay.timeIntervalSince(lastStreakStartDate)
+            if duration >= 60 {
+                streaks.append(PastStreak(length: length, duration: duration, startDate: lastStreakStartDate, endDate: endDetoxDay, reason: "Пропущен чек-ин", notes: nil))
+            }
+            lastStreakStartDate = firstLog.date
+        }
         
         for i in 0..<sortedLogs.count {
             let log = sortedLogs[i]
             
-            if log.isClean || log.isRescued {
+            let isMinor = !(log.isClean) && log.relapseDuration == "пару минут"
+            if log.isClean || log.isRescued || isMinor {
                 if currentStreak.isEmpty {
                     currentStreak.append(log)
                 } else {
@@ -107,7 +128,9 @@ struct StatisticsView: View {
                             currentStreak.append(log)
                         } else {
                             // Streak broken due to check-in gap
-                            let length = currentStreak.count
+                            let effectiveStart = DetoxDateHelper.getEffectiveStartDay(for: lastStreakStartDate, boundaryHour: detoxDayBoundaryHour)
+                            let endDetoxDay = Calendar.current.date(byAdding: .day, value: 1, to: log1DetoxDay) ?? log1DetoxDay
+                            let length = DetoxDateHelper.calculateStreakDaysBetween(effectiveStartDay: effectiveStart, endDetoxDay: endDetoxDay)
                             let duration = lastLog.date.timeIntervalSince(lastStreakStartDate)
                             if duration >= 60 {
                                 streaks.append(PastStreak(length: length, duration: duration, startDate: lastStreakStartDate, endDate: lastLog.date, reason: "Пропущен чек-ин", notes: nil))
@@ -119,7 +142,9 @@ struct StatisticsView: View {
                 }
             } else {
                 // Relapse without rescue (breaks streak)
-                let length = currentStreak.count
+                let effectiveStart = DetoxDateHelper.getEffectiveStartDay(for: lastStreakStartDate, boundaryHour: detoxDayBoundaryHour)
+                let endDetoxDay = DetoxDateHelper.detoxDay(for: log.date, boundaryHour: detoxDayBoundaryHour)
+                let length = DetoxDateHelper.calculateStreakDaysBetween(effectiveStartDay: effectiveStart, endDetoxDay: endDetoxDay)
                 let duration = log.date.timeIntervalSince(lastStreakStartDate)
                 let reason = log.failReason ?? "Срыв"
                 let notes = log.failNotes
@@ -132,8 +157,17 @@ struct StatisticsView: View {
             }
         }
         
-        // Exclude the current active streak since it is still running!
-        return streaks.reversed() // Show newest first
+        var reversedStreaks = Array(streaks.reversed())
+        if let active = activeProfile {
+            let activeStartDate = active.streakStartDate ?? active.creationDate
+            let length = DetoxDateHelper.calculateStreakDays(from: activeStartDate, creationDate: active.creationDate, currentBoundaryHour: detoxDayBoundaryHour, startBoundaryHour: active.streakStartBoundaryHour)
+            let duration = Date().timeIntervalSince(activeStartDate)
+            if duration >= 60 {
+                let activeStreak = PastStreak(length: length, duration: duration, startDate: activeStartDate, endDate: nil, reason: "Активный стрик", notes: nil)
+                reversedStreaks.insert(activeStreak, at: 0)
+            }
+        }
+        return reversedStreaks
     }
     
     var body: some View {
@@ -184,8 +218,8 @@ struct StatisticsView: View {
                     }
                 }
             }
-            .sheet(isPresented: $showEditCheckIn) {
-                CheckInView(targetDate: editCheckInDate, targetLogId: editCheckInLogId, profile: activeProfile, progress: progress)
+            .sheet(item: $checkInSheetItem) { item in
+                CheckInView(targetDate: item.date, targetLogId: item.logId, forceNewLog: item.forceNewLog, profile: activeProfile, progress: progress)
             }
             .sheet(isPresented: $showImpulsesHistory) {
                 impulsesHistorySheet
@@ -427,11 +461,25 @@ struct StatisticsView: View {
                         .foregroundColor(.yellow)
                         .shadow(color: .yellow.opacity(0.4), radius: 6)
                     
-                    let maxHistory = pastStreaks.map { $0.length }.max() ?? 0
-                    let actualLongest = max(activeProfile?.longestStreakDays ?? 0, max(maxHistory, activeProfile?.currentStreakDays ?? 0))
-                    Text("\(actualLongest) дн")
-                        .font(.title.bold())
-                        .foregroundColor(.white)
+                    let maxHistoryLength = pastStreaks.map { $0.length }.max() ?? 0
+                    let actualLongestDays = max(activeProfile?.longestStreakDays ?? 0, max(maxHistoryLength, activeProfile?.currentStreakDays ?? 0))
+                    
+                    if actualLongestDays > 0 {
+                        Text("\(actualLongestDays) дн")
+                            .font(.title.bold())
+                            .foregroundColor(.white)
+                    } else {
+                        let longestDurationStreak = pastStreaks.max { ($0.duration ?? 0) < ($1.duration ?? 0) }
+                        if let best = longestDurationStreak, (best.duration ?? 0) > 0 {
+                            Text(formatStreakDurationValue(for: best))
+                                .font(.title.bold())
+                                .foregroundColor(.white)
+                        } else {
+                            Text("0 дн")
+                                .font(.title.bold())
+                                .foregroundColor(.white)
+                        }
+                    }
                     
                     Text("Лучший стрик")
                         .font(.caption)
@@ -603,9 +651,8 @@ struct StatisticsView: View {
                 // Tolerance display mode
                 if let tolerance = log.silenceTolerance {
                     textColor = .white
-                    let opacity = 0.2 + (Double(tolerance) * 0.16)
-                    cellColor = Color.purple.opacity(opacity)
-                    shadowColor = Color.purple.opacity(opacity * 0.4)
+                    cellColor = getToleranceColor(tolerance)
+                    shadowColor = cellColor.opacity(0.4)
                 } else {
                     cellColor = Color.white.opacity(0.15)
                     textColor = Color.white.opacity(0.7)
@@ -703,9 +750,7 @@ struct StatisticsView: View {
                     
                     if !isFuture {
                         Button(action: {
-                            editCheckInDate = date
-                            editCheckInLogId = nil
-                            showEditCheckIn = true
+                            checkInSheetItem = CheckInSheetItem(date: date, logId: nil, forceNewLog: true)
                         }) {
                             Image(systemName: "plus")
                                 .font(.subheadline.bold())
@@ -773,9 +818,7 @@ struct StatisticsView: View {
                                     Spacer()
                                     
                                     Button(action: {
-                                        editCheckInDate = log.date
-                                        editCheckInLogId = log.id
-                                        showEditCheckIn = true
+                                        checkInSheetItem = CheckInSheetItem(date: log.date, logId: log.id)
                                     }) {
                                         Image(systemName: "pencil")
                                             .font(.caption.bold())
@@ -1008,10 +1051,15 @@ struct StatisticsView: View {
                                         Text("Период чистого разума")
                                             .font(.subheadline.bold())
                                             .foregroundColor(.white)
-                                        
-                                        Text("\(formatShortDate(streak.startDate)) — \(formatShortDate(streak.endDate))")
-                                            .font(.caption)
-                                            .foregroundColor(.white.opacity(0.5))
+                                        if let end = streak.endDate {
+                                            Text("\(formatShortDate(streak.startDate)) — \(formatShortDate(end))")
+                                                .font(.caption)
+                                                .foregroundColor(.white.opacity(0.6))
+                                        } else {
+                                            Text("\(formatShortDate(streak.startDate)) — по настоящее время")
+                                                .font(.caption)
+                                                .foregroundColor(.green.opacity(0.8))
+                                        }
                                     }
                                     
                                     Spacer()
@@ -1086,5 +1134,16 @@ struct StatisticsView: View {
         }
         let minutes = (Int(duration) % 3600) / 60
         return "\(minutes)м"
+    }
+    
+    private func getToleranceColor(_ tolerance: Int) -> Color {
+        switch tolerance {
+        case 1: return Color(red: 0.7, green: 0, blue: 0) // Dark Red
+        case 2: return Color(red: 0.8, green: 0.4, blue: 0) // Darker Orange
+        case 3: return Color(red: 0, green: 0.5, blue: 0) // Dark Green
+        case 4: return Color(red: 0.45, green: 0.15, blue: 0.6) // Dark Purple
+        case 5: return Color(red: 0.2, green: 0.5, blue: 0.7) // Muted Cyan
+        default: return Color.gray
+        }
     }
 }
