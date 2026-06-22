@@ -4,7 +4,8 @@ import SwiftUI
 import SwiftData
 import AppIntents
 
-@available(iOS 17.0, *)
+// MARK: - AppEntity
+
 struct WidgetProfile: AppEntity {
     var id: String
     
@@ -28,21 +29,22 @@ struct WidgetProfile: AppEntity {
     static var defaultQuery = WidgetProfileQuery()
 }
 
-@available(iOS 17.0, *)
+// MARK: - EntityQuery
+
 struct WidgetProfileQuery: EntityQuery {
     func entities(for identifiers: [String]) async throws -> [WidgetProfile] {
-        return fetchProfiles().filter { identifiers.contains($0.id) }
+        return loadAllProfiles().filter { identifiers.contains($0.id) }
     }
     
     func suggestedEntities() async throws -> [WidgetProfile] {
-        return fetchProfiles()
+        return loadAllProfiles()
     }
     
     func defaultResult() async -> WidgetProfile? {
-        return fetchProfiles().first
+        return loadAllProfiles().first
     }
     
-    private func fetchProfiles() -> [WidgetProfile] {
+    private func loadAllProfiles() -> [WidgetProfile] {
         let schema = Schema([FocusSession.self, UserProgress.self, BreakActivity.self, MindfulnessSession.self, DetoxLog.self, PastStreak.self, DetoxProfile.self])
         var storeURL: URL
         if let sharedURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.gg.MyFocus") {
@@ -64,7 +66,8 @@ struct WidgetProfileQuery: EntityQuery {
     }
 }
 
-@available(iOS 17.0, *)
+// MARK: - WidgetConfigurationIntent
+
 struct StreakWidgetConfigurationIntent: WidgetConfigurationIntent {
     static var title: LocalizedStringResource = "Выбор Детокса"
     static var description = IntentDescription("Выберите детокс для отображения.")
@@ -75,6 +78,8 @@ struct StreakWidgetConfigurationIntent: WidgetConfigurationIntent {
     init() {}
 }
 
+// MARK: - Entry
+
 struct StreakEntry: TimelineEntry {
     let date: Date
     let streakDays: Int
@@ -82,12 +87,14 @@ struct StreakEntry: TimelineEntry {
     let paletteName: String
     let hasCheckedInToday: Bool
     let profileName: String
+    let debugInfo: String // temporary debug
 }
 
-@available(iOS 17.0, *)
+// MARK: - Provider
+
 struct StreakProvider: AppIntentTimelineProvider {
     func placeholder(in context: Context) -> StreakEntry {
-        StreakEntry(date: Date(), streakDays: 7, activeHours: 168, paletteName: "default", hasCheckedInToday: true, profileName: "Трекинг")
+        StreakEntry(date: Date(), streakDays: 7, activeHours: 168, paletteName: "default", hasCheckedInToday: true, profileName: "Трекинг", debugInfo: "placeholder")
     }
 
     func snapshot(for configuration: StreakWidgetConfigurationIntent, in context: Context) async -> StreakEntry {
@@ -105,6 +112,10 @@ struct StreakProvider: AppIntentTimelineProvider {
         let paletteName = sharedDefaults.string(forKey: "activePalette") ?? "default"
         let boundaryHour = sharedDefaults.integer(forKey: "detoxDayBoundaryHour")
         
+        // Debug: track whether we received a profile from the intent
+        let receivedProfileId = widgetProfile?.id ?? "NIL"
+        let receivedProfileName = widgetProfile?.name ?? "NIL"
+        
         let schema = Schema([FocusSession.self, UserProgress.self, BreakActivity.self, MindfulnessSession.self, DetoxLog.self, PastStreak.self, DetoxProfile.self])
         var storeURL: URL
         if let sharedURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.gg.MyFocus") {
@@ -116,7 +127,7 @@ struct StreakProvider: AppIntentTimelineProvider {
         
         let config = ModelConfiguration(url: storeURL)
         guard let container = try? ModelContainer(for: schema, configurations: [config]) else {
-            return StreakEntry(date: Date(), streakDays: 0, activeHours: 0, paletteName: paletteName, hasCheckedInToday: false, profileName: "Трекинг")
+            return StreakEntry(date: Date(), streakDays: 0, activeHours: 0, paletteName: paletteName, hasCheckedInToday: false, profileName: "Трекинг", debugInfo: "no container")
         }
         
         let context = ModelContext(container)
@@ -126,16 +137,30 @@ struct StreakProvider: AppIntentTimelineProvider {
         let profilesFetch = FetchDescriptor<DetoxProfile>()
         let profiles = (try? context.fetch(profilesFetch)) ?? []
         
+        // Try to find the profile selected in widget configuration
         var activeProfile: DetoxProfile?
-        if let widgetProfileIdString = widgetProfile?.id, let widgetProfileId = UUID(uuidString: widgetProfileIdString) {
+        var debugMsg = "intent_id=\(receivedProfileId) intent_name=\(receivedProfileName)"
+        
+        if let widgetProfileIdString = widgetProfile?.id,
+           !widgetProfileIdString.isEmpty,
+           let widgetProfileId = UUID(uuidString: widgetProfileIdString) {
             activeProfile = profiles.first { $0.id == widgetProfileId }
+            if activeProfile != nil {
+                debugMsg += " MATCHED"
+            } else {
+                debugMsg += " NOT_FOUND_IN_\(profiles.count)_PROFILES"
+            }
+        } else {
+            debugMsg += " NO_INTENT"
         }
+        
+        // Fallback to active profile
         if activeProfile == nil {
             activeProfile = profiles.first { $0.id == progress.activeProfileId } ?? profiles.first
+            debugMsg += " FALLBACK=\(activeProfile?.name ?? "nil")"
         }
         
         let pName = activeProfile?.name ?? "Трекинг"
-
         
         let streakStartDate = activeProfile?.streakStartDate ?? (activeProfile?.creationDate ?? Date())
         let creationDate = activeProfile?.creationDate ?? Date()
@@ -168,13 +193,16 @@ struct StreakProvider: AppIntentTimelineProvider {
             activeHours: activeHours,
             paletteName: paletteName,
             hasCheckedInToday: hasCheckedIn,
-            profileName: pName
+            profileName: pName,
+            debugInfo: debugMsg
         )
     }
 }
 
+// MARK: - Widget View
+
 struct StreakWidgetEntryView : View {
-    var entry: StreakProvider.Entry
+    var entry: StreakEntry
     @Environment(\.widgetFamily) var family
     
     var themeColors: [Color] {
@@ -218,7 +246,7 @@ struct StreakWidgetEntryView : View {
                 Text("\(Image(systemName: "flame.fill")) \(entry.streakDays) \(daysString(entry.streakDays))")
             }
         default:
-            VStack(spacing: 8) {
+            VStack(spacing: 4) {
                     if family == .systemSmall {
                         Text(entry.profileName.uppercased())
                             .font(.system(size: 10, weight: .black))
@@ -256,6 +284,14 @@ struct StreakWidgetEntryView : View {
                                 .font(.system(size: 10, weight: .bold))
                                 .foregroundColor(.white.opacity(0.4))
                         }
+                        
+                        // DEBUG: показывает что пришло из intent
+                        Text(entry.debugInfo)
+                            .font(.system(size: 6))
+                            .foregroundColor(.yellow.opacity(0.7))
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.5)
+                        
                     } else {
                         HStack(spacing: 20) {
                             VStack(spacing: 6) {
@@ -320,6 +356,13 @@ struct StreakWidgetEntryView : View {
                                         .foregroundColor(.white.opacity(0.5))
                                         .lineLimit(2)
                                 }
+                                
+                                // DEBUG
+                                Text(entry.debugInfo)
+                                    .font(.system(size: 6))
+                                    .foregroundColor(.yellow.opacity(0.7))
+                                    .lineLimit(2)
+                                    .minimumScaleFactor(0.5)
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
                         }
@@ -362,28 +405,26 @@ struct StreakWidgetEntryView : View {
     }
 }
 
+// MARK: - Widget
+
 struct StreakWidget: Widget {
     let kind: String = "StreakWidget"
 
     var body: some WidgetConfiguration {
-        if #available(iOS 17.0, *) {
-            return AppIntentConfiguration(kind: kind, intent: StreakWidgetConfigurationIntent.self, provider: StreakProvider()) { entry in
-                StreakWidgetEntryView(entry: entry)
-                    .containerBackground(for: .widget) {
-                        LinearGradient(
-                            colors: [Color(white: 0.08), Color(white: 0.03)],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                    }
-            }
-            .configurationDisplayName("Прогресс Детокса")
-            .description("Показывает количество дней вашего стрика детокса.")
-            .supportedFamilies([.systemSmall, .systemMedium, .accessoryCircular, .accessoryRectangular, .accessoryInline])
-            .contentMarginsDisabled()
-        } else {
-            fatalError("Widget requires iOS 17")
+        AppIntentConfiguration(kind: kind, intent: StreakWidgetConfigurationIntent.self, provider: StreakProvider()) { entry in
+            StreakWidgetEntryView(entry: entry)
+                .containerBackground(for: .widget) {
+                    LinearGradient(
+                        colors: [Color(white: 0.08), Color(white: 0.03)],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                }
         }
+        .configurationDisplayName("Прогресс Детокса")
+        .description("Показывает количество дней вашего стрика детокса.")
+        .supportedFamilies([.systemSmall, .systemMedium, .accessoryCircular, .accessoryRectangular, .accessoryInline])
+        .contentMarginsDisabled()
     }
 }
 
