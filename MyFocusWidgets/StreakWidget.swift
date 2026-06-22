@@ -6,8 +6,20 @@ import AppIntents
 
 @available(iOS 17.0, *)
 struct WidgetProfile: AppEntity {
-    var id: UUID
+    var id: String
+    
+    @Property(title: "Название")
     var name: String
+    
+    init(id: String, name: String) {
+        self.id = id
+        self.name = name
+    }
+    
+    init() {
+        self.id = ""
+        self.name = ""
+    }
     
     static var typeDisplayRepresentation: TypeDisplayRepresentation = "Детокс Профиль"
     var displayRepresentation: DisplayRepresentation {
@@ -18,7 +30,7 @@ struct WidgetProfile: AppEntity {
 
 @available(iOS 17.0, *)
 struct WidgetProfileQuery: EntityQuery {
-    func entities(for identifiers: [WidgetProfile.ID]) async throws -> [WidgetProfile] {
+    func entities(for identifiers: [String]) async throws -> [WidgetProfile] {
         return fetchProfiles().filter { identifiers.contains($0.id) }
     }
     
@@ -48,7 +60,7 @@ struct WidgetProfileQuery: EntityQuery {
         let context = ModelContext(container)
         let profilesFetch = FetchDescriptor<DetoxProfile>()
         let profiles = (try? context.fetch(profilesFetch)) ?? []
-        return profiles.map { WidgetProfile(id: $0.id, name: $0.name) }
+        return profiles.map { WidgetProfile(id: $0.id.uuidString, name: $0.name) }
     }
 }
 
@@ -59,6 +71,8 @@ struct StreakWidgetConfigurationIntent: WidgetConfigurationIntent {
 
     @Parameter(title: "Детокс")
     var profile: WidgetProfile?
+    
+    init() {}
 }
 
 struct StreakEntry: TimelineEntry {
@@ -113,7 +127,7 @@ struct StreakProvider: AppIntentTimelineProvider {
         let profiles = (try? context.fetch(profilesFetch)) ?? []
         
         var activeProfile: DetoxProfile?
-        if let widgetProfileId = widgetProfile?.id {
+        if let widgetProfileIdString = widgetProfile?.id, let widgetProfileId = UUID(uuidString: widgetProfileIdString) {
             activeProfile = profiles.first { $0.id == widgetProfileId }
         }
         if activeProfile == nil {
