@@ -27,6 +27,8 @@ struct StreakRecoveryView: View {
     @State private var selectedReason: String = ""
     @State private var customFailReason: String = ""
     @State private var customReflection: String = ""
+    @State private var specifyRelapseTime: Bool = false
+    @State private var relapseTime: Date = Date()
     
     let reasons = ["\"Один раз\"", "Усталость", "Тревога", "Автопилот", "Скука", "Голод", "Другое"]
     
@@ -99,6 +101,23 @@ struct StreakRecoveryView: View {
             }
             .padding(.horizontal, 30)
             
+            VStack(alignment: .leading, spacing: 10) {
+                Toggle("Указать время начала срыва", isOn: $specifyRelapseTime)
+                    .foregroundColor(.white.opacity(0.8))
+                    .font(.headline)
+                    .tint(Color(red: 0.5, green: 0.0, blue: 0.0))
+                
+                if specifyRelapseTime {
+                    DatePicker("Начало срыва", selection: $relapseTime, in: ...Date(), displayedComponents: [.date, .hourAndMinute])
+                        .datePickerStyle(.compact)
+                        .colorScheme(.dark)
+                        .padding()
+                        .background(Color.white.opacity(0.1))
+                        .cornerRadius(12)
+                }
+            }
+            .padding(.horizontal, 30)
+            
             Spacer()
             
             let isSaveDisabled = selectedReason.isEmpty || (selectedReason == "Другое" && customFailReason.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
@@ -138,6 +157,7 @@ struct StreakRecoveryView: View {
         withAnimation {
             let finalReason = selectedReason == "Другое" ? customFailReason : selectedReason
             let now = Date()
+            let relapseStart = specifyRelapseTime ? relapseTime : now
             
             let profileId = activeProfile?.id
             
@@ -157,7 +177,8 @@ struct StreakRecoveryView: View {
             
             // Log the relapse for today (as partial)
             let log = DetoxLog(
-                date: now,
+                date: relapseStart,
+                endDate: now,
                 isClean: false,
                 isPartial: true,
                 failReason: finalReason,
