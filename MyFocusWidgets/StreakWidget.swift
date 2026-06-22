@@ -123,9 +123,10 @@ struct StreakProvider: AppIntentTimelineProvider {
         let pName = activeProfile?.name ?? "Трекинг"
 
         
-        let streakStartDate = activeProfile?.streakStartDate ?? progress.streakStartDate
+        let isMainProfile = activeProfile?.id == progress.activeProfileId
+        let streakStartDate = activeProfile?.streakStartDate ?? (isMainProfile ? progress.streakStartDate : (activeProfile?.creationDate ?? Date()))
         let creationDate = activeProfile?.creationDate ?? Date()
-        let lastCheckIn = activeProfile?.lastCheckInDate ?? progress.lastCheckInDate
+        let lastCheckIn = activeProfile?.lastCheckInDate ?? (isMainProfile ? progress.lastCheckInDate : nil)
         
         var hasCheckedIn = false
         if let lastCheck = lastCheckIn {
@@ -206,13 +207,19 @@ struct StreakWidgetEntryView : View {
         default:
             VStack(spacing: 8) {
                     if family == .systemSmall {
+                        Text(entry.profileName.uppercased())
+                            .font(.system(size: 10, weight: .black))
+                            .foregroundColor(themeColors.first ?? .green)
+                            .tracking(1)
+                            .lineLimit(1)
+                            
                         ZStack {
                             Circle()
                                 .fill(LinearGradient(colors: themeColors, startPoint: .topLeading, endPoint: .bottomTrailing).opacity(0.15))
-                                .frame(width: 65, height: 65)
+                                .frame(width: 55, height: 55)
                             
                             Image(systemName: "flame.fill")
-                                .font(.system(size: 32))
+                                .font(.system(size: 26))
                                 .foregroundStyle(
                                     LinearGradient(colors: themeColors, startPoint: .topLeading, endPoint: .bottomTrailing)
                                 )
@@ -221,7 +228,7 @@ struct StreakWidgetEntryView : View {
                         
                         if entry.streakDays < 1 {
                             Text("\(entry.activeHours)")
-                                .font(.system(size: 28, weight: .bold, design: .rounded))
+                                .font(.system(size: 24, weight: .bold, design: .rounded))
                                 .foregroundColor(.white)
                             
                             Text(hoursString(entry.activeHours))
@@ -229,7 +236,7 @@ struct StreakWidgetEntryView : View {
                                 .foregroundColor(.white.opacity(0.4))
                         } else {
                             Text("\(entry.streakDays)")
-                                .font(.system(size: 28, weight: .bold, design: .rounded))
+                                .font(.system(size: 24, weight: .bold, design: .rounded))
                                 .foregroundColor(.white)
                             
                             Text(daysString(entry.streakDays))
