@@ -244,7 +244,7 @@ struct DetoxDateHelper {
                 let creationDetoxDay = detoxDay(for: profile.creationDate, boundaryHour: boundaryHour)
                 let daysDiff = calendar.dateComponents([.day], from: creationDetoxDay, to: day).day ?? 0
                 if daysDiff > 1 {
-                    currentStreakStartDate = log.date
+                    currentStreakStartDate = log.endDate ?? log.date
                     currentStreakStartBoundaryHour = boundaryHour
                 }
             }
@@ -254,7 +254,8 @@ struct DetoxDateHelper {
                 let length = calculateStreakDaysBetween(effectiveStartDay: effectiveStart, endDetoxDay: day)
                 longestStreak = max(longestStreak, length)
                 
-                currentStreakStartDate = log.date
+                let relapseEnd = log.endDate ?? log.date
+                currentStreakStartDate = relapseEnd
                 currentStreakStartBoundaryHour = boundaryHour
             }
             
